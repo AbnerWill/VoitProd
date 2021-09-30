@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20.323" height="27.369" viewBox="0 0 20.323 27.369">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Mask" d="M0,9.579C0,4.284,4.544,0,10.161,0S20.323,4.284,20.323,9.579c0,7.184-10.161,17.789-10.161,17.789S0,16.763,0,9.579Z" transform="translate(5 2)" fill="#95a1bb"/>
+    </clipPath>
+  </defs>
+  <g id="gps" transform="translate(-5 -2)" clip-path="url(#clip-path)">
+    <g id="Symbols" transform="translate(4.656 2)">
+      <g id="Icon_Location" data-name="Icon/Location">
+        <path id="Mask-2" data-name="Mask" d="M15.679,2C9.775,2,5,6.214,5,11.423c0,7.067,10.679,17.5,10.679,17.5s10.679-10.433,10.679-17.5C26.359,6.214,21.583,2,15.679,2Zm0,12.789a3.612,3.612,0,0,1-3.814-3.365,3.612,3.612,0,0,1,3.814-3.365,3.612,3.612,0,0,1,3.814,3.365,3.612,3.612,0,0,1-3.814,3.365Z" transform="translate(-5 -2)" fill="#95a1bb"/>
+      </g>
+    </g>
+  </g>
+</svg>

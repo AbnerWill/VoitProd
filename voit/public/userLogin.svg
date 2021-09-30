@@ -1,0 +1,6 @@
+<svg id="userLogin" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="Icon_Profile" data-name="Icon/Profile">
+    <rect id="Base" width="30" height="30" fill="none"/>
+    <path id="Mask" d="M0,20V17.5c0-3.325,6.662-5,10-5s10,1.675,10,5V20ZM5,5a5,5,0,1,1,5,5A5,5,0,0,1,5,5Z" transform="translate(5 5)" fill="#cad1e1"/>
+  </g>
+</svg>
