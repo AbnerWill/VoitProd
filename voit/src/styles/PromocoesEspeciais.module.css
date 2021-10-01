@@ -1,0 +1,33 @@
+.bgEspeciais {
+    background-color: #EAEDF5;
+    height: 650px;
+}
+
+.divTitulo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+}
+
+.subTitulo {
+    color: #95A1BB;
+    font-size: 14px;
+    font-weight: 500;
+    width: 300px;
+    text-align: center;
+}
+
+.divCard {
+    border: 1px solid #95A1BB;
+    border-radius: 10px;
+    max-width: 280px;
+    height: 380px;
+}
+
+.divImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

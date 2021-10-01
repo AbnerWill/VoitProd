@@ -1,4 +1,8 @@
 import Head from 'next/head'
+import Ajuda from '../components/Home/Ajuda';
+import CondicoesEspeciais from '../components/Home/CondicoesEspeciais';
+import ProdutoHome from '../components/Home/ProdutoHome';
+import PromocoesEspeciais from '../components/Home/PromocoesEspeciais';
 import Navbar from '../components/Navbar';
 
 
@@ -12,6 +16,18 @@ export default function Home() {
       </Head>
       <section>
         <Navbar />
+      </section>
+      <section>
+        <ProdutoHome />
+      </section>
+      <section>
+        <CondicoesEspeciais />
+      </section>
+      <section>
+        <Ajuda />
+      </section>
+      <section>
+        <PromocoesEspeciais />
       </section>
     </section>
   )
