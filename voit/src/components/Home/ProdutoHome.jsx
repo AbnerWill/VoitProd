@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 import BotaoGeral from "../BotaoGeral";
-import styles from '../../styles/ProdutoHome.module.css';
+import styles from '../../styles/Home/ProdutoHome.module.css';
 
 export default function ProdutoHome(props) {
 
