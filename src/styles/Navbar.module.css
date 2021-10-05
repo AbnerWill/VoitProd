@@ -1,0 +1,200 @@
+.bordaNav {
+    border-bottom: 1px solid #CAD1E1;
+}
+
+.limitado {
+    display: flex;
+}
+
+.aproveite {
+    background-color: #CAD1E1;
+    color: #95A1BB;
+    font-size: 14px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aproveite p {
+    padding: 5px 0;
+    margin: 0;
+}
+
+.linksNav {
+    background-color: #EAEDF5;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    width: 30%;
+}
+
+.linksNav li {
+    cursor: pointer;
+    padding: 5px 0;
+    margin: 0 7px 0 10px;
+    font-size: 12px;
+    color: #95A1BB;
+    text-transform: uppercase;
+}
+
+.linksNav li:hover, .linksNav li:focus {
+    color: #00ff00;
+}
+
+.divNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.divNav li {
+    list-style: none;
+    margin: 10px;
+}
+
+.gps {
+    display: flex;
+    align-items: center;
+    width: 200px;
+}
+
+.gps:hover {
+    border-radius: 10px;
+    border: 1px solid #95A1BB;
+}
+
+.gps p {
+    color: #95A1BB;
+    font-size: 12px;
+    line-height: 1rem;
+    margin-left: 7px;
+    margin-bottom: 0;
+}
+
+.divBuscar {
+    border: none;
+    border-radius: 10px;
+    width: 600px;
+    background-color: #F6F7FA;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inputBuscar {
+    border: none;
+    background-color: #F6F7FA;
+    width: 400px;
+}
+
+.inputBuscar::-webkit-input-placeholder {
+    color: #95A1BB;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Kanit', Arial, Helvetica, sans-serif;
+}
+
+.entrar {
+    display: flex;
+    align-items: center;
+    width: 150px;
+}
+
+.entrar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: #95A1BB;
+    margin-left: 10px;
+    border-bottom: 2px solid #CAD1E1;
+    width: 80px;
+}
+
+.entrar a:hover {
+    color: #00ff00;
+    border-bottom: 2px solid #00ff00;
+}
+
+.categorias {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* flex-wrap: wrap; */
+    list-style: none;
+    margin: 0 0 20px 0;
+}
+
+.categorias li a{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+.categorias li a:hover {
+    color: #00ff00;
+}
+
+.voitPro {
+    border-bottom: 2px solid #00ff00;
+}
+
+.btnVender {
+    background-color: #00ff00;
+    color: #000;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    border-radius: 7px;
+    text-transform: uppercase;
+    border: none;
+    font-size: 10px;
+    width: 130px;
+    padding: 10px;
+}
+
+.dropBtn {
+    background-color: #fff;
+    border: none;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: #000;
+}
+
+.dropBtn:hover, .dropBtn:focus {
+    background-color: #fff;
+    color: #00ff00;
+}
+
+.dropBtn::after {
+    display: none;
+}
+
+.dropNav {
+    display: flex;
+    width: max-content;
+}
+
+.divDropNav {
+    color: #95A1BB;
+}
+
+.dropImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 150px;
+    background-color: #F6F7FA;
+    border-radius: 10px;
+}
