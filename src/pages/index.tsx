@@ -1,11 +1,21 @@
 import Head from 'next/head'
-import Ajuda from '../components/Home/Ajuda'
-import CondicoesEspeciais from '../components/Home/CondicoesEspeciais'
-import Diarias from '../components/Home/Diarias'
-import ProdutoDestaque from '../components/Home/ProdutoDestaque'
-import ProdutoHome from '../components/Home/ProdutoHome'
-import PromocoesEspeciais from '../components/Home/PromocoesEspeciais'
+import { Ajuda } from '../components/Ajuda'
+import { CondicoesEspeciais } from '../components/CondicoesEspeciais'
+import { Diarias } from '../components/Diarias/Diarias'
+import { ProdutoDestaque } from '../components/ProdutoDestaque'
+import { ProdutoHome } from '../components/ProdutoHome'
+import { PromocoesEspeciais } from '../components/PromocoesEspeciais'
 import Navbar from '../components/Navbar'
+import { Modalidade } from '../components/Modalidade'
+import { SelecaoEsporte } from '../components/SelecaoEsporte'
+import { ProdutosProximos } from '../components/ProdutosProximos'
+import { MelhoresDescontos } from '../components/MelhoresDescontos'
+import { CallToAction } from '../components/CallToAction'
+import { Blog } from '../components/Blog'
+import { Depoimentos } from '../components/Depoimentos'
+import { Parceiros } from '../components/Parceiros'
+import { SobreNos } from '../components/SobreNos'
+import { Footer } from '../components/Footer'
 
 export default function Home(): JSX.Element {
   return (
@@ -35,6 +45,36 @@ export default function Home(): JSX.Element {
       </section>
       <section>
         <Diarias />
+      </section>
+      <section>
+        <Modalidade />
+      </section>
+      <section>
+        <SelecaoEsporte />
+      </section>
+      <section>
+        <ProdutosProximos />
+      </section>
+      <section>
+        <MelhoresDescontos />
+      </section>
+      <section>
+        <CallToAction />
+      </section>
+      <section>
+        <Blog />
+      </section>
+      <section>
+        <Depoimentos />
+      </section>
+      <section>
+        <Parceiros />
+      </section>
+      <section>
+        <SobreNos />
+      </section>
+      <section>
+        <Footer />
       </section>
     </section>
   )

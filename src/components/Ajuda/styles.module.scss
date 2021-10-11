@@ -1,0 +1,32 @@
+.divAjuda {
+  background-color: #EAEDF5;
+  margin: 20px 0;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+.subTitulo {
+  text-align: center;
+  color: #95A1BB;
+  font-size: 16px;
+  width: 420px;
+}
+
+.btnAjuda {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #00ff00;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+  width: 220px;
+  padding: 8px 0;
+  margin: 20px 0;
+  letter-spacing: 0.1rem
+}

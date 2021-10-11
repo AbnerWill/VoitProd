@@ -25,6 +25,10 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Kanit&display=swap"
             rel="stylesheet"
           />
+          <script
+            src="https://kit.fontawesome.com/fef6e5d091.js"
+            crossOrigin="anonymous"
+          ></script>
         </Head>
         <body>
           <Main />

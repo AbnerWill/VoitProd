@@ -1,0 +1,27 @@
+.divSobre {
+  margin: 100px 0 0 0;
+  padding: 40px 0;
+  background-color: #EAEDF5;
+}
+
+.divImgSobre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 240px;
+  border-radius: 10px;
+  background-color: #F6F7FA;
+}
+
+.divTitulo {
+  margin: 0 0 0 20px;
+}
+
+.textoSobre {
+  width: 350px;
+  margin: 0 0 0 20px;
+  color: #363940;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
