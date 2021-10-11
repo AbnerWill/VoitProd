@@ -1,18 +1,18 @@
 .divAjuda {
-  background-color: #EAEDF5;
-  margin: 20px 0;
-  height: 300px;
+  background-color: #eaedf5;
+  margin: 2rem 0;
+  height: 30rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .subTitulo {
   text-align: center;
-  color: #95A1BB;
-  font-size: 16px;
-  width: 420px;
+  color: #95a1bb;
+  font-size: 1.6rem;
+  width: 42rem;
 }
 
 .btnAjuda {
@@ -22,11 +22,11 @@
   background-color: #00ff00;
   border: none;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 1.2rem;
   text-transform: uppercase;
   font-weight: 500;
-  width: 220px;
-  padding: 8px 0;
-  margin: 20px 0;
-  letter-spacing: 0.1rem
+  width: 22rem;
+  padding: 0.8rem 0;
+  margin: 2rem 0;
+  letter-spacing: 0.16rem;
 }
