@@ -2,14 +2,14 @@ import { Container } from 'react-bootstrap'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import { TituloSecao } from '../TituloSecao'
-import Desconto from '../Desconto'
+import { Desconto } from '../Desconto'
 
 export function ProdutoDestaque(): JSX.Element {
   return (
     <div className={styles.divDestaque}>
       <Container>
         <div className={styles.bgDestaque}>
-          <div className="d-flex justify-content-end">
+          <div className="d-flex justify-content-sm-end justify-content-center mb-3">
             <Desconto desconto="-15%" />
           </div>
           <div className="row">

@@ -21,7 +21,7 @@ export function ProdutoHome(props): JSX.Element {
   return (
     <div className="row">
       <div className="col-2 d-none d-md-block"></div>
-      <div className={'col-12 col-lg-5'}>
+      <div className={'col-12 col-md-5'}>
         <p className={styles.produtoTitulo}>{renderizarResposta(0)}</p>
         <p className={styles.produtoDescricao}>{renderizarResposta(1)}</p>
         <p className={styles.produtoCheck}>
@@ -43,7 +43,7 @@ export function ProdutoHome(props): JSX.Element {
       </div>
       <div
         className={
-          'col-12 col-lg-5 d-flex justify-content-center align-items-center mt-3 mt-lg-0'
+          'col-12 col-md-5 d-flex justify-content-center align-items-center mt-3 mt-lg-0'
         }
       >
         <div className={styles.divImgProduto}>
