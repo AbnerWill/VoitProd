@@ -11,7 +11,7 @@ export function Depoimentos(): JSX.Element {
           <TituloSecao titulo="Depoimentos" />
         </div>
         <div className="row">
-          <div className="col-12 col-md-6 col-lg-4">
+          <div className="col-12 col-md-6 col-lg-4 mt-3 mt-lg-0">
             <div>
               <p>
                 Although this is well intentioned and the goal certainly is to
@@ -19,7 +19,7 @@ export function Depoimentos(): JSX.Element {
                 is inherently flawed.
               </p>
             </div>
-            <div className="d-flex mb-3">
+            <div className="d-flex justify-content-center justify-content-lg-start mb-3">
               <Image
                 src="/user.svg"
                 alt="imagem usuário"
@@ -31,7 +31,7 @@ export function Depoimentos(): JSX.Element {
                 <span className={Styles.funcao}>função</span>
               </div>
             </div>
-            <div>
+            <div className="d-flex justify-content-center justify-content-lg-start">
               <Image
                 src="/estrelas.svg"
                 alt="imagem usuário"
@@ -40,7 +40,7 @@ export function Depoimentos(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-12 col-md-6 col-lg-4">
+          <div className="col-12 col-md-6 col-lg-4 mt-3 mt-lg-0">
             <div>
               <p>
                 Although this is well intentioned and the goal certainly is to
@@ -48,7 +48,7 @@ export function Depoimentos(): JSX.Element {
                 is inherently flawed.
               </p>
             </div>
-            <div className="d-flex mb-3">
+            <div className="d-flex justify-content-center justify-content-lg-start mb-3">
               <Image
                 src="/user.svg"
                 alt="imagem usuário"
@@ -60,7 +60,7 @@ export function Depoimentos(): JSX.Element {
                 <span className={Styles.funcao}>função</span>
               </div>
             </div>
-            <div>
+            <div className="d-flex justify-content-center justify-content-lg-start">
               <Image
                 src="/estrelas.svg"
                 alt="imagem usuário"
@@ -69,7 +69,7 @@ export function Depoimentos(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-12 col-md-6 col-lg-4">
+          <div className="col-12 col-md-6 col-lg-4 mt-3 mt-lg-0">
             <div>
               <p>
                 Although this is well intentioned and the goal certainly is to
@@ -77,7 +77,7 @@ export function Depoimentos(): JSX.Element {
                 is inherently flawed.
               </p>
             </div>
-            <div className="d-flex mb-3">
+            <div className="d-flex justify-content-center justify-content-lg-start mb-3">
               <Image
                 src="/user.svg"
                 alt="imagem usuário"
@@ -89,7 +89,7 @@ export function Depoimentos(): JSX.Element {
                 <span className={Styles.funcao}>função</span>
               </div>
             </div>
-            <div>
+            <div className="d-flex justify-content-center justify-content-lg-start">
               <Image
                 src="/estrelas.svg"
                 alt="imagem usuário"

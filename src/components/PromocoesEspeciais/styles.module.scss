@@ -1,6 +1,7 @@
 .bgEspeciais {
   background-color: #eaedf5;
-  height: 700px;
+  // height: 700px;
+  padding: 40px 0;
 }
 
 .divTitulo {
@@ -21,7 +22,7 @@
 .divCard {
   border: 1px solid #95a1bb;
   border-radius: 10px;
-  max-width: 300px;
+  // max-width: 300px;
   height: max-content;
   padding: 20px;
 }
@@ -54,7 +55,8 @@
   border-radius: 12px;
   background-color: #95a1bb;
   color: #fff;
-  padding: 14px 52px;
+  padding: 14px 0;
+  width: 150px;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1rem;

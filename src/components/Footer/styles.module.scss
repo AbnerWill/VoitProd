@@ -11,7 +11,19 @@
   margin: 30px 0 0 0;
 }
 
+@media screen and(max-width: 576px) {
+  .divInputs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .divInputs input {
+    margin: 10px 0;
+  }
+}
+
 .desconto {
+  text-align: center;
   color: #CAD1E1;
   font-size: 22px;
 }
@@ -97,6 +109,15 @@
   margin-left: 80px;
   display: flex;
   flex-direction: column;
+}
+
+@media screen and(max-width: 992px) {
+  .separarFooter {
+    margin: 0;
+  }
+  .separarFooter2 {
+    margin: 0 !important;
+  }
 }
 
 .separarFooter2 {

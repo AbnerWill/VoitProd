@@ -14,7 +14,7 @@ export function PromocoesEspeciais(): JSX.Element {
       </div>
       <Container>
         <div className="row justify-content-center">
-          <div className={'col-12 col-md-3'}>
+          <div className={'col-12 col-lg-3'}>
             <div className={styles.divCard}>
               <div className={styles.divImg}>
                 <Image
@@ -32,7 +32,7 @@ export function PromocoesEspeciais(): JSX.Element {
               </div>
             </div>
           </div>
-          <div className={'col-12 col-md-3'}>
+          <div className={'col-12 col-lg-3 mt-3 mt-lg-0'}>
             <div className={styles.divCard}>
               <div className={styles.divImg}>
                 <Image
@@ -50,7 +50,7 @@ export function PromocoesEspeciais(): JSX.Element {
               </div>
             </div>
           </div>
-          <div className={'col-12 col-md-3'}>
+          <div className={'col-12 col-lg-3 mt-3 mt-lg-0'}>
             <div className={styles.divCard}>
               <div className={styles.divImg}>
                 <Image

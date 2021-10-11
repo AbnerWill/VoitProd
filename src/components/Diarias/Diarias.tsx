@@ -16,7 +16,7 @@ export function Diarias(): JSX.Element {
       </div>
       <Container>
         <div className="row">
-          <div className="col-12 col-sm-6 col-lg-3">
+          <div className="col-12 col-sm-6 col-xl-3 mt-4 mt-xl-0">
             <div className={styles.cardDiarias}>
               <Descontaco />
               <div className="d-flex justify-content-center align-items-center">
@@ -31,7 +31,7 @@ export function Diarias(): JSX.Element {
               <p className={styles.preco}>R$ 290</p>
             </div>
           </div>
-          <div className="col-12 col-sm-6 col-lg-3">
+          <div className="col-12 col-sm-6 col-xl-3 mt-4 mt-xl-0">
             <div className={styles.cardDiarias}>
               <div className="d-flex justify-content-center align-items-center">
                 <Image
@@ -47,7 +47,7 @@ export function Diarias(): JSX.Element {
               <p className={styles.preco}>R$ 30</p>
             </div>
           </div>
-          <div className="col-12 col-sm-6 col-lg-3">
+          <div className="col-12 col-sm-6 col-xl-3 mt-4 mt-xl-0">
             <div className={styles.cardDiarias}>
               <div className="d-flex justify-content-center align-items-center">
                 <Image
@@ -61,7 +61,7 @@ export function Diarias(): JSX.Element {
               <p className={styles.preco}>R$ 180</p>
             </div>
           </div>
-          <div className="col-12 col-sm-6 col-lg-3">
+          <div className="col-12 col-sm-6 col-xl-3 mt-4 mt-xl-0">
             <div className={styles.cardDiarias}>
               <div className="d-flex justify-content-center align-items-center">
                 <Image

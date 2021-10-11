@@ -42,7 +42,7 @@ export function Modalidade(): JSX.Element {
             <p className={Styles.preco}>A partir de R$ 19.90</p>
           </div>
         </div>
-        <div className="col-12 col-md-6 col-lg-4">
+        <div className="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
           <div className={Styles.bgCard}>
             <div className="d-flex justify-content-center align-items-center">
               <Image

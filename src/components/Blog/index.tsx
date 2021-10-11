@@ -12,7 +12,7 @@ export function Blog(): JSX.Element {
       </div>
       <Container>
         <div className="row">
-          <div className="col-6">
+          <div className="col-12 col-md-6">
             <div className={Styles.primeiroPost}>
               <Image
                 src="/img-padrao.svg"
@@ -26,7 +26,7 @@ export function Blog(): JSX.Element {
               </p>
             </div>
           </div>
-          <div className="col-3">
+          <div className="col-12 col-md-3 mt-3 mt-md-0">
             <div className={Styles.divImgBlog}>
               <Image
                 src="/img-padrao.svg"
@@ -42,7 +42,7 @@ export function Blog(): JSX.Element {
               </p>
             </div>
           </div>
-          <div className="col-3">
+          <div className="col-12 col-md-3 mt-3 mt-md-0">
             <div className={Styles.divImgBlog}>
               <Image
                 src="/img-padrao.svg"
