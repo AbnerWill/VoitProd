@@ -13,7 +13,7 @@ export function Depoimentos(): JSX.Element {
         <div className="row">
           <div className="col-12 col-md-6 col-lg-4 mt-3 mt-lg-0">
             <div>
-              <p>
+              <p className={Styles.depoimento}>
                 Although this is well intentioned and the goal certainly is to
                 reduce the quantity of these bothersome thoughts, the technique
                 is inherently flawed.
@@ -42,7 +42,7 @@ export function Depoimentos(): JSX.Element {
           </div>
           <div className="col-12 col-md-6 col-lg-4 mt-3 mt-lg-0">
             <div>
-              <p>
+              <p className={Styles.depoimento}>
                 Although this is well intentioned and the goal certainly is to
                 reduce the quantity of these bothersome thoughts, the technique
                 is inherently flawed.
@@ -71,7 +71,7 @@ export function Depoimentos(): JSX.Element {
           </div>
           <div className="col-12 col-md-6 col-lg-4 mt-3 mt-lg-0">
             <div>
-              <p>
+              <p className={Styles.depoimento}>
                 Although this is well intentioned and the goal certainly is to
                 reduce the quantity of these bothersome thoughts, the technique
                 is inherently flawed.
