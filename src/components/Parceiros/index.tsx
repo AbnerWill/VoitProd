@@ -11,7 +11,7 @@ export function Parceiros(): JSX.Element {
       </div>
       <Container>
         <div className="row">
-          <div className="col-6 col-md-4 col-lg-2">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-2 mt-3 mt-lg-0">
             <div className={Styles.divParceiro}>
               <Image
                 src="/img-padrao.svg"
@@ -21,7 +21,7 @@ export function Parceiros(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-6 col-md-4 col-lg-2">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-2 mt-3 mt-lg-0">
             <div className={Styles.divParceiro}>
               <Image
                 src="/img-padrao.svg"
@@ -31,7 +31,7 @@ export function Parceiros(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-6 col-md-4 col-lg-2">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-2 mt-3 mt-lg-0">
             <div className={Styles.divParceiro}>
               <Image
                 src="/img-padrao.svg"
@@ -41,7 +41,7 @@ export function Parceiros(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-6 col-md-4 col-lg-2">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-2 mt-3 mt-lg-0">
             <div className={Styles.divParceiro}>
               <Image
                 src="/img-padrao.svg"
@@ -51,7 +51,7 @@ export function Parceiros(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-6 col-md-4 col-lg-2">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-2 mt-3 mt-lg-0">
             <div className={Styles.divParceiro}>
               <Image
                 src="/img-padrao.svg"
@@ -61,13 +61,13 @@ export function Parceiros(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-6 col-md-4 col-lg-2">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-2 mt-3 mt-lg-0">
             <div className={Styles.divParceiro}>
               <Image
                 src="/img-padrao.svg"
                 alt="Imagem parceiro voit"
-                width={100}
-                height={100}
+                width={120}
+                height={120}
               />
             </div>
           </div>

@@ -1,11 +1,11 @@
 .divAjuda {
   background-color: #eaedf5;
   margin: 2rem 0;
-  height: 30rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 4rem 0;
 }
 
 .subTitulo {
@@ -13,6 +13,12 @@
   color: #95a1bb;
   font-size: 1.6rem;
   width: 42rem;
+}
+
+@media screen and(max-width: 476px) {
+  .subTitulo {
+    width: 300px;
+  }
 }
 
 .btnAjuda {

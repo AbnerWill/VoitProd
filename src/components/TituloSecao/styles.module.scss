@@ -3,3 +3,9 @@
   color: #363940;
   font-weight: 500;
 }
+
+@media screen and (max-width: 588px) {
+  .titulo {
+    text-align: center;
+  }
+}

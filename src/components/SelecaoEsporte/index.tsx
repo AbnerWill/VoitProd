@@ -14,7 +14,7 @@ export function SelecaoEsporte(): JSX.Element {
           </p>
         </div>
         <div className="row">
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col-12 col-md-6 col-lg-3 mt-3 mt-lg-0">
             <div className={Styles.bgImagem}>
               <Image
                 src="/img-padrao.svg"
@@ -34,7 +34,7 @@ export function SelecaoEsporte(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col-12 col-md-6 col-lg-3 mt-3 mt-lg-0">
             <div className={Styles.bgImagem}>
               <Image
                 src="/img-padrao.svg"
@@ -54,7 +54,7 @@ export function SelecaoEsporte(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col-12 col-md-6 col-lg-3 mt-3 mt-lg-0">
             <div className={Styles.bgImagem}>
               <Image
                 src="/img-padrao.svg"
@@ -74,7 +74,7 @@ export function SelecaoEsporte(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col-12 col-md-6 col-lg-3 mt-3 mt-lg-0">
             <div className={Styles.bgImagem}>
               <Image
                 src="/img-padrao.svg"

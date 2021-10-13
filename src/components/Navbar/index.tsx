@@ -16,47 +16,48 @@ export default function NavbarVoit(): JSX.Element {
           <li>contato</li>
         </ul>
       </div>
-      <Navbar variant="light">
+      <Navbar variant="light" expand="lg">
         <Container>
-          <Nav>
-            <ul className={styles.divNav}>
-              <li>
-                <Navbar.Brand href="/">
+          <Navbar.Brand href="/">
+            <Image
+              src="/voit-logo.svg"
+              alt="Logo voit"
+              width={100}
+              height={35}
+            />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav>
+              <ul className={styles.divNav}>
+                <li className={styles.gps}>
                   <Image
-                    src="/voit-logo.svg"
+                    className={styles.gpsImg}
+                    src="/gps.svg"
                     alt="Logo voit"
-                    width={100}
-                    height={35}
+                    width={25}
+                    height={25}
                   />
-                </Navbar.Brand>
-              </li>
-              <li className={styles.gps}>
-                <Image
-                  className={styles.gpsImg}
-                  src="/gps.svg"
-                  alt="Logo voit"
-                  width={25}
-                  height={25}
-                />
-                <p>Informe seu endereço para entrega</p>
-              </li>
-              <li className={styles.divBuscar}>
-                <input
-                  className={styles.inputBuscar}
-                  type="text"
-                  placeholder="Me diz o que está procurando..."
-                />
-                <Image src="/lupa.svg" alt="Logo voit" width={25} height={25} />
-              </li>
-              <li className={styles.entrar}>
-                <i className="fas fa-shopping-basket me-2"></i>
-                <a href="" className={styles.login}>
-                  <i className="fas fa-user me-1"></i>
-                  entrar
-                </a>
-              </li>
-            </ul>
-          </Nav>
+                  <p>Informe seu endereço para entrega</p>
+                </li>
+                <li className={styles.divBuscar}>
+                  <input
+                    className={styles.inputBuscar}
+                    type="text"
+                    placeholder="Me diz o que está procurando..."
+                  />
+                  <i className="fas fa-search fa-lg"></i>
+                </li>
+                <li className={styles.entrar}>
+                  <i className="fas fa-shopping-basket me-2"></i>
+                  <a href="" className={styles.login}>
+                    <i className="fas fa-user me-1"></i>
+                    entrar
+                  </a>
+                </li>
+              </ul>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
       <Container>

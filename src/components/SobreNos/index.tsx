@@ -8,7 +8,7 @@ export function SobreNos(): JSX.Element {
     <div className={Styles.divSobre}>
       <Container>
         <div className="row">
-          <div className="col-4">
+          <div className="col-12 col-lg-4">
             <div className={Styles.divImgSobre}>
               <Image
                 src="/img-padrao.svg"
@@ -18,11 +18,11 @@ export function SobreNos(): JSX.Element {
               />
             </div>
           </div>
-          <div className="col-8">
+          <div className="col-12 col-lg-8 mt-3 mt-lg-0">
             <div className={Styles.divTitulo}>
               <TituloSecao titulo="Sobre Nós" />
             </div>
-            <div className="d-flex">
+            <div className="d-flex flex-sm-row flex-column align-items-center">
               <p className={Styles.textoSobre}>
                 Acreditamos que a experiência do nosso cliente deve ser única e
                 exclusiva em cada detalhe e que para se alcançar isso a

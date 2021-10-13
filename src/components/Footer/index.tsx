@@ -24,7 +24,7 @@ export function Footer(): JSX.Element {
         </div>
         <hr className={Styles.separador} />
         <div className="row">
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col-12 col-sm-6 col-lg-3">
             <p className={Styles.tituloFooter}>Sobre Nós</p>
             <p className={Styles.textoFooter}>
               Although this is well intentioned and the goal certainly is to
@@ -42,7 +42,7 @@ export function Footer(): JSX.Element {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-6 col-lg-4 d-flex flex-column">
+          <div className="col-12 col-sm-6 col-lg-4 d-flex flex-column">
             <div className={Styles.separarFooter}>
               <p className={Styles.tituloFooter}>Voit</p>
               <a href="" className={Styles.linksFooter}>
@@ -56,7 +56,7 @@ export function Footer(): JSX.Element {
               </a>
             </div>
           </div>
-          <div className="col-12 col-md-6 col-lg-2 d-flex flex-column">
+          <div className="col-12 col-sm-6 col-lg-2 d-flex flex-column">
             <div className={Styles.separarFooter2}>
               <p className={Styles.tituloFooter}>Ajuda</p>
               <a href="" className={Styles.linksFooter}>
@@ -70,7 +70,7 @@ export function Footer(): JSX.Element {
               </a>
             </div>
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col-12 col-sm-6 col-lg-3">
             <p className={Styles.tituloFooter}>Chame um especialista</p>
             <button className={Styles.btnFooterChamar}>
               <i className="fab fa-whatsapp fa-2x me-3"></i>
