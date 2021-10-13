@@ -1,0 +1,12 @@
+.main {
+  padding: 0 17rem;
+  display: flex;
+}
+
+.productsGrid {
+  flex: 1;
+  padding: 0 6.6rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
