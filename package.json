@@ -9,12 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/slick-carousel": "^1.6.37",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-slick": "^0.28.1",
-    "sass": "^1.42.1",
-    "slick-carousel": "^1.8.1"
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -23,6 +21,7 @@
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@types/react": "^17.0.27",
     "@types/react-dom": "^17.0.9",
+    "@types/react-slick": "^0.23.6",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "bootstrap": "^5.1.1",
@@ -40,6 +39,9 @@
     "react": "17.0.2",
     "react-bootstrap": "^2.0.0-rc.0",
     "react-dom": "17.0.2",
+    "react-slick": "^0.28.1",
+    "sass": "^1.42.1",
+    "slick-carousel": "^1.8.1",
     "typescript": "^4.4.3"
   }
 }

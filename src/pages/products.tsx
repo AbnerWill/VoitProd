@@ -2,13 +2,14 @@ import Slider from 'react-slick'
 
 import { Footer } from '../components/Footer'
 import NavbarVoit from '../components/Navbar'
-import { ProductItemCard } from '../components/ProductItemCard'
+import { ProductItemCard } from '../components/BuyProductItemCard'
 import { ProductsFilter } from '../components/ProductsFilter'
 import { ProdutoDestaque } from '../components/ProdutoDestaque'
-import { ProdutosProximos } from '../components/ProdutosProximos'
-import { SelecaoEsporte } from '../components/SelecaoEsporte'
+import { NearestProducts } from '../components/NearestProducts'
+import { SportSelection } from '../components/SportSelection'
 
 import Styles from '../styles/products.module.scss'
+import { MostSearchedWords } from '../components/MostSearchedWords'
 
 export default function product(): JSX.Element {
   const settings = {
@@ -50,8 +51,9 @@ export default function product(): JSX.Element {
             <ProductItemCard />
           </section>
         </div>
-        <SelecaoEsporte />
-        <ProdutosProximos />
+        <SportSelection />
+        <NearestProducts />
+        <MostSearchedWords />
       </main>
       <Footer />
     </>

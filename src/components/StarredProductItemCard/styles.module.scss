@@ -1,0 +1,29 @@
+.itemCardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > div {
+    padding: 12rem 10rem 9rem 10rem;
+
+    img {
+      width: 12.7rem;
+      height: 12.7rem;
+    }
+  }
+
+  .cardName {
+    font-size: 2.4rem;
+    font-weight: 500;
+    text-align: center;
+    color: #363940;
+  }
+
+  strong {
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-align: center;
+    color: #0000ff;
+    margin-bottom: 1.5rem;
+  }
+}
