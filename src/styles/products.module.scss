@@ -1,6 +1,8 @@
 .main {
   padding: 0 17rem;
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .productsGrid {
@@ -9,4 +11,39 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.sportSelectionSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 19rem 0;
+}
+
+.sportSelectionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  h1 {
+    font-size: 5.8rem;
+    font-weight: 500;
+    color: #363940;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: #95a1bb;
+    text-align: center;
+  }
 }

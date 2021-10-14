@@ -7,8 +7,8 @@ import { ProdutoHome } from '../components/ProdutoHome'
 import { PromocoesEspeciais } from '../components/PromocoesEspeciais'
 import Navbar from '../components/Navbar'
 import { Modalidade } from '../components/Modalidade'
-import { SelecaoEsporte } from '../components/SelecaoEsporte'
-import { ProdutosProximos } from '../components/ProdutosProximos'
+import { SportSelection } from '../components/SportSelection'
+import { NearestProducts } from '../components/NearestProducts'
 import { MelhoresDescontos } from '../components/MelhoresDescontos'
 import { CallToAction } from '../components/CallToAction'
 import { Blog } from '../components/Blog'
@@ -49,11 +49,11 @@ export default function Home(): JSX.Element {
       <section>
         <Modalidade />
       </section>
+
+      <SportSelection />
+
       <section>
-        <SelecaoEsporte />
-      </section>
-      <section>
-        <ProdutosProximos />
+        <NearestProducts />
       </section>
       <section>
         <MelhoresDescontos />
