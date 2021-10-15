@@ -3,7 +3,9 @@ import Styles from './styles.module.scss'
 export function ProductItemCard(): JSX.Element {
   return (
     <div className={Styles.container}>
-      <img src="img-padrao.svg" alt="img" />
+      <div className={Styles.imgContainer}>
+        <img src="img-padrao.svg" alt="img" />
+      </div>
       <div className={Styles.content}>
         <h1>Nome do produto</h1>
         <strong>R$290</strong>
