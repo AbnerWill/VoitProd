@@ -1,5 +1,3 @@
-import { Button } from '../Button'
-
 import Styles from './styles.module.scss'
 
 export function CartResume(): JSX.Element {
@@ -32,8 +30,6 @@ export function CartResume(): JSX.Element {
         </div>
         <strong>Você está economizando R$130</strong>
       </div>
-      <Button title="Efetuar pedido" />
-      <button className={Styles.keepBuying}>Continuar comprando</button>
     </aside>
   )
 }
