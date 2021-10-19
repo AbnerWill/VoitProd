@@ -1,0 +1,40 @@
+.divEsporte {
+  margin: 10rem 0 0 0;
+}
+
+.subTitulo {
+  text-align: center;
+  color: #95a1bb;
+  font-size: 1.6rem;
+  width: 35rem;
+}
+
+@media screen and (max-width: 476px) {
+  .subTitulo {
+    width: 28rem;
+  }
+}
+
+.bgImagem {
+  background-color: #f6f7fa;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25rem;
+}
+
+.produto {
+  color: #363940;
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin: 2rem 0 0 0;
+}
+
+.preco {
+  color: #0000ff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.32rem;
+}

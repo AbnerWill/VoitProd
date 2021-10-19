@@ -28,7 +28,7 @@ export function ProdutoHome(props): JSX.Element {
           <Image src="/check.svg" alt="imagem produto" width={25} height={25} />
           {renderizarResposta(2)}
         </p>
-        <p className={styles.produtoCheck}>
+        <p className={styles.teste}>
           <Image src="/check.svg" alt="imagem produto" width={25} height={25} />
           {renderizarResposta(3)}
         </p>
