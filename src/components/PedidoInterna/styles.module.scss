@@ -1,0 +1,193 @@
+.divImg {
+  background-color: #F6F7FA;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  margin: 5rem 0 0 0;
+}
+
+.divLinks {
+  background-color: #F6F7FA;
+  border-radius: 1rem;
+  margin: 2rem 0;
+  padding: 4rem;
+  // width: 20rem;
+}
+
+.links {
+  font-size: 1.6rem;
+  color: #363940;
+  font-weight: 500;
+}
+
+.links:hover {
+  color: #00ff00;
+}
+
+.separadorLinks {
+  margin: 2rem 0;
+}
+
+.divPedidos {
+  margin: 3rem 0;
+  padding: 0 3rem;
+}
+
+.pedidos {
+  color: #363940;
+  font-size: 2rem;
+}
+
+.divProgresso {
+  border: 1px solid #CAD1E1;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-around;
+  padding: 3rem 1rem;
+}
+
+.descricaoVendido {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  border-right: 1px solid #CAD1E1;
+}
+
+@media screen and (max-width: 992px) {
+  .divProgresso {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .descricaoVendido {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: none;
+  }
+
+  .resumoCompra {
+    border-left: none !important;
+  }
+
+  .divLinks {
+    padding: 2rem;
+  }
+
+  .divProdutoVendido {
+    margin: 0 !important;
+  }
+}
+
+@media screen and(max-width: 768px) {
+  .divPedidos {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 476px) {
+  .divProgressoProduto {
+    justify-content: center;
+  }
+}
+
+.divProgressoProduto{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.divProdutoVendido {
+  background-color: #F6F7FA;
+  border-radius: 1rem;
+  width: 8rem;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1rem 0 0;
+}
+
+.produto {
+  color: #363940;
+  font-size: 1.6rem;
+  width: 20rem;
+}
+
+.vendidoPor {
+  color: #95A1BB;
+  font-size: 1.2rem;
+
+  span {
+    color: #6E38F7;
+  }
+}
+
+.tamanho {
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  span {
+    color: #95A1BB;
+    font-weight: 500;
+  }
+}
+
+.cor {
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  span {
+    color: #95A1BB;
+    font-weight: 500;
+  }
+}
+
+.divStatus {
+  margin: 0 0.6rem;
+}
+
+.divSubStatus {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgStatus {
+  border: 1px solid #CAD1E1;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.pedido {
+  color: #95A1BB;
+  font-size: 1.2rem;
+}
+
+.resumoCompra {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid #CAD1E1;
+  padding: 0 2rem;
+}
+
+.tituloResumo {
+  color: #363940;
+  font-size: 1.6rem;
+}
+
+.numeroPedido, .dataPedido, .valorTotal  {
+  color: #95A1BB;
+  font-size: 1.4rem;
+  font-weight: 500;
+}

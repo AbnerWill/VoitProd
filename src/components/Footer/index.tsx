@@ -37,8 +37,8 @@ export function Footer(): JSX.Element {
                 <span className={Styles.contato}>oi@voit.co</span>
               </div>
               <div className={Styles.divIcons}>
-                <i className="fab fa-facebook-square fa-lg me-2"></i>
-                <i className="fab fa-instagram fa-lg"></i>
+                <i className="fab fa-facebook-square fa-2x me-2"></i>
+                <i className="fab fa-instagram fa-2x"></i>
               </div>
             </div>
           </div>
