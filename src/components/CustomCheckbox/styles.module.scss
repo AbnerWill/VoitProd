@@ -1,7 +1,6 @@
 .checkboxContainer {
   display: flex;
   align-items: center;
-  gap: 16px;
   user-select: none;
 
   .label {
@@ -9,6 +8,7 @@
     font-weight: 500;
     color: #363940;
     line-height: 20px;
+    margin-left: 1.6rem;
   }
 }
 

@@ -7,6 +7,14 @@
 
 html {
   font-size: 62.5%;
+
+  @media only screen and (max-width: 1440px) {
+    font-size: 56.25%;
+  }
+
+  @media only screen and (max-width: 992px) {
+    font-size: 50%;
+  }
 }
 
 a {
@@ -20,6 +28,12 @@ body {
 
 button {
   cursor: pointer;
+
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 }
 
 [disabled] {

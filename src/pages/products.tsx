@@ -3,7 +3,7 @@ import Slider from 'react-slick'
 import { Footer } from '../components/Footer'
 import NavbarVoit from '../components/Navbar'
 import { ProductItemCard } from '../components/BuyProductItemCard'
-import { ProductsFilter } from '../components/ProductsFilter'
+import { ProductsFilter } from '../components/ProductsAsideFilter'
 import { ProdutoDestaque } from '../components/ProdutoDestaque'
 import { NearestProducts } from '../components/NearestProducts'
 import { SportSelection } from '../components/SportSelection'
@@ -28,7 +28,6 @@ export default function product(): JSX.Element {
         <div className={Styles.wrapper}>
           <ProductsFilter />
           <section className={Styles.productsGrid}>
-            <ProductItemCard />
             <ProductItemCard />
             <ProductItemCard />
             <ProductItemCard />

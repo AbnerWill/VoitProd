@@ -1,4 +1,5 @@
 import { CustomCheckbox } from '../CustomCheckbox'
+import { WhatsappContact } from '../WhatsappContact'
 import Styles from './styles.module.scss'
 
 export function ProductsFilter(): JSX.Element {
@@ -73,6 +74,11 @@ export function ProductsFilter(): JSX.Element {
           <CustomCheckbox name="Nobuk" />
           <CustomCheckbox name="Verniz" />
         </div>
+      </div>
+      <div className={Styles.whatsappContact}>
+        <img src="/img-padrao.svg" alt="Default img" />
+        <h1>Na dúvida chame nossos especialistas</h1>
+        <WhatsappContact />
       </div>
     </aside>
   )

@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from 'react'
 import Styles from './styles.module.scss'
 
 interface CustomCheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
-  name: string
+  name?: string
 }
 
 export function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
@@ -12,7 +12,7 @@ export function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
         <input type="checkbox" {...props} />
         <span className={Styles.checkmark}></span>
       </label>
-      <span className={Styles.label}>{props.name}</span>
+      {props.name && <span className={Styles.label}>{props.name}</span>}
     </div>
   )
 }

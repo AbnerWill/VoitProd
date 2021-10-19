@@ -1,0 +1,52 @@
+.container {
+  width: 100%;
+  max-width: 91rem;
+  height: 14.4rem;
+
+  border: 1px solid #d9deea;
+  border-radius: 18px;
+
+  padding: 3.1rem 3.5rem 3.3rem 4rem;
+
+  display: flex;
+  align-items: center;
+
+  > img {
+    margin-right: 3.3rem;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #363940;
+      margin-bottom: 1.6rem;
+    }
+
+    span {
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: #95a1bb;
+      margin-left: 1.1rem;
+    }
+  }
+
+  > button {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    border: none;
+    background: none;
+
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #95a1bb;
+
+    > img {
+      margin-right: 1rem;
+    }
+  }
+}

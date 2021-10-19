@@ -1,0 +1,128 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 88rem;
+
+  .creditCard {
+    display: flex;
+    align-items: center;
+
+    h1 {
+      margin: 0;
+      font-size: 2.4rem;
+      font-size: 500;
+      color: #363940;
+      margin-left: 1.2rem;
+    }
+  }
+
+  .creditCardForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 4rem;
+
+    > div {
+      display: flex;
+      align-items: flex-end;
+      gap: 2.9rem;
+      margin-top: 3.8rem;
+      width: 100%;
+
+      label {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 46.6rem;
+        gap: 1.1rem;
+        flex: 1;
+
+        > div {
+          display: flex;
+          align-items: center;
+          gap: 2.9rem;
+        }
+
+        h2 {
+          font-size: 2rem;
+          font-weight: 500;
+          color: #363940;
+          margin: 0;
+          line-height: unset;
+        }
+
+        input {
+          padding: 1.65rem 2.4rem;
+          border: 1px solid #d9deea;
+          border-radius: 18px;
+          width: 100%;
+
+          font-size: 1.8rem;
+          font-weight: 400;
+
+          ::placeholder {
+            color: #95a1bb;
+          }
+
+          -moz-appearance: textfield;
+          appearance: textfield;
+
+          ::-webkit-inner-spin-button,
+          ::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+        }
+
+        .small {
+          max-width: 14.2rem;
+        }
+      }
+
+      .smallLabel {
+        flex: unset;
+      }
+    }
+
+    > span {
+      display: flex;
+      align-items: center;
+      margin-top: 2.4rem;
+
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 400;
+        color: #000000;
+        margin-left: 1.6rem;
+      }
+    }
+  }
+
+  .boleto {
+    padding-top: 6rem;
+    margin-top: 6rem;
+    border-top: 1px solid #cad1e1;
+
+    div {
+      display: flex;
+      align-items: center;
+
+      h1 {
+        margin: 0;
+        font-size: 2.4rem;
+        font-size: 500;
+        color: #363940;
+        margin-left: 1.2rem;
+      }
+    }
+  }
+
+  p {
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #95a1bb;
+    margin: 0;
+    margin-left: 4rem;
+  }
+}
