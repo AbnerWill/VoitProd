@@ -7,7 +7,6 @@
 .divInputs {
   display: flex;
   justify-content: space-between;
-  width: 50rem;
   margin: 3rem 0 0 0;
 }
 
@@ -18,7 +17,7 @@
   }
 
   .divInputs input {
-    margin: 10px 0;
+    margin: 1rem 0;
   }
 }
 
@@ -35,6 +34,7 @@
   background-color: transparent;
   width: 20rem;
   font-size: 1.4rem;
+  margin: 0 1rem 0 0;
 }
 
 .btnEnviar {
@@ -108,6 +108,10 @@
   i {
     color: #fff;
   }
+}
+
+.btnFooterChamar:hover {
+  transform: scale(1.1);
 }
 
 .separarFooter {

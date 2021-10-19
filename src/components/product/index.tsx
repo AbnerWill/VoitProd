@@ -1,20 +1,14 @@
 import { Container } from 'react-bootstrap'
 import { Button } from '../Button'
 import { CarouselProduto } from '../Carousel'
+import { Voltar } from '../Voltar'
 import Styles from './styles.module.scss'
 
 export function Product(): JSX.Element {
   return (
     <div>
       <Container>
-        <div className={Styles.divVoltar}>
-          <button className={Styles.btnVoltar}>
-            <i className="fas fa-angle-left fa-4x"></i>
-          </button>
-          <a href="/" className={Styles.linkVoltar}>
-            voltar
-          </a>
-        </div>
+        <Voltar />
         <div className="row">
           <div className="col-12 col-lg-6">
             <CarouselProduto />
@@ -36,7 +30,7 @@ export function Product(): JSX.Element {
               <p className={Styles.customizar}>Tamanhos</p>
             </div>
             <div className="row">
-              <div className="col-6">
+              <div className="col-12 col-md-6">
                 <div className="d-flex align-items-end">
                   <span className={Styles.precoOld}>de R$320</span>
                   <div className="d-flex flex-column">
@@ -48,7 +42,7 @@ export function Product(): JSX.Element {
                   R$360 preço estimado no varejo
                 </p>
               </div>
-              <div className="col-6 d-flex align-items-center">
+              <div className="col-12 col-md-6 d-flex align-items-center">
                 <button className={Styles.btnComprar}>
                   <i className="fas fa-shopping-basket fa-lg me-2"></i>comprar
                 </button>
@@ -57,18 +51,22 @@ export function Product(): JSX.Element {
           </div>
         </div>
         <div className="row mt-5">
-          <div className="col-6">
+          <div className="col-12 col-md-6">
             <p>teste</p>
           </div>
-          <div className="col-6 px-5">
+          <div className="col-12 col-md-6 px-5">
             <p className={Styles.textoConsulte}>Consulte o prazo de entrega</p>
-            <div>
+            <div className="">
               <input
                 type="text"
                 placeholder="Insira o CEP"
                 className={Styles.inputCep}
               />
-              <button className={Styles.btnConsultar}>consultar</button>
+              <button
+                className={`${Styles.btnConsultar} mt-3 md-sm-0 mt-md-3 mt-lg-0`}
+              >
+                consultar
+              </button>
             </div>
           </div>
         </div>
