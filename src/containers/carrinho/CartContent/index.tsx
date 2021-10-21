@@ -11,8 +11,8 @@ import { SearchCEP } from '../SearchCEP'
 import Styles from './styles.module.scss'
 
 export function CartContent(): JSX.Element {
-  const [step, setStep] = useState<number>(1)
-  const [paymentMethod, setPaymentMethod] = useState('boleto')
+  const [step, setStep] = useState<number>(3)
+  const [paymentMethod, setPaymentMethod] = useState('credit')
 
   switch (step) {
     case 1:
