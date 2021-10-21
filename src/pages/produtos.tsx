@@ -52,7 +52,7 @@ export default function ProductsPage({
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('/produto/publica', {
     // headers: {
-    //   authorization: 'Bearer 107|BAndr7b8cnH5Re6xTg2DQHmxNHcvUA6h5WGMt5OG'
+    //   authorization: 'Bearer ${token de autorização}'
     // },
     params: {
       loja_id: '3'
