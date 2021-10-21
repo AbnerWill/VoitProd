@@ -37,8 +37,11 @@ export function Footer(): JSX.Element {
                 <span className={Styles.contato}>oi@voit.co</span>
               </div>
               <div className={Styles.divIcons}>
-                <i className="fab fa-facebook-square fa-2x me-2"></i>
-                <i className="fab fa-instagram fa-2x"></i>
+                <i
+                  aria-hidden
+                  className="fab fa-facebook-square fa-2x me-2"
+                ></i>
+                <i aria-hidden className="fab fa-instagram fa-2x"></i>
               </div>
             </div>
           </div>
@@ -73,7 +76,7 @@ export function Footer(): JSX.Element {
           <div className="col-12 col-sm-6 col-lg-3">
             <p className={Styles.tituloFooter}>Chame um especialista</p>
             <button className={Styles.btnFooterChamar}>
-              <i className="fab fa-whatsapp fa-2x me-3"></i>
+              <i aria-hidden className="fab fa-whatsapp fa-2x me-3"></i>
               fale com a gente !
             </button>
           </div>

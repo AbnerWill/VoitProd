@@ -1,5 +1,5 @@
-import { CustomCheckbox } from '../CustomCheckbox'
-import { WhatsappContact } from '../WhatsappContact'
+import { CustomCheckbox } from '../../../components/CustomCheckbox'
+import { WhatsappContact } from '../../../components/WhatsappContact'
 import Styles from './styles.module.scss'
 
 export function ProductsFilter(): JSX.Element {

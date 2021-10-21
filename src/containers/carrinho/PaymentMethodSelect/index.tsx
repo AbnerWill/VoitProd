@@ -1,4 +1,4 @@
-import { CustomCheckbox } from '../CustomCheckbox'
+import { CustomCheckbox } from '../../../components/CustomCheckbox'
 
 import Styles from './styles.module.scss'
 

@@ -12,15 +12,17 @@
 .productsGrid {
   flex: 1;
   padding: 0 2%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2rem;
+  display: block;
+
+  > div {
+    display: inline-flex;
+  }
 }
 
 .wrapper {
   display: flex;
   width: 100%;
+  margin-top: 8.2rem;
 }
 
 .sportSelectionSection {
