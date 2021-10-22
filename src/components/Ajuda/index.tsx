@@ -11,12 +11,7 @@ export function Ajuda(): JSX.Element {
         qualquer coisa é só chamar
       </p>
       <button className={Styles.btnAjuda}>
-        <Image
-          src="/whatsIcon.svg"
-          alt="imagem produto"
-          width={25}
-          height={25}
-        />
+        <i className="fab fa-whatsapp fa-2x"></i>
         fale com a gente !
       </button>
     </div>
