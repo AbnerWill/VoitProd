@@ -29,7 +29,7 @@ export function CompreJunto(): JSX.Element {
           </div>
           <div className="col-4 d-flex">
             <div className={Styles.somar}>
-              <i className="fas fa-plus fa-2x"></i>
+              <i aria-hidden className="fas fa-plus fa-2x"></i>
             </div>
             <div className="d-flex flex-column align-items-center">
               <div className={Styles.cardProduto}>
@@ -54,7 +54,7 @@ export function CompreJunto(): JSX.Element {
               <p className={Styles.precoCard}>R$ 290</p>
             </div>
             <div className={Styles.igual}>
-              <i className="fas fa-equals fa-2x"></i>
+              <i aria-hidden className="fas fa-equals fa-2x"></i>
             </div>
           </div>
           <div className="col-4">

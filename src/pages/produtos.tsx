@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
-
 import { Footer } from '../components/Footer'
 import NavbarVoit from '../components/Navbar'
 import { ProductItemCard } from '../containers/listaProdutos/BuyProductItemCard'
-import { ProductsFilter } from '../containers/listaProdutos/ProductsAsideFilter'
+import { FiltroProdutos } from '../containers/listaProdutos/FiltroProdutos'
 import { ProdutoDestaque } from '../components/ProdutoDestaque'
 import { NearestProducts } from '../components/NearestProducts'
 import { SportSelection } from '../components/SportSelection'
@@ -28,7 +26,7 @@ export default function ProductsPage({
       <ProdutoDestaque />
       <main className={Styles.main}>
         <div className={Styles.wrapper}>
-          <ProductsFilter />
+          <FiltroProdutos />
           <section className={Styles.productsGrid}>
             {products?.map((produto, index) => (
               <ProductItemCard
