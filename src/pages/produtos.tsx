@@ -7,7 +7,7 @@ import { NearestProducts } from '../components/NearestProducts'
 import { SportSelection } from '../components/SportSelection'
 import { MostSearchedWords } from '../components/MostSearchedWords'
 
-import Styles from '../styles/products.module.scss'
+import Styles from '../styles/produtos.module.scss'
 import api from '../services/api'
 
 import { DadosPublicosProduto } from '../types/typesProduto'

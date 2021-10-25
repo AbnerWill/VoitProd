@@ -22,7 +22,7 @@ class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Kanit&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;900&family=Rubik:wght@400;500&display=swap"
             rel="stylesheet"
           />
           <script
