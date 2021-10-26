@@ -1,0 +1,161 @@
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-top: auto;
+  width: 50.8rem;
+}
+
+.container > button {
+  max-width: unset;
+  width: 100%;
+  font-size: 1.8rem;
+  font-weight: 500;
+  padding: 1.65rem 0;
+  border-radius: 18px;
+  margin-top: 5rem;
+}
+
+.container .keepBuying {
+  padding: 1.65rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 18px;
+  background: none;
+  border: 1px solid #95a1bb;
+  margin-top: 2.25rem;
+  color: #95a1bb;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.title {
+  font-size: 2.6rem;
+  font-weight: 500;
+  color: #363940;
+  margin-bottom: 4rem;
+}
+
+.resume {
+  width: 100%;
+  padding: 2.25rem 3.55rem 4.65rem 3.2rem;
+  border-radius: 18px;
+  background: #f6f7fa;
+}
+
+.resume div {
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #363940;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 2.55rem 1.95rem 2.55rem 1.05rem;
+  border-bottom: 1px solid #cad1e1;
+}
+
+.resume div input[type='text'] {
+  padding: 0.8rem 2.4rem;
+  border-radius: 18px;
+  border: 1px solid #d9deea;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  max-width: 24rem;
+  background: #ffffff;
+}
+
+.resume div input[type='text']::-webkit-input-placeholder {
+  color: #95a1bb;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+
+.resume div input[type='text']:-ms-input-placeholder {
+  color: #95a1bb;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+
+.resume div input[type='text']::-ms-input-placeholder {
+  color: #95a1bb;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+
+.resume div input[type='text']::placeholder {
+  color: #95a1bb;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+
+.resume div span {
+  font-weight: 500;
+  color: #13d071;
+}
+
+.resume div div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  border: none;
+  padding: 0;
+}
+
+.resume div div span {
+  font-size: 1.4rem;
+  color: #000000;
+}
+
+.resume .total {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  border: none;
+}
+
+.resume > strong {
+  display: block;
+  width: 100%;
+  padding: 1.8rem 5.7rem;
+  background: #a1f2c9;
+  border-radius: 18px;
+  margin-top: 1.6rem;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #03a755;
+  text-transform: uppercase;
+}
+/*# sourceMappingURL=styles.module.css.map */

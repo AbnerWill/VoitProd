@@ -1,0 +1,12 @@
+.titulo {
+  font-size: 3.2rem;
+  color: #363940;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 588px) {
+  .titulo {
+    text-align: center;
+  }
+}
+/*# sourceMappingURL=styles.module.css.map */

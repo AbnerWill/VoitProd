@@ -1,0 +1,25 @@
+.divCall {
+  margin: 10rem 0 0 0;
+}
+
+.call {
+  color: #95a1bb;
+  text-transform: uppercase;
+  letter-spacing: 0.48rem;
+  font-size: 1.4rem;
+}
+
+.imgCall {
+  width: 75%;
+}
+
+.btnApp {
+  border: none;
+  background-color: #000;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 14rem;
+  margin: 0 0 0 1rem;
+}
+/*# sourceMappingURL=styles.module.css.map */
