@@ -3,7 +3,7 @@ import Styles from './styles.module.scss'
 export function StarredItemCard(): JSX.Element {
   return (
     <div className={Styles.itemCardContainer}>
-      <div>
+      <div className={Styles.bgCard}>
         <img src="/img-padrao.svg" alt="Imagem padrão" />
       </div>
       <h1 className={Styles.cardName}>Tenis Nike SB553</h1>
