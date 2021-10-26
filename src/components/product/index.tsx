@@ -44,7 +44,11 @@ export function Product(): JSX.Element {
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center">
                 <button className={Styles.btnComprar}>
-                  <i className="fas fa-shopping-basket fa-lg me-2"></i>comprar
+                  <i
+                    aria-hidden
+                    className="fas fa-shopping-basket fa-lg me-2"
+                  ></i>
+                  comprar
                 </button>
               </div>
             </div>
