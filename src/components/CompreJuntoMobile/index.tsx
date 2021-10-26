@@ -18,11 +18,11 @@ export function CompreJuntoMobile(): JSX.Element {
           <p className={Styles.preco}>R$ 290</p>
         </div>
         <div className="d-flex justify-content-center align-items-center d-lg-none mb-5 mt-5">
-          <i className="fas fa-plus fa-2x"></i>
+          <i aria-hidden className="fas fa-plus fa-2x"></i>
         </div>
       </div>
       <div className="col-12 col-sm-3 col-lg-2 d-lg-flex d-none justify-content-center align-items-center">
-        <i className="fas fa-plus fa-2x"></i>
+        <i aria-hidden className="fas fa-plus fa-2x"></i>
       </div>
       <div className="col-12 col-sm-6 d-flex flex-column align-items-center">
         <div className={Styles.cardProduto}>
@@ -49,7 +49,7 @@ export function CompreJuntoMobile(): JSX.Element {
         <p className={Styles.precoCard}>R$ 290</p>
       </div>
       <div className="d-flex justify-content-center align-items-center mt-5">
-        <i className="fas fa-equals fa-2x"></i>
+        <i aria-hidden className="fas fa-equals fa-2x"></i>
       </div>
       <div className="col-12">
         <div className={Styles.card}>

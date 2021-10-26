@@ -5,14 +5,17 @@ interface CustomCheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   name?: string
 }
 
-export function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
+export function CustomCheckbox({
+  name,
+  ...rest
+}: CustomCheckboxProps): JSX.Element {
   return (
     <div className={Styles.checkboxContainer}>
       <label className={Styles.checkbox}>
-        <input type="checkbox" {...props} />
+        <input type="checkbox" {...rest} />
         <span className={Styles.checkmark}></span>
       </label>
-      {props.name && <span className={Styles.label}>{props.name}</span>}
+      {name && <span className={Styles.label}>{name}</span>}
     </div>
   )
 }

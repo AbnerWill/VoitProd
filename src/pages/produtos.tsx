@@ -1,15 +1,18 @@
+<<<<<<< HEAD
 npimport { useEffect, useState } from 'react'
 
+=======
+>>>>>>> de7c8386bac57d632fa84f618de758f72fe790bb
 import { Footer } from '../components/Footer'
 import NavbarVoit from '../components/Navbar'
 import { ProductItemCard } from '../containers/listaProdutos/BuyProductItemCard'
-import { ProductsFilter } from '../containers/listaProdutos/ProductsAsideFilter'
+import { FiltroProdutos } from '../containers/listaProdutos/FiltroProdutos'
 import { ProdutoDestaque } from '../components/ProdutoDestaque'
 import { NearestProducts } from '../components/NearestProducts'
 import { SportSelection } from '../components/SportSelection'
 import { MostSearchedWords } from '../components/MostSearchedWords'
 
-import Styles from '../styles/products.module.scss'
+import Styles from '../styles/produtos.module.scss'
 import api from '../services/api'
 
 import { DadosPublicosProduto } from '../types/typesProduto'
@@ -28,7 +31,7 @@ export default function ProductsPage({
       <ProdutoDestaque />
       <main className={Styles.main}>
         <div className={Styles.wrapper}>
-          <ProductsFilter />
+          <FiltroProdutos />
           <section className={Styles.productsGrid}>
             {products?.map((produto, index) => (
               <ProductItemCard
