@@ -2,9 +2,20 @@ import { Container, Table } from 'react-bootstrap'
 import Styles from './styles.module.scss'
 import Image from 'next/image'
 import { useState } from 'react'
+import { ModalCadastro } from '../ModalEndereco'
+import { CustomCheckbox } from '../CustomCheckbox'
+import { ModalCartaoCredito } from '../ModalCartaoCredito'
 
 export function PedidoInterna(): JSX.Element {
   const [estado, setEstado] = useState('Pedidos')
+  const [nome, setNome] = useState('')
+  const [data, setData] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [genero, setGenero] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [dadosAcesso, setDadosAcesso] = useState('')
+  const [senha, setSenha] = useState('')
+  const [novaSenha, setNovaSenha] = useState('')
 
   function Conteudo() {
     switch (estado) {
@@ -145,9 +156,14 @@ export function PedidoInterna(): JSX.Element {
       <div className={`${Styles.divPedidos} col-12 col-md-10`}>
         <div className={Styles.divInputs}>
           <div className="row">
-            <div className={`${Styles.inputsForm} col-6`}>
+            <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
               <label htmlFor="nome">Nome Completo</label>
-              <input type="text" id="nome" placeholder="Nome Completo" />
+              <input
+                type="text"
+                id="nome"
+                placeholder="Nome Completo"
+                onBlur={evt => setNome(evt.target.value)}
+              />
               <label htmlFor="dataNascimento">Data Nascimento</label>
               <input
                 type="text"
@@ -165,36 +181,61 @@ export function PedidoInterna(): JSX.Element {
               <label htmlFor="telefone">Telefone</label>
               <input type="text" placeholder="Telefone" />
             </div>
-            <div className={`${Styles.inputsForm} col-6`}>
+            <div className={`${Styles.divSeparador} col-1`}></div>
+            <div className={`${Styles.inputsForm} col-12 col-sm-6`}>
               <label htmlFor="acesso">Dados de Acesso</label>
               <input type="text" id="acesso" placeholder="Dados de Acesso" />
               <label htmlFor="senha">Senha</label>
-              <input type="text" id="senha" placeholder="Senha" />
+              <input type="password" id="senha" placeholder="Senha" />
               <label htmlFor="novaSenha">Nova Senha</label>
-              <input type="text" id="novaSenha" placeholder="Nova Senha" />
-              <p>Preferências</p>
+              <input type="password" id="novaSenha" placeholder="Nova Senha" />
+              <p className={Styles.checkboxTexto}>Preferências</p>
+              <div className="d-flex align-items-center ">
+                <input
+                  type="checkbox"
+                  id="checkbox1"
+                  className={Styles.checkboxPreferencias}
+                />
+                <label htmlFor="checkbox1">
+                  Quero receber por e-mail ofertas e novidades
+                </label>
+              </div>
+              <div className="d-flex align-items-center ">
+                <input
+                  type="checkbox"
+                  id="checkbox2"
+                  className={Styles.checkboxPreferencias}
+                />
+                <label htmlFor="checkbox2">
+                  Quero receber notificações dos meus pedidos por SMS
+                </label>
+              </div>
             </div>
           </div>
         </div>
         <p className={Styles.titulo}>Endereço</p>
         <div className={`${Styles.divInputs} mt-5`}>
-          <div className={Styles.divEndereco}>
-            <p className={Styles.nome}>Nome da pessoa</p>
-            <div className={Styles.endereco}>
-              <span>Rua Santos Mauro, 468</span>
-              <span>Centro - Ponta Grossa - PR</span>
-              <span>CEP: 84063-160</span>
-              <div className="d-flex justify-content-end">
-                <i className="fas fa-pen me-2">
-                  <span>Alterar</span>
-                </i>
-                <i className="fas fa-trash me-2 ">
-                  <span>Excluir</span>
-                </i>
+          <div className="row">
+            <div className="col-12 col-sm-6 col-lg-4">
+              <div className={Styles.divEndereco}>
+                <p className={Styles.nome}>Nome da pessoa</p>
+                <div className={Styles.endereco}>
+                  <span>Rua Santos Mauro, 468</span>
+                  <span>Centro - Ponta Grossa - PR</span>
+                  <span>CEP: 84063-160</span>
+                  <div className="d-flex justify-content-end">
+                    <i className="fas fa-pen me-2">
+                      <span>Alterar</span>
+                    </i>
+                    <i className="fas fa-trash me-2 ">
+                      <span>Excluir</span>
+                    </i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <button className={Styles.btnEndereco}>novo endereço</button>
+          <ModalCadastro />
         </div>
       </div>
     )
@@ -205,20 +246,26 @@ export function PedidoInterna(): JSX.Element {
       <div className={`${Styles.divPedidos} col-12 col-md-10`}>
         <p className={Styles.titulo}>Meus Cartões</p>
         <div className={`${Styles.divInputs} mt-5`}>
-          <div className={Styles.divEndereco}>
-            <img src="/master-card.svg" alt="bandeira cartão" />
-            <div className={Styles.endereco}>
-              <p className={Styles.nome}>MasterCard ****0099</p>
-              <span>Nome da pessoa</span>
-              <span>Validade 09/25</span>
-              <div className="d-flex justify-content-end">
-                <i className="fas fa-trash me-2 ">
-                  <span>Excluir</span>
-                </i>
+          <div className="row">
+            <div className="col-12 col-sm-6 col-lg-4">
+              <div className={Styles.divEndereco}>
+                <img src="/master-card.svg" alt="bandeira cartão" />
+                <div className={Styles.endereco}>
+                  <p className={Styles.nome}>MasterCard ****0099</p>
+                  <span>Nome da pessoa</span>
+                  <span>Validade 09/25</span>
+                  <div className="d-flex justify-content-end">
+                    <i className="fas fa-trash">
+                      <span>Excluir</span>
+                    </i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <button className={Styles.btnEndereco}>novo cartão</button>
+          <div>
+            <ModalCartaoCredito />
+          </div>
         </div>
       </div>
     )
