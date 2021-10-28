@@ -63,7 +63,7 @@ export default function NavbarVoit(): JSX.Element {
                   <i className="fas fa-search fa-2x"></i>
                 </li>
                 <li className={styles.entrar}>
-                  <i className="fas fa-shopping-basket fa-2x me-2"></i>
+                  <i className="fas fa-shopping-basket fa-lg me-2"></i>
                   <a href="" className={styles.login}>
                     <i className="fas fa-user me-1"></i>
                     entrar
