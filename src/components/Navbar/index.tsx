@@ -1,8 +1,22 @@
 import { Container, Dropdown, Nav, Navbar } from 'react-bootstrap'
 import styles from './styles.module.scss'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import api from '../../services/api'
 
 export default function NavbarVoit(): JSX.Element {
+  const [request, setRequest] = useState('')
+  useEffect(() => {
+    async function getCategorias() {
+      const { data } = await api.get('/atributo', {
+        headers: {
+          authorization: 'Bearer 116|pqBaGSXTynyTJePMaPbaTXNDR80NQxNFMSwo62SJ'
+        }
+      })
+      console.log(data)
+    }
+    getCategorias()
+  }, [])
   return (
     <section className={styles.bordaNav}>
       <div className={styles.limitado}>

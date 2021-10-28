@@ -11,6 +11,7 @@
   border-radius: 1rem;
   margin: 2rem 0;
   padding: 4rem;
+  max-height: 35rem;
   // width: 20rem;
 }
 
@@ -302,4 +303,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.divSeparador {
+  border-left: 1px solid #CAD1E1;
+}
+
+.checkboxTexto {
+  font-size: 1.6rem !important;
+}
+
+.checkboxPreferencias {
+  width: 3rem !important;
 }
