@@ -16,4 +16,10 @@
   border: 1px solid #d9deea;
   border-radius: 18px;
   background: #eff3fd;
+
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 }

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-npimport { useEffect, useState } from 'react'
-
-=======
->>>>>>> de7c8386bac57d632fa84f618de758f72fe790bb
 import { Footer } from '../components/Footer'
 import NavbarVoit from '../components/Navbar'
 import { ProductItemCard } from '../containers/listaProdutos/BuyProductItemCard'
