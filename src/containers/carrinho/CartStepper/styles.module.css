@@ -1,0 +1,83 @@
+.cartStepper {
+  width: 100%;
+  padding: 7rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.cartStepper div {
+  margin-top: 2.75rem;
+}
+
+.cartStepper div ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-bottom: 1px solid #000000;
+  padding: 0;
+  margin: 0;
+}
+
+.cartStepper div ul li {
+  list-style: none;
+  font-size: 1.6rem;
+  line-height: 2.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 1.75rem 5rem;
+  width: 19.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+}
+
+.cartStepper div ul li::after {
+  content: '';
+  width: 100%;
+  height: 4px;
+  background: #00ff00;
+  position: absolute;
+  bottom: -2px;
+}
+
+.defaultStep {
+  color: #95a1bb;
+}
+
+.defaultStep::after {
+  opacity: 0;
+}
+
+.currentStep {
+  color: #000000;
+}
+
+.currentStep::after {
+  opacity: 1;
+}
+
+.pastStep {
+  color: #95a1bb;
+}
+
+.pastStep::after {
+  opacity: 1;
+}
+/*# sourceMappingURL=styles.module.css.map */

@@ -43,6 +43,8 @@
     width: 100%;
 
     label {
+      position: relative;
+
       h2 {
         margin-bottom: 1rem;
 
@@ -66,10 +68,31 @@
         width: 100%;
 
         padding-left: 2.5rem;
+
+        &.erro {
+          border-color: #e00070;
+        }
       }
 
       & + label {
         margin-top: 1.6rem;
+      }
+
+      strong {
+        display: flex;
+        align-items: center;
+
+        font-size: 1.6rem;
+        line-height: 1.6rem;
+        font-weight: 400;
+        color: #d9006c;
+
+        position: absolute;
+
+        height: 5rem;
+
+        right: 1.5rem;
+        bottom: 0;
       }
     }
 

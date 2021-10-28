@@ -1,0 +1,24 @@
+.bgDepoimentos {
+  background-color: #eaedf5;
+  margin: 7rem 0 0 0;
+  padding: 8rem 0;
+}
+
+.depoimento {
+  font-size: 1.4rem;
+}
+
+.nome {
+  color: #363940;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin: 0 2rem;
+}
+
+.funcao {
+  text-transform: uppercase;
+  color: #95a1bb;
+  letter-spacing: 0.16rem;
+  margin: 0 2rem;
+}
+/*# sourceMappingURL=styles.module.css.map */

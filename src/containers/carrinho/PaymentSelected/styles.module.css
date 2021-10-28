@@ -1,0 +1,82 @@
+.card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 5.7rem 0 4.1rem;
+  height: 24.2rem;
+  background: #f6f7fa;
+  border-radius: 18px;
+  gap: 9rem;
+}
+
+.card div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.card div h2 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #363940;
+  display: inline;
+  line-height: unset;
+  margin: 0;
+}
+
+.card div img {
+  margin-right: 1.4rem;
+}
+
+.card div input[type='text'] {
+  padding: 0.8rem 2.4rem;
+  margin-left: 3.2rem;
+  border-radius: 18px;
+  border: 1px solid #d9deea;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  max-width: 24rem;
+  background: #ffffff;
+}
+
+.card div input[type='text']::-webkit-input-placeholder {
+  color: #95a1bb;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+
+.card div input[type='text']:-ms-input-placeholder {
+  color: #95a1bb;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+
+.card div input[type='text']::-ms-input-placeholder {
+  color: #95a1bb;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+
+.card div input[type='text']::placeholder {
+  color: #95a1bb;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+/*# sourceMappingURL=styles.module.css.map */

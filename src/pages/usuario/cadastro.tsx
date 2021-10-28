@@ -1,53 +1,51 @@
+import { useState } from 'react'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 import Link from 'next/link'
-import { useState } from 'react'
+
+import api from '../../services/api'
+
+import { mascaraCelular } from '../../utils/mascaraCelular'
+import { mascaraCPF } from '../../utils/mascaraCPF'
+
 import { PrevArrow } from '../../components/Arrows'
 
 import Styles from '../../styles/cadastro.module.scss'
-import api from '../../services/api'
+
+interface DadosCadastroUsuario {
+  nome: string
+  email: string
+  senha: string
+  cpf: string
+  celular: string
+}
 
 const regexCpf = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/
 
 const schema = Yup.object().shape({
-  nome: Yup.string().required(),
-  email: Yup.string().email('Digite um email válido').required(),
-  senha: Yup.string().required(),
-  celular: Yup.string().length(15),
+  nome: Yup.string().required('Este campo é obrigatório'),
+  email: Yup.string()
+    .email('Digite um email válido')
+    .required('Este campo é obrigatório'),
+  senha: Yup.string().required('Este campo é obrigatório'),
   cpf: Yup.string()
     .max(14)
-    .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
+    .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX'),
+  celular: Yup.string().min(13, 'Digite o numero completo')
 })
-
-function mascaraCPF(cpf) {
-  cpf = cpf.replace(/\D/g, '')
-  cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2')
-  cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2')
-  cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2')
-
-  return cpf
-}
-
-function mascaraCelular(numero) {
-  numero = numero.replace(/\D/g, '')
-
-  numero = numero.replace(/^(\d{2})(\d)/g, '($1)$2')
-
-  numero = numero.replace(/(\d)(\d{4})$/, '$1-$2')
-
-  return numero
-}
 
 export default function Cadastro(): JSX.Element {
   const [formEnviado, setFormEnviado] = useState<boolean>(false)
 
-  async function onSubmit(dados) {
+  async function onSubmit(dados: DadosCadastroUsuario) {
     try {
-      const response = await api.post('/usuario', dados)
+      const response = await api.post('/usuario', {
+        data: dados
+      })
 
       console.log(response)
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data.message)
     }
   }
 
@@ -74,6 +72,7 @@ export default function Cadastro(): JSX.Element {
             <h1>Crie sua conta na voit</h1>
             <Formik
               validationSchema={schema}
+              validateOnBlur
               initialValues={{
                 nome: '',
                 celular: '',
@@ -83,28 +82,50 @@ export default function Cadastro(): JSX.Element {
               }}
               onSubmit={values => onSubmit(values)}
             >
-              {({ values, errors }) => (
+              {({ values, errors, touched, dirty }) => (
                 <Form>
                   <label>
-                    <h2>Nome</h2>
-                    <Field type="text" name="nome" />
-                  </label>
-                  <label>
-                    <h2>E-mail</h2>
-                    <Field type="email" name="email" />
-                  </label>
-                  <label>
-                    <h2>Celular</h2>
+                    <h2>Nome*</h2>
                     <Field
-                      type="phone"
-                      name="celular"
-                      value={mascaraCelular(values.celular)}
-                      maxLength={15}
+                      type="text"
+                      name="nome"
+                      className={
+                        errors.nome && touched.nome && dirty ? Styles.erro : ''
+                      }
                     />
+                    {dirty && errors.nome && touched.nome && (
+                      <strong>{errors.nome}</strong>
+                    )}
                   </label>
                   <label>
-                    <h2>Senha</h2>
-                    <Field type="password" name="senha" />
+                    <h2>E-mail*</h2>
+                    <Field
+                      type="email"
+                      name="email"
+                      className={
+                        errors.email && touched.email && dirty
+                          ? Styles.erro
+                          : ''
+                      }
+                    />
+                    {dirty && errors.email && touched.email && (
+                      <strong>{errors.email}</strong>
+                    )}
+                  </label>
+                  <label>
+                    <h2>Senha*</h2>
+                    <Field
+                      type="password"
+                      name="senha"
+                      className={
+                        errors.senha && touched.senha && dirty
+                          ? Styles.erro
+                          : ''
+                      }
+                    />
+                    {dirty && errors.senha && touched.senha && (
+                      <strong>{errors.senha}</strong>
+                    )}
                   </label>
                   <label>
                     <h2>CPF</h2>
@@ -113,8 +134,32 @@ export default function Cadastro(): JSX.Element {
                       name="cpf"
                       maxLength={14}
                       value={mascaraCPF(values.cpf)}
+                      className={
+                        errors.cpf && touched.cpf && dirty ? Styles.erro : ''
+                      }
                     />
+                    {dirty && errors.cpf && touched.cpf && (
+                      <strong>{errors.cpf}</strong>
+                    )}
                   </label>
+                  <label>
+                    <h2>Celular</h2>
+                    <Field
+                      type="phone"
+                      name="celular"
+                      value={mascaraCelular(values.celular)}
+                      maxLength={14}
+                      className={
+                        errors.celular && touched.celular && dirty
+                          ? Styles.erro
+                          : ''
+                      }
+                    />
+                    {dirty && errors.celular && touched.celular && (
+                      <strong>{errors.celular}</strong>
+                    )}
+                  </label>
+
                   <button type="submit">Criar conta</button>
                 </Form>
               )}

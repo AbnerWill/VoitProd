@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Kanit', sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+@media only screen and (max-width: 1440px) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  min-width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+button {
+  cursor: pointer;
+}
+
+[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/*# sourceMappingURL=globals.css.map */
