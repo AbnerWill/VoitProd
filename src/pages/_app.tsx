@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { csrfToken } from '../lib/csrf'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -16,7 +15,7 @@ library.add(fab, faCoffee)
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <SSRProvider>
-      <Component {...pageProps} csrfToken={csrfToken} />
+      <Component {...pageProps} />
     </SSRProvider>
   )
 }
