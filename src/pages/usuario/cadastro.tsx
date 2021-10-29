@@ -11,6 +11,7 @@ import { mascaraCPF } from '../../utils/mascaraCPF'
 import { PrevArrow } from '../../components/Arrows'
 
 import Styles from '../../styles/cadastro.module.scss'
+import { FormEnviado } from '../../containers/CadastroUsuario/PaginaRedirecionar'
 
 interface DadosCadastroUsuario {
   nome: string
@@ -27,7 +28,9 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email('Digite um email válido')
     .required('Este campo é obrigatório'),
-  senha: Yup.string().required('Este campo é obrigatório'),
+  senha: Yup.string()
+    .min(8, 'Digite uma senha de no mínimo 8 caracteres')
+    .required('Este campo é obrigatório'),
   cpf: Yup.string()
     .max(14)
     .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX'),
@@ -39,11 +42,12 @@ export default function Cadastro(): JSX.Element {
 
   async function onSubmit(dados: DadosCadastroUsuario) {
     try {
-      const response = await api.post('/usuario', {
-        data: dados
-      })
+      const response = await api.post('/usuario', dados)
+      console.log(response.status)
 
-      console.log(response)
+      if (response.status === 201) {
+        setFormEnviado(true)
+      }
     } catch (error) {
       console.log(error.response.data.message)
     }
@@ -61,12 +65,7 @@ export default function Cadastro(): JSX.Element {
       </header>
       <section className={Styles.container}>
         {formEnviado ? (
-          <div className={Styles.formEnviado}>
-            <h1>Cadastro criado com sucesso</h1>
-            <h2>
-              Você será redirecionado para a página de início em 5 segundos
-            </h2>
-          </div>
+          <FormEnviado />
         ) : (
           <div className={Styles.content}>
             <h1>Crie sua conta na voit</h1>

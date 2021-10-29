@@ -11,7 +11,8 @@ import Styles from '../styles/produtos.module.scss'
 import api from '../services/api'
 
 import { DadosPublicosProduto } from '../types/typesProduto'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticProps } from 'next'
+import { parseCookies } from 'nookies'
 
 interface ProductsPageProps {
   products: Array<DadosPublicosProduto>
@@ -50,14 +51,14 @@ export default function ProductsPage({
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('/produto/publica', {
     // headers: {
-    //   authorization: 'Bearer ${token de autorização}'
+    //   authorization: `Bearer`
     // },
     params: {
       loja_id: '3'
     }
   })
 
-  const products = [...data]
+  const products: DadosPublicosProduto[] = data
 
   return {
     props: {

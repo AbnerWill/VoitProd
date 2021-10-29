@@ -1,6 +1,10 @@
+import { setCookie } from 'nookies'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import Link from 'next/link'
+import Router from 'next/router'
+
+import { Spinner } from 'react-bootstrap'
 
 import { PrevArrow } from '../../components/Arrows'
 import { BotaoLoginFacebook } from '../../containers/login/BotãoLoginFacebook'
@@ -8,6 +12,7 @@ import { BotaoLoginGoogle } from '../../containers/login/BotãoLoginGoogle'
 
 import Styles from '../../styles/login.module.scss'
 import api from '../../services/api'
+import { useState } from 'react'
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -17,14 +22,25 @@ const schema = Yup.object().shape({
 })
 
 export default function Login(): JSX.Element {
+  const [mensagemErro, setMensagemErro] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+
   async function onSubmit(dados) {
     try {
-      const { data } = await api.post('/login', {
-        data: dados
+      setMensagemErro('')
+      setLoading(true)
+      const { data } = await api.post('/login', dados)
+      setLoading(false)
+
+      setCookie(null, 'access-token', data?.access_token, {
+        path: '/',
+        maxAge: 60 * 60 * 24
       })
-      console.log(data)
+
+      Router.push('/pedidos')
     } catch (error) {
-      console.log(error.response)
+      setLoading(false)
+      setMensagemErro(error.response.data.mensagem)
     }
   }
 
@@ -77,7 +93,20 @@ export default function Login(): JSX.Element {
                   <strong>{errors.senha}</strong>
                 )}
               </label>
-              <button type="submit">Entrar</button>
+              {mensagemErro && (
+                <div className={Styles.mensagemErro}>
+                  <strong>{mensagemErro}</strong>
+                </div>
+              )}
+              <button type="submit" className={Styles.submitButton}>
+                {loading ? (
+                  <Spinner animation="border">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                ) : (
+                  <span>Entrar</span>
+                )}
+              </button>
             </Form>
           )}
         </Formik>
