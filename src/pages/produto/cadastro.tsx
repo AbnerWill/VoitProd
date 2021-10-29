@@ -10,7 +10,7 @@ import { NewAdressButton } from '../../containers/carrinho/NewAdressButton'
 import Styles from './cadastro.module.scss'
 
 export default function CadastroProduto(): JSX.Element {
-  const [passo, setPasso] = useState(4)
+  const [passo, setPasso] = useState(1)
 
   const settings = {
     dots: false,
