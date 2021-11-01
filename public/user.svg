@@ -1,0 +1,17 @@
+<svg id="Picture" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <pattern id="pattern" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" viewBox="0 0 16 16">
+      <image width="16" height="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAABVJREFUOBFjYBgFoyEwGgKjIQAJAQAEEAABvmNTIgAAAABJRU5ErkJggg=="/>
+    </pattern>
+  </defs>
+  <g id="Avatar_Small" data-name="Avatar/Small">
+    <rect id="Base" width="60" height="60" rx="30" fill="#f6f7fa"/>
+    <g id="Icon" transform="translate(12 12)">
+      <g id="Icon_Profile" data-name="Icon/Profile">
+        <rect id="Base-2" data-name="Base" width="36" height="36" fill="none"/>
+        <path id="Mask" d="M0,24V21c0-3.991,7.995-6,12-6s12,2.01,12,6v3ZM6,6a6,6,0,1,1,6,6A6,6,0,0,1,6,6Z" transform="translate(6 6)" fill="#cad1e1"/>
+      </g>
+    </g>
+    <rect id="Photo" width="60" height="60" rx="30" fill="url(#pattern)"/>
+  </g>
+</svg>

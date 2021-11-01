@@ -1,0 +1,38 @@
+.divTitulo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10rem 0 3rem 0;
+}
+
+.subTitulo {
+  text-align: center;
+  color: #95a1bb;
+  font-size: 1.6rem;
+  width: 35rem;
+}
+
+.bgCard {
+  background-color: #f6f7fa;
+  border-radius: 10px;
+  padding: 3rem;
+  height: 35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.categoria {
+  color: #363940;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.preco {
+  color: #0000ff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.32rem;
+}

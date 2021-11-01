@@ -1,0 +1,30 @@
+.divVoltar {
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.btnVoltar {
+  border: none;
+  border-radius: 1rem;
+  background-color: #F6F7FA;
+  width: 5rem;
+  height: 5rem;
+
+  i {
+    color: #3B266F;
+  }
+}
+
+.linkVoltar {
+  color: #95A1BB;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 0.3rem;
+  margin: 0 0 0 1.5rem;
+}
+
+.linkVoltar:hover {
+  color: #00ff00;
+}

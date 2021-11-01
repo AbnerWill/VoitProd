@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  max-width: 84.7rem;
+  width: 100%;
+
+  padding: 4rem 0;
+  border-bottom: 1px solid #cad1e1;
+
+  h1,
+  h2 {
+    text-align: center;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 3.6rem;
+    color: #000000;
+  }
+
+  h2 {
+    font-size: 2.8rem;
+    color: #95a1bb;
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    margin-top: 3rem;
+
+    strong {
+      width: 6rem;
+      height: 6rem;
+      border: 1px solid #cad1e1;
+      color: #95a1bb;
+      font-size: 2rem;
+      line-height: 2rem;
+      font-weight: 500;
+      border-radius: 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .highlighted {
+      border: none;
+      background: #00ff00;
+      color: #000000;
+    }
+  }
+}
