@@ -1,4 +1,7 @@
+/* eslint-disable camelcase */
+import { GetServerSideProps } from 'next'
 import Link from 'next/link'
+import { parseCookies } from 'nookies'
 import { useState } from 'react'
 import Slider from 'react-slick'
 
@@ -397,4 +400,21 @@ export default function CadastroProduto(): JSX.Element {
       <Footer />
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const access_token = parseCookies(ctx)
+
+  if (!access_token['access-token']) {
+    return {
+      redirect: {
+        destination: '/usuario/login',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
 }

@@ -96,7 +96,7 @@
       }
     }
 
-    div {
+    > div {
       display: flex;
       align-items: center;
 
@@ -163,6 +163,19 @@
 
   &:hover {
     filter: brightness(0.8);
+  }
+}
+
+.mensagemErro {
+  margin: 5rem auto 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  strong {
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #d9006c;
   }
 }
 

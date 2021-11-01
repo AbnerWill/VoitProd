@@ -84,10 +84,37 @@
         right: 1.5rem;
         bottom: 0;
       }
+
+      .mostrarSenha {
+        background: none;
+        margin: 0;
+        height: unset;
+        width: unset;
+
+        position: absolute;
+        right: 2rem;
+        bottom: 0;
+        height: 5rem;
+      }
     }
 
-    button {
-      margin: 5rem auto 0 auto;
+    .esqueciSenha {
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: #0d45f4;
+      cursor: pointer;
+
+      text-align: right;
+      display: block;
+      margin-top: 1rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    > button {
+      margin: 6rem auto 0 auto;
       background: #00ff00;
       color: #000000;
     }
@@ -172,6 +199,7 @@
     font-weight: 500;
     color: #000000;
     text-transform: uppercase;
+    margin: 0;
 
     &::after,
     &::before {
@@ -182,6 +210,9 @@
 
 .mensagemErro {
   margin: 5rem auto 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   strong {
     font-size: 1.8rem;

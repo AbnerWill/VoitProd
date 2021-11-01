@@ -13,6 +13,7 @@ import { BotaoLoginGoogle } from '../../containers/login/BotãoLoginGoogle'
 import Styles from '../../styles/login.module.scss'
 import api from '../../services/api'
 import { useState } from 'react'
+import { ModalEsqueciSenha } from '../../containers/CadastroUsuario/ModalEsqueciSenha'
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -24,6 +25,10 @@ const schema = Yup.object().shape({
 export default function Login(): JSX.Element {
   const [mensagemErro, setMensagemErro] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const [mostrarSenha, setMostrarSenha] = useState<boolean>(false)
+  const [abrirModal, setAbrirModal] = useState(false)
+
+  const toggleMostrarSenha = () => setMostrarSenha(!mostrarSenha)
 
   async function onSubmit(dados) {
     try {
@@ -72,6 +77,7 @@ export default function Login(): JSX.Element {
                 <Field
                   type="email"
                   name="email"
+                  placeholder="Digite seu email"
                   className={
                     errors.email && touched.email && dirty ? Styles.erro : ''
                   }
@@ -83,16 +89,34 @@ export default function Login(): JSX.Element {
               <label>
                 <h2>Senha*</h2>
                 <Field
-                  type="password"
+                  type={mostrarSenha ? 'text' : 'password'}
                   name="senha"
+                  placeholder="Digite sua senha"
                   className={
                     errors.senha && touched.senha && dirty ? Styles.erro : ''
                   }
                 />
+                <button
+                  className={Styles.mostrarSenha}
+                  type="button"
+                  onClick={toggleMostrarSenha}
+                >
+                  {mostrarSenha ? (
+                    <img src="/escondersenha.svg" alt="Esconder senha" />
+                  ) : (
+                    <img src="/mostrarsenha.svg" alt="Mostrar senha" />
+                  )}
+                </button>
                 {dirty && errors.senha && touched.senha && (
                   <strong>{errors.senha}</strong>
                 )}
               </label>
+              <a
+                className={Styles.esqueciSenha}
+                onClick={() => setAbrirModal(true)}
+              >
+                Esqueceu sua senha?
+              </a>
               {mensagemErro && (
                 <div className={Styles.mensagemErro}>
                   <strong>{mensagemErro}</strong>
@@ -118,6 +142,11 @@ export default function Login(): JSX.Element {
       <footer className={Styles.footer}>
         voit.co Copyright &copy; 2020. All rights reserved.
       </footer>
+
+      <ModalEsqueciSenha
+        onHide={() => setAbrirModal(false)}
+        show={abrirModal}
+      />
     </>
   )
 }

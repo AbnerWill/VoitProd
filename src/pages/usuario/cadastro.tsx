@@ -3,6 +3,8 @@ import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 import Link from 'next/link'
 
+import { Spinner } from 'react-bootstrap'
+
 import api from '../../services/api'
 
 import { mascaraCelular } from '../../utils/mascaraCelular'
@@ -39,17 +41,27 @@ const schema = Yup.object().shape({
 
 export default function Cadastro(): JSX.Element {
   const [formEnviado, setFormEnviado] = useState<boolean>(false)
+  const [mensagemErro, setMensagemErro] = useState<string[]>([''])
+  const [loading, setLoading] = useState<boolean>(false)
 
   async function onSubmit(dados: DadosCadastroUsuario) {
     try {
+      setMensagemErro([''])
+      setLoading(true)
       const response = await api.post('/usuario', dados)
-      console.log(response.status)
+      setLoading(false)
 
       if (response.status === 201) {
         setFormEnviado(true)
       }
     } catch (error) {
-      console.log(error.response.data.message)
+      setLoading(false)
+      setMensagemErro([
+        ...mensagemErro,
+        ...error.response.data.cpf,
+        ...error.response.data.email
+      ])
+      console.log(mensagemErro)
     }
   }
 
@@ -158,8 +170,21 @@ export default function Cadastro(): JSX.Element {
                       <strong>{errors.celular}</strong>
                     )}
                   </label>
-
-                  <button type="submit">Criar conta</button>
+                  {mensagemErro &&
+                    mensagemErro.map((msg, index) => (
+                      <div className={Styles.mensagemErro} key={index}>
+                        <strong>{msg}</strong>
+                      </div>
+                    ))}
+                  <button type="submit">
+                    {loading ? (
+                      <Spinner animation="border">
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    ) : (
+                      <span>Criar conta</span>
+                    )}
+                  </button>
                 </Form>
               )}
             </Formik>
