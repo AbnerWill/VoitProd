@@ -101,11 +101,13 @@ export default function Login(): JSX.Element {
                   type="button"
                   onClick={toggleMostrarSenha}
                 >
-                  {mostrarSenha ? (
-                    <img src="/escondersenha.svg" alt="Esconder senha" />
-                  ) : (
-                    <img src="/mostrarsenha.svg" alt="Mostrar senha" />
-                  )}
+                  {touched.senha && !errors.senha ? (
+                    mostrarSenha ? (
+                      <img src="/escondersenha.svg" alt="Esconder senha" />
+                    ) : (
+                      <img src="/mostrarsenha.svg" alt="Mostrar senha" />
+                    )
+                  ) : null}
                 </button>
                 {dirty && errors.senha && touched.senha && (
                   <strong>{errors.senha}</strong>
