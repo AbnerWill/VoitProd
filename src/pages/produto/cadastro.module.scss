@@ -171,11 +171,11 @@
   align-items: center;
   justify-content: center;
 
-  width: 40px;
-  height: 40px;
+  width: 4rem;
+  height: 4rem;
 
   position: absolute;
-  bottom: 0.9rem;
+  bottom: 0.95rem;
   right: -6.6rem;
 
   font-size: 2rem;
@@ -226,62 +226,6 @@
   width: 100%;
   max-width: 77.6rem;
 
-  label {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    width: 100%;
-
-    position: relative;
-
-    h2 {
-      font-size: 2rem;
-      font-weight: 500;
-      color: #363940;
-      margin-bottom: 1.8rem;
-    }
-
-    input {
-      width: 100%;
-
-      border: 1px solid #d9deea;
-      border-radius: 18px;
-
-      padding: 0 2.4rem;
-      height: 6rem;
-
-      font-size: 1.8rem;
-      font-weight: 400;
-      line-height: 2.2rem;
-
-      &.erro {
-        border-color: #e00070;
-      }
-
-      &::placeholder {
-        color: #95a1bb;
-      }
-    }
-
-    strong {
-      display: flex;
-      align-items: center;
-
-      font-size: 1.6rem;
-      line-height: 1.6rem;
-      font-weight: 400;
-      color: #d9006c;
-
-      position: absolute;
-
-      height: 6rem;
-
-      right: 1.5rem;
-      bottom: 0;
-    }
-  }
-
   div {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -292,14 +236,6 @@
     margin-top: 2.8rem;
 
     width: 100%;
-
-    label {
-      input {
-        &::placeholder {
-          font-weight: 500;
-        }
-      }
-    }
   }
 
   > label + label {
@@ -324,76 +260,28 @@
     display: flex;
     align-items: center;
 
-    label {
+    > span {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: #95a1bb;
+      font-family: 'Kanit', sans-serif;
+      margin: 3rem 2rem 0 2rem;
+    }
+
+    div {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-
-      position: relative;
-
-      h2 {
-        font-size: 2rem;
-        font-weight: 500;
-        color: #363940;
-        margin-bottom: 0.9rem;
-      }
-
-      input {
-        width: 100%;
-
-        border: 1px solid #d9deea;
-        border-radius: 18px;
-
-        padding: 1.65rem 2.4rem;
-
-        font-size: 1.8rem;
-        font-weight: 400;
-        line-height: 2.2rem;
-
-        &::placeholder {
-          color: #95a1bb;
-        }
-
-        &.erro {
-          border-color: #e00070;
-        }
-      }
-
-      strong {
-        display: flex;
-        align-items: center;
-
-        font-size: 1.6rem;
-        line-height: 1.6rem;
-        font-weight: 400;
-        color: #d9006c;
-        margin: 0;
-
-        position: absolute;
-
-        width: fit-content;
-        height: 6rem;
-
-        left: calc(100% + 2rem);
-        bottom: 0;
-      }
+      gap: 0.7rem;
 
       span {
+        font-family: 'Kanit', sans-serif;
         font-size: 1.4rem;
         font-weight: 400;
         color: #95a1bb;
-
-        position: absolute;
-        top: calc(100% + 1rem);
+        margin-left: 2rem;
       }
-    }
-
-    strong {
-      font-size: 2.2rem;
-      line-height: 2.2rem;
-      font-weight: 500;
-      color: #95a1bb;
-      margin: 0 2.1rem;
     }
   }
 }
@@ -488,67 +376,61 @@
     margin-bottom: 1.8rem;
   }
 
-  label {
+  > label + label {
+    margin-top: 2rem;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+
+    margin-top: 2rem;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 2.8rem;
+      position: relative;
+    }
+  }
+
+  .especificações {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .textarea {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
 
+    h2 {
+      font-size: 2rem;
+      font-weight: 500;
+      color: #363940;
+    }
+
     textarea {
       width: 100%;
-      min-height: 14rem;
-      resize: vertical;
-
+      height: 14rem;
       padding: 1.6rem 2.4rem;
-      margin-bottom: 1.8rem;
 
       border: 1px solid #d9deea;
       border-radius: 18px;
 
       font-size: 1.8rem;
+      font-family: 'Kanit', sans-serif;
       font-weight: 400;
 
       &::placeholder {
         color: #95a1bb;
       }
-    }
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2.8rem;
-    width: 100%;
-
-    label {
-      width: 100%;
-      position: relative;
-
-      input {
-        width: 100%;
-
-        padding: 0 2.4rem;
-        height: 6rem;
-
-        border: 1px solid #d9deea;
-        border-radius: 18px;
-
-        font-size: 1.8rem;
-        font-weight: 400;
-
-        &::placeholder {
-          color: #95a1bb;
-        }
-      }
-    }
-
-    > div {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 2.8rem;
-      position: relative;
     }
   }
 
@@ -594,29 +476,6 @@
   h2 {
     margin-bottom: 0.9rem;
     padding-left: 2rem;
-  }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-
-    input {
-      width: 100%;
-
-      padding: 1.65rem 2.1rem;
-
-      border: 1px solid #d9deea;
-      border-radius: 18px;
-
-      font-size: 1.8rem;
-      font-weight: 400;
-
-      &::placeholder {
-        color: #95a1bb;
-      }
-    }
   }
 
   .selecionarEndereço {

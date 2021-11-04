@@ -15,6 +15,7 @@ import { NewAdressButton } from '../../containers/carrinho/NewAdressButton'
 import api from '../../services/api'
 
 import Styles from './cadastro.module.scss'
+import { CustomField } from '../../components/CustomField'
 
 interface Categoria {
   categoria_id: number
@@ -34,17 +35,19 @@ interface CadastroProdutoProps {
 interface DadosProduto {
   loja_id: string
   categoria_id: string
-  subcategoria_id?: string
+  subcategoria_id: string
   nome: string
-  codigo_produto: string
   valor: number
+  cor?: string
+  tamanho?: number
+  marca?: string
+  condicao?: string
   valor_com_desconto?: number
   descricao?: string
   altura?: number
   largura?: number
   comprimento?: number
   peso?: number
-  estoque?: number
   produto_atributo?: {
     atributo_grupo_valor_id: string
     valor: string
@@ -57,7 +60,6 @@ const dadosProdutoInicial: DadosProduto = {
   categoria_id: '',
   subcategoria_id: '',
   nome: '',
-  codigo_produto: '',
   valor: 0
 }
 
@@ -73,18 +75,22 @@ const settings = {
 
 const informaçoesBasicasSchema = Yup.object().shape({
   nome: Yup.string().required('Digite o nome do produto'),
-  codigo_produto: Yup.string().required('Digite o código do produto'),
   valor: Yup.number().required('Digite o valor do produto'),
-  altura: Yup.number(),
-  largura: Yup.number(),
-  comprimento: Yup.number(),
-  peso: Yup.number()
+  valorDesconto: Yup.number(),
+  cor: Yup.string(),
+  tamanho: Yup.number(),
+  marca: Yup.string(),
+  condicao: Yup.string()
 })
 
 const informaçõesSecundariasSchema = Yup.object().shape({
   descricao: Yup.string().required('Digite a descrição do produto'),
   subcategoria_id: Yup.string().required('Escolha uma subcategoria do produto'),
-  estoque: Yup.number().required('Digite a quantidade em estoque do produto')
+  altura: Yup.number(),
+  largura: Yup.number(),
+  comprimento: Yup.number(),
+  peso: Yup.number(),
+  categoria_id: Yup.string()
 })
 
 export default function CadastroProduto({
@@ -108,12 +114,12 @@ export default function CadastroProduto({
     setDadosProduto({
       ...dadosProduto,
       nome: values.nome,
-      codigo_produto: values.codigo_produto,
-      comprimento: values.comprimento,
-      largura: values.largura,
-      altura: values.altura,
-      peso: values.peso,
-      valor: values.valor
+      cor: values.cor,
+      tamanho: values.tamanho,
+      marca: values.marca,
+      condicao: values.condicao,
+      valor: values.valor,
+      valor_com_desconto: values.valorDesconto
     })
 
     setPasso(oldValue => oldValue + 1)
@@ -122,27 +128,22 @@ export default function CadastroProduto({
   async function SubmitInformacoesSecundarias(values) {
     setDadosProduto({
       ...dadosProduto,
-      estoque: values.estoque,
       subcategoria_id: values.subcategoria_id,
       descricao: values.descricao
     })
 
-    const data = {
-      ...dadosProduto
-    }
+    // try {
+    //   const response = await api.post('/produto', {
+    //     data,
+    //     headers: {
+    //       authorization: `Bearer ${access_token['access-token']}`
+    //     }
+    //   })
 
-    try {
-      const response = await api.post('/produto', {
-        data,
-        headers: {
-          authorization: `Bearer ${access_token['access-token']}`
-        }
-      })
-
-      console.log(response)
-    } catch (error) {
-      console.log(error.response)
-    }
+    //   console.log(response)
+    // } catch (error) {
+    //   console.log(error.response)
+    // }
   }
 
   function mudarConteudo(passo: number) {
@@ -193,109 +194,77 @@ export default function CadastroProduto({
               validationSchema={informaçoesBasicasSchema}
               initialValues={{
                 nome: '',
-                codigo_produto: '',
-                altura: '',
-                largura: '',
-                comprimento: '',
-                peso: '',
-                valor: ''
+                cor: '',
+                tamanho: '',
+                marca: '',
+                condicao: '',
+                valor: '',
+                valorDesconto: ''
               }}
               onSubmit={values => SubmitInformacoesBasicas(values)}
             >
-              {({ errors, touched, dirty }) => (
+              {({ dirty }) => (
                 <Form>
                   <div className={Styles.informaçoesBasicas}>
-                    <label>
-                      <h2>Nome do produto</h2>
-                      <Field
-                        type="text"
-                        placeholder="Digite aqui o texto"
-                        name="nome"
-                        className={
-                          dirty && errors.nome && touched.nome
-                            ? Styles.erro
-                            : ''
-                        }
-                      />
-                      {dirty && errors.nome && touched.nome && (
-                        <strong>{errors.nome}</strong>
-                      )}
-                    </label>
-                    <label>
-                      <h2>Código do produto</h2>
-                      <Field
-                        type="text"
-                        placeholder="Digite aqui o código do produto"
-                        name="codigo_produto"
-                        className={
-                          dirty &&
-                          errors.codigo_produto &&
-                          touched.codigo_produto
-                            ? Styles.erro
-                            : ''
-                        }
-                      />
-                      {dirty &&
-                        errors.codigo_produto &&
-                        touched.codigo_produto && (
-                          <strong>{errors.codigo_produto}</strong>
-                        )}
-                    </label>
+                    <CustomField
+                      label="Título do produto"
+                      type="text"
+                      name="nome"
+                      dirty={dirty}
+                      placeholder="Digite o título do produto"
+                    />
                     <div>
-                      <label>
-                        <h2>Altura</h2>
-                        <Field type="number" min="0" name="altura" />
-                      </label>
-                      <label>
-                        <h2>Largura</h2>
-                        <Field type="number" min="0" name="largura" />
-                      </label>
-                      <label>
-                        <h2>Comprimento</h2>
-                        <Field type="number" min="0" name="comprimento" />
-                      </label>
-                      <label>
-                        <h2>Peso</h2>
-                        <Field type="number" min="0" name="peso" />
-                      </label>
+                      <CustomField label="Cor" type="text" name="cor" />
+                      <CustomField
+                        label="Tamanho"
+                        type="number"
+                        name="tamanho"
+                        min="0"
+                      />
+                      <CustomField label="Marca" type="text" name="marca" />
+                      <CustomField
+                        label="Condição"
+                        type="text"
+                        name="condicao"
+                      />
                     </div>
                   </div>
                   <div className={Styles.divisor} />
                   <div className={Styles.valorProduto}>
                     <h1>Qual o valor?</h1>
                     <div>
-                      <label>
-                        <h2>Valor</h2>
-                        <Field
-                          type="number"
-                          min="0"
-                          placeholder="R$ 0,00"
-                          name="valor"
-                          className={
-                            dirty && errors.valor && touched.valor
-                              ? Styles.erro
-                              : ''
-                          }
-                        />
-                        {dirty && errors.valor && touched.valor && (
-                          <strong>{errors.valor}</strong>
-                        )}
+                      <div>
+                        <CustomField label="Valor" name="valor" type="number" />
                         <span>Quanto deseja receber + 20% de taxa</span>
-                      </label>
+                      </div>
+                      <span>ou</span>
+                      <div>
+                        <CustomField
+                          label="Quanto quer receber?"
+                          name="valorDesconto"
+                          type="number"
+                        />
+                        <span>Valor total - 20% de taxa</span>
+                      </div>
                     </div>
                   </div>
                   <div className={Styles.divisor} />
-                  {/* <div className={Styles.adicionarFotos}>
+                  <div className={Styles.adicionarFotos}>
                     <h1>Adicione Fotos</h1>
                     <h2>Adicione fotos do produto</h2>
                     <div>
                       <img src="/img-padrao.svg" alt="img" />
                       <strong>Arraste imagens aqui</strong>
                       <label>
-                        Adicionar foto <input type="file" />
+                        Adicionar foto{' '}
+                        <input
+                          type="file"
+                          multiple
+                          accept=".jpg, .png, .jpeg"
+                        />
                       </label>
                     </div>
-                  </div> */}
+                  </div>
                   <div className={Styles.buttons}>
                     <button type="button" onClick={() => setPasso(0)}>
                       Voltar
@@ -319,15 +288,19 @@ export default function CadastroProduto({
               validationSchema={informaçõesSecundariasSchema}
               initialValues={{
                 descricao: '',
-                estoque: '',
+                altura: 0,
+                largura: 0,
+                comprimento: 0,
+                peso: 0,
+                categoria_id: '',
                 subcategoria_id: ''
               }}
               onSubmit={values => SubmitInformacoesSecundarias(values)}
             >
-              {({ errors, dirty, touched }) => (
+              {() => (
                 <Form>
                   <div className={Styles.descriçaoProduto}>
-                    <label>
+                    <label className={Styles.textarea}>
                       <h2>Descrição do produto</h2>
                       <Field
                         as="textarea"
@@ -336,31 +309,48 @@ export default function CadastroProduto({
                         placeholder="Digite aqui o texto"
                       />
                     </label>
+                    <div className={Styles.especificações}>
+                      <CustomField label="Altura" name="altura" type="number" />
+                      <CustomField
+                        label="Largura"
+                        name="largura"
+                        type="number"
+                      />
+                      <CustomField
+                        label="Comprimento"
+                        name="comprimento"
+                        type="number"
+                      />
+                      <CustomField label="Peso" name="peso" type="number" />
+                    </div>
                     <div>
-                      <label>
-                        <h2>Estoque</h2>
-                        <Field type="number" name="estoque" />
-                      </label>
-                      <label>
-                        <h2>Subcategoria</h2>
-                        <Field
-                          as="select"
+                      <div>
+                        <CustomField
+                          label="Categoria"
+                          name="categoria_id"
+                          type="text"
+                        />
+                        <CustomField
+                          label="Subcategoria"
                           name="subcategoria_id"
-                          className={Styles.selectField}
-                        >
-                          {getSubcategoria(
-                            Number(dadosProduto.categoria_id)
-                          ).map(subcategoria => (
-                            <option
-                              value={subcategoria.subcategoria_id}
-                              key={subcategoria.subcategoria_id}
-                            >
-                              {subcategoria.nome}
-                            </option>
-                          ))}
-                        </Field>
-                        {/* <button className={Styles.botãoFlutuante}>&#43;</button> */}
-                      </label>
+                          type="text"
+                        />
+                      </div>
+                      <div>
+                        <CustomField
+                          label="Atributo"
+                          name="atributo"
+                          type="text"
+                        />
+                        <CustomField
+                          label="Valor"
+                          name="valorAtributo"
+                          type="text"
+                        />
+                        <button className={Styles.botãoFlutuante}>
+                          <img src="/mais.svg" alt="Operador de adição" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div className={Styles.buttons}>
