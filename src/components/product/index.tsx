@@ -1,34 +1,14 @@
 import { Container } from 'react-bootstrap'
-import { Button } from '../Button'
-import { CarouselProduto } from '../Carousel'
-import { Voltar } from '../Voltar'
-import Styles from './styles.module.scss'
-
-import { useState, useEffect } from 'react'
-import api from '../../services/api'
+// import { Button } from '../Button'
+// import { CarouselProduto } from '../Carousel'
+// import { Voltar } from '../Voltar'
+// import Styles from './styles.module.scss'
 
 export function Product(): JSX.Element {
-  const [produto, setProduto] = useState('')
-
-  useEffect(() => {
-    async function getProduto() {
-      const { data } = await api.get('/produto/publica', {
-        headers: {
-          authorization: 'Bearer 155|XA0ai3qHXqTHf2ppZyD104EkLDPHp3LeBoBWSFuY'
-        },
-        params: {
-          loja_id: '3'
-        }
-      })
-      setProduto(data)
-    }
-    getProduto()
-  }, [])
-  console.log(produto[1])
   return (
     <div>
       <Container>
-        <Voltar />
+        {/* <Voltar />
         <div className="row">
           <div className="col-12 col-lg-6">
             <CarouselProduto />
@@ -57,7 +37,7 @@ export function Product(): JSX.Element {
                   </div>
                 </div>
                 <p className={Styles.precoVarejo}>
-                  R$360 preço estimado no varejo
+                  R$1400 preço estimado no varejo
                 </p>
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center">
@@ -88,7 +68,7 @@ export function Product(): JSX.Element {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </Container>
     </div>
   )

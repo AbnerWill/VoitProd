@@ -3,27 +3,7 @@ import Slider from 'react-slick'
 import { NextArrow, PrevArrow } from '../../components/Arrows'
 import Styles from './styles.module.scss'
 
-import { useState, useEffect } from 'react'
-import api from '../../services/api'
-
-export function CarouselProduto(): JSX.Element {
-  const [produto, setProduto] = useState('')
-
-  useEffect(() => {
-    async function getProduto() {
-      const { data } = await api.get('/produto/publica', {
-        headers: {
-          authorization: 'Bearer 155|XA0ai3qHXqTHf2ppZyD104EkLDPHp3LeBoBWSFuY'
-        },
-        params: {
-          loja_id: '3'
-        }
-      })
-      setProduto(data)
-    }
-    getProduto()
-  }, [])
-
+export function CarouselProduto(props): JSX.Element {
   const settings = {
     dots: false,
     infinite: true,
@@ -38,7 +18,7 @@ export function CarouselProduto(): JSX.Element {
       <section className={Styles.resumoAnuncio}>
         <div className={Styles.imagens}>
           <div className={Styles.imagemGrande}>
-            <img src="/img-padrao.svg" alt="Img" />
+            <img src={props.foto} alt="Img" />
           </div>
           <div className={Styles.carrossel}>
             <Slider {...settings}>
