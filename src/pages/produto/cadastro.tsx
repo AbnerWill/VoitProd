@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import { Formik, Form, Field } from 'formik'
-import { Dropdown } from 'react-bootstrap'
 import * as Yup from 'yup'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
@@ -11,16 +10,21 @@ import Slider from 'react-slick'
 import { NextArrow, PrevArrow } from '../../components/Arrows'
 import { Footer } from '../../components/Footer'
 import { PassosCadastro } from '../../containers/cadastroProdutos/PassosCadastro'
-import { NewAdressButton } from '../../containers/carrinho/NewAdressButton'
 import api from '../../services/api'
 
 import Styles from './cadastro.module.scss'
 import { CustomField } from '../../components/CustomField'
+import { CustomDropdown } from '../../components/CustomDropdown'
 
 interface Categoria {
   categoria_id: number
   nome: string
   descricao: string
+  atributos?: {
+    atributo_grupo_id: number
+    data_adicionado: string
+    nome: string
+  }[]
   sub_categoria: {
     subcategoria_id: string
     nome: string
@@ -99,15 +103,34 @@ export default function CadastroProduto({
   const [passo, setPasso] = useState(0)
   const [dadosProduto, setDadosProduto] =
     useState<DadosProduto>(dadosProdutoInicial)
+  const [atributos, setAtributos] = useState([])
 
   const access_token = parseCookies()
 
-  function getSubcategoria(id: number) {
+  function getSubcategorias(id: number) {
     const categoria = categorias.find(
       categoria => categoria.categoria_id === id
     )
 
+    getAtributosPorCategoriaID(id)
+
     return categoria.sub_categoria
+  }
+
+  async function getAtributosPorCategoriaID(id: number) {
+    const { data } = await api.get(`/categoria/${id}`, {
+      headers: {
+        authorization: `Bearer ${access_token['access-token']}`
+      }
+    })
+
+    const dados: Categoria = { ...data }
+
+    const atributosResponse = dados.atributos?.map(atributo => {
+      return atributo.nome
+    })
+
+    setAtributos([...atributos, ...atributosResponse])
   }
 
   function SubmitInformacoesBasicas(values) {
@@ -222,10 +245,10 @@ export default function CadastroProduto({
                         min="0"
                       />
                       <CustomField label="Marca" type="text" name="marca" />
-                      <CustomField
+                      <CustomDropdown
                         label="Condição"
-                        type="text"
                         name="condicao"
+                        array={['Usado', 'Novo']}
                       />
                     </div>
                   </div>
@@ -297,7 +320,7 @@ export default function CadastroProduto({
               }}
               onSubmit={values => SubmitInformacoesSecundarias(values)}
             >
-              {() => (
+              {({ values, errors, touched, dirty, handleChange }) => (
                 <Form>
                   <div className={Styles.descriçaoProduto}>
                     <label className={Styles.textarea}>
@@ -310,37 +333,108 @@ export default function CadastroProduto({
                       />
                     </label>
                     <div className={Styles.especificações}>
-                      <CustomField label="Altura" name="altura" type="number" />
-                      <CustomField
-                        label="Largura"
-                        name="largura"
-                        type="number"
-                      />
-                      <CustomField
-                        label="Comprimento"
-                        name="comprimento"
-                        type="number"
-                      />
-                      <CustomField label="Peso" name="peso" type="number" />
+                      <label className={Styles.customInput}>
+                        <h2>Altura</h2>
+                        <input
+                          min="0"
+                          name="altura"
+                          type="number"
+                          value={values.altura}
+                          onChange={handleChange}
+                          className={
+                            dirty && errors.altura && touched.altura
+                              ? Styles.erro
+                              : ''
+                          }
+                        />
+                        {dirty && errors.altura && touched.altura && (
+                          <strong>{errors.altura}</strong>
+                        )}
+                      </label>
+                      <label className={Styles.customInput}>
+                        <h2>Largura</h2>
+                        <input
+                          min="0"
+                          name="largura"
+                          type="number"
+                          value={values.largura}
+                          onChange={handleChange}
+                          className={
+                            dirty && errors.largura && touched.largura
+                              ? Styles.erro
+                              : ''
+                          }
+                        />
+                        {dirty && errors.largura && touched.largura && (
+                          <strong>{errors.largura}</strong>
+                        )}
+                      </label>
+                      <label className={Styles.customInput}>
+                        <h2>Comprimento</h2>
+                        <input
+                          min="0"
+                          name="comprimento"
+                          type="number"
+                          value={values.comprimento}
+                          onChange={handleChange}
+                          className={
+                            dirty && errors.comprimento && touched.comprimento
+                              ? Styles.erro
+                              : ''
+                          }
+                        />
+                        {dirty && errors.comprimento && touched.comprimento && (
+                          <strong>{errors.comprimento}</strong>
+                        )}
+                      </label>
+                      <label className={Styles.customInput}>
+                        <h2>Peso</h2>
+                        <input
+                          min="0"
+                          name="peso"
+                          type="number"
+                          value={values.peso}
+                          onChange={handleChange}
+                          className={
+                            dirty && errors.peso && touched.peso
+                              ? Styles.erro
+                              : ''
+                          }
+                        />
+                        {dirty && errors.peso && touched.peso && (
+                          <strong>{errors.peso}</strong>
+                        )}
+                      </label>
                     </div>
                     <div>
                       <div>
-                        <CustomField
+                        <CustomDropdown
                           label="Categoria"
+                          initialValue={
+                            categorias.find(
+                              categoria =>
+                                categoria.categoria_id.toString() ===
+                                dadosProduto.categoria_id
+                            ).nome
+                          }
                           name="categoria_id"
-                          type="text"
+                          categorias={categorias}
                         />
-                        <CustomField
+                        <CustomDropdown
                           label="Subcategoria"
                           name="subcategoria_id"
-                          type="text"
+                          sub_categorias={getSubcategorias(
+                            values.categoria_id
+                              ? Number(values.categoria_id)
+                              : Number(dadosProduto.categoria_id)
+                          )}
                         />
                       </div>
                       <div>
-                        <CustomField
+                        <CustomDropdown
                           label="Atributo"
-                          name="atributo"
-                          type="text"
+                          array={atributos}
+                          name=""
                         />
                         <CustomField
                           label="Valor"
@@ -364,157 +458,114 @@ export default function CadastroProduto({
             </Formik>
           </>
         )
-      // case 3:
-      //   return (
-      //     <>
-      //       <div className={Styles.title}>
-      //         <h1>Título</h1>
-      //         <img src="/img-padrao.svg" alt="Imagem" />
-      //       </div>
-      //       <PassosCadastro passo={passo} />
-      //       <div className={Styles.tipoEntrega}>
-      //         <label>
-      //           <h2>Qual tipo de endereço de entrega?</h2>
-      //           <input type="text" placeholder="Selecione" />
-      //         </label>
-      //         <div className={Styles.selecionarEndereço}>
-      //           <h2>Qual o endereço?</h2>
-      //           <ul>
-      //             <li>
-      //               <div className={Styles.highlighted} />
-      //               <span>
-      //                 R. Santos Dumont, 1487 <br /> Ponta Grossa PR 84060-120
-      //               </span>
-      //             </li>
-      //             <li>
-      //               <div />
-      //               <span>
-      //                 R. Santos Dumont, 1487 <br /> Ponta Grossa PR 84060-120
-      //               </span>
-      //             </li>
-      //             <li>
-      //               <div />
-      //               <span>
-      //                 R. Santos Dumont, 1487 <br /> Ponta Grossa PR 84060-120
-      //               </span>
-      //             </li>
-      //           </ul>
-      //         </div>
-      //       </div>
-      //       <NewAdressButton />
-      //       <div className={Styles.buttons}>
-      //         <button onClick={() => setPasso(2)}>Voltar</button>
-      //         <button onClick={() => setPasso(4)}>Próximo</button>
-      //       </div>
-      //     </>
-      //   )
-      // case 4:
-      //   return (
-      //     <>
-      //       <div className={Styles.titleLastPage}>
-      //         <h1>Resumo do anúncio</h1>
-      //         <h2>Seu anúncio irá aparecer assim:</h2>
-      //       </div>
-      //       <section className={Styles.resumoAnuncio}>
-      //         <div className={Styles.imagens}>
-      //           <div className={Styles.imagemGrande}>
-      //             <img src="/img-padrao.svg" alt="Img" />
-      //             <button className={Styles.botaoEditar}>
-      //               <img src="/pencil.svg" alt="Botao de editar" />
-      //               Editar
-      //             </button>
-      //           </div>
-      //           <div className={Styles.carrossel}>
-      //             <Slider {...settings}>
-      //               <div>
-      //                 <div className={Styles.imagensCarrossel}>
-      //                   <img src="/img-padrao.svg" alt="Img" />
-      //                 </div>
-      //               </div>
-      //               <div>
-      //                 <div className={Styles.imagensCarrossel}>
-      //                   <img src="/img-padrao.svg" alt="Img" />
-      //                 </div>
-      //               </div>
-      //               <div>
-      //                 <div className={Styles.imagensCarrossel}>
-      //                   <img src="/img-padrao.svg" alt="Img" />
-      //                 </div>
-      //               </div>
-      //               <div>
-      //                 <div className={Styles.imagensCarrossel}>
-      //                   <img src="/img-padrao.svg" alt="Img" />
-      //                 </div>
-      //               </div>
-      //               <div>
-      //                 <div className={Styles.imagensCarrossel}>
-      //                   <img src="/img-padrao.svg" alt="Img" />
-      //                 </div>
-      //               </div>
-      //               <div>
-      //                 <div className={Styles.imagensCarrossel}>
-      //                   <img src="/img-padrao.svg" alt="Img" />
-      //                 </div>
-      //               </div>
-      //             </Slider>
-      //           </div>
-      //         </div>
-      //         <div className={Styles.informaçoes}>
-      //           <div className={Styles.tagsAnuncio}>
-      //             <span>Exemplo tag 1</span>
-      //             <span>Tag 2</span>
-      //             <button className={Styles.botaoEditar}>
-      //               <img src="/pencil.svg" alt="Botao de editar" />
-      //               Editar
-      //             </button>
-      //           </div>
-      //           <div className={Styles.tituloAnuncio}>
-      //             <h1>Título do anúncio</h1>
-      //             <button className={Styles.botaoEditar}>
-      //               <img src="/pencil.svg" alt="Botao de editar" />
-      //               Editar
-      //             </button>
-      //           </div>
-      //           <div className={Styles.descricaoAnuncio}>
-      //             <p>
-      //               Lorem Ipsum is simply dummy text of the printing and
-      //               typesetting industry. Lorem Ipsum has been the industry’s
-      //               standard dummy text ever since the 1500s, when an unknown
-      //               printer took a galley of type and scrambled it to make a
-      //               type specimen book.
-      //             </p>
-      //             <button className={Styles.botaoEditar}>
-      //               <img src="/pencil.svg" alt="Botao de editar" />
-      //               Editar
-      //             </button>
-      //           </div>
-      //           <div className={Styles.categoriaAnuncio}>
-      //             <strong>Título Categoria</strong>
-      //             <span>Lorem Ipsum is simply dummy text.</span>
-      //             <button className={Styles.botaoEditar}>
-      //               <img src="/pencil.svg" alt="Botao de editar" />
-      //               Editar
-      //             </button>
-      //           </div>
-      //           <div className={Styles.preçoAnuncio}>
-      //             <span>de R$320</span>
-      //             <strong>
-      //               <sup>por</sup>R$260
-      //             </strong>
-      //             <h2>R$360 preço estimado no varejo</h2>
-      //             <button className={Styles.botaoEditar}>
-      //               <img src="/pencil.svg" alt="Botao de editar" />
-      //               Editar
-      //             </button>
-      //           </div>
-      //         </div>
-      //       </section>
-      //       <div className={Styles.buttonsLastPage}>
-      //         <button onClick={() => setPasso(3)}>Voltar</button>
-      //         <button onClick={() => setPasso(4)}>Publicar anúncio</button>
-      //       </div>
-      //     </>
-      //   )
+
+      case 3:
+        return (
+          <>
+            <div className={Styles.titleLastPage}>
+              <h1>Resumo do anúncio</h1>
+              <h2>Seu anúncio irá aparecer assim:</h2>
+            </div>
+            <section className={Styles.resumoAnuncio}>
+              <div className={Styles.imagens}>
+                <div className={Styles.imagemGrande}>
+                  <img src="/img-padrao.svg" alt="Img" />
+                  <button className={Styles.botaoEditar}>
+                    <img src="/pencil.svg" alt="Botao de editar" />
+                    Editar
+                  </button>
+                </div>
+                <div className={Styles.carrossel}>
+                  <Slider {...settings}>
+                    <div>
+                      <div className={Styles.imagensCarrossel}>
+                        <img src="/img-padrao.svg" alt="Img" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className={Styles.imagensCarrossel}>
+                        <img src="/img-padrao.svg" alt="Img" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className={Styles.imagensCarrossel}>
+                        <img src="/img-padrao.svg" alt="Img" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className={Styles.imagensCarrossel}>
+                        <img src="/img-padrao.svg" alt="Img" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className={Styles.imagensCarrossel}>
+                        <img src="/img-padrao.svg" alt="Img" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className={Styles.imagensCarrossel}>
+                        <img src="/img-padrao.svg" alt="Img" />
+                      </div>
+                    </div>
+                  </Slider>
+                </div>
+              </div>
+              <div className={Styles.informaçoes}>
+                <div className={Styles.tagsAnuncio}>
+                  <span>Exemplo tag 1</span>
+                  <span>Tag 2</span>
+                  <button className={Styles.botaoEditar}>
+                    <img src="/pencil.svg" alt="Botao de editar" />
+                    Editar
+                  </button>
+                </div>
+                <div className={Styles.tituloAnuncio}>
+                  <h1>Título do anúncio</h1>
+                  <button className={Styles.botaoEditar}>
+                    <img src="/pencil.svg" alt="Botao de editar" />
+                    Editar
+                  </button>
+                </div>
+                <div className={Styles.descricaoAnuncio}>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry’s
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </p>
+                  <button className={Styles.botaoEditar}>
+                    <img src="/pencil.svg" alt="Botao de editar" />
+                    Editar
+                  </button>
+                </div>
+                <div className={Styles.categoriaAnuncio}>
+                  <strong>Título Categoria</strong>
+                  <span>Lorem Ipsum is simply dummy text.</span>
+                  <button className={Styles.botaoEditar}>
+                    <img src="/pencil.svg" alt="Botao de editar" />
+                    Editar
+                  </button>
+                </div>
+                <div className={Styles.preçoAnuncio}>
+                  <span>de R$320</span>
+                  <strong>
+                    <sup>por</sup>R$260
+                  </strong>
+                  <h2>R$360 preço estimado no varejo</h2>
+                  <button className={Styles.botaoEditar}>
+                    <img src="/pencil.svg" alt="Botao de editar" />
+                    Editar
+                  </button>
+                </div>
+              </div>
+            </section>
+            <div className={Styles.buttonsLastPage}>
+              <button onClick={() => setPasso(3)}>Voltar</button>
+              <button>Publicar anúncio</button>
+            </div>
+          </>
+        )
       default:
         return <h1>Carregando conteúdo...</h1>
     }
