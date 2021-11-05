@@ -14,7 +14,6 @@ import api from '../services/api'
 import { GetStaticProps } from 'next'
 
 export default function Produto({ products }): JSX.Element {
-  console.log(products)
   const Produto = props => {
     return (
       <Container>
@@ -88,14 +87,6 @@ export default function Produto({ products }): JSX.Element {
         <Navbar />
       </section>
       <section>
-        {/* {products?.map((produto, index) => (
-          <Produto
-            key={index}
-            nome={produto.nome}
-            valor={produto.valor}
-            valor_com_desconto={produto.valor_com_desconto}
-          />
-        ))} */}
         <Produto
           key="1"
           nome={products[1].nome}
