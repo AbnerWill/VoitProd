@@ -16,6 +16,8 @@ export function PedidoInterna(): JSX.Element {
   const [dadosAcesso, setDadosAcesso] = useState('')
   const [senha, setSenha] = useState('')
   const [novaSenha, setNovaSenha] = useState('')
+  const [nomeLoja, setNomeLoja] = useState('')
+  const [razaoSocial, setrazaoSocial] = useState('')
 
   function Conteudo() {
     switch (estado) {
@@ -30,6 +32,9 @@ export function PedidoInterna(): JSX.Element {
 
       case 'Meus Anúncios':
         return <MeusPedidos />
+
+      case 'Cadastro Loja':
+        return <CadastroLoja />  
 
       default:
         return <h1>Não encontrado</h1>
@@ -327,6 +332,60 @@ export function PedidoInterna(): JSX.Element {
     )
   }
 
+  const CadastroLoja = () => {
+    return (
+      <div className={`${Styles.divPedidos} col-12 col-md-10`}>
+        <div className={Styles.divInputs}>
+          <div className="row">
+            <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+              <label htmlFor="nomeLoja">Nome Fantasia</label>
+              <input
+                type="text"
+                id="nomeLoja"
+                placeholder="Nome Fantasia"
+                onBlur={evt => setNomeLoja(evt.target.value)}
+              />
+              <label htmlFor="razaoSocial">Razão Social</label>
+              <input
+                type="text"
+                id="razaoSocial"
+                placeholder="Razão Social"
+              />
+              <label htmlFor="cpf">CPF</label>
+              <input type="text" id="cpf" placeholder="CPF" />
+              <label htmlFor="cep">CEP</label>
+              <input type="text" id="cep" placeholder="CEP" />
+              <label htmlFor="rua">Rua</label>
+              <input type="text" placeholder="Rua" />
+              <label htmlFor="numero">Número</label> 
+              <input type="number" placeholder="Número" />
+              <label htmlFor="telefone">Telefone</label>
+              <input type="text" placeholder="Telefone" />
+            </div>
+            <div className={`${Styles.divSeparador} col-1`}></div>
+            <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+              <label htmlFor="complemento">Complemento</label>
+              <input type="text" placeholder="Complemento" />
+              <label htmlFor="bairro">Bairro</label>
+              <input type="text" placeholder="Bairro" />
+              <label htmlFor="cidade">Cidade</label>
+              <input type="text" placeholder="Cidade" />
+              <label htmlFor="complemento">Complemento</label>
+              <input type="text" placeholder="Complemento" />
+              <label htmlFor="uf">UF</label>
+              <input type="text" placeholder="UF" />
+              <label htmlFor="email">E-mail</label>
+              <input type="text" placeholder="E-mail" />
+              <button className={`${Styles.btnEndereco} mb-5`}>
+                Cadastrar Loja
+              </button>
+            </div>  
+          </div>
+        </div>
+      </div> 
+    )
+  }     
+
   return (
     <div>
       <Container>
@@ -370,6 +429,14 @@ export function PedidoInterna(): JSX.Element {
               onClick={() => setEstado('Meus Anúncios')}
             >
               Meus Anúncios
+            </a>
+            <hr className={Styles.separadorLinks} />
+            <a
+              href="#"
+              className={Styles.links}
+              onClick={() => setEstado('Cadastro Loja')}
+            >
+              Cadastro Loja
             </a>
             <hr className={Styles.separadorLinks} />
             <a href="#" className={Styles.links}>
