@@ -20,7 +20,7 @@ interface Categoria {
   categoria_id: number
   nome: string
   descricao: string
-  atributos?: {
+  atributo?: {
     atributo_grupo_id: number
     data_adicionado: string
     nome: string
@@ -30,6 +30,12 @@ interface Categoria {
     nome: string
     descricao: string
   }[]
+}
+
+interface Atributo {
+  atributo_grupo_id: number
+  data_adicionado: string
+  nome: string
 }
 
 interface CadastroProdutoProps {
@@ -42,10 +48,11 @@ interface DadosProduto {
   subcategoria_id: string
   nome: string
   valor: number
+  codigo_produto?: string
   cor?: string
   tamanho?: number
   marca?: string
-  condicao?: string
+  produto_estado?: string
   valor_com_desconto?: number
   descricao?: string
   altura?: number
@@ -84,7 +91,7 @@ const informaçoesBasicasSchema = Yup.object().shape({
   cor: Yup.string(),
   tamanho: Yup.number(),
   marca: Yup.string(),
-  condicao: Yup.string()
+  produto_estado: Yup.string()
 })
 
 const informaçõesSecundariasSchema = Yup.object().shape({
@@ -94,7 +101,12 @@ const informaçõesSecundariasSchema = Yup.object().shape({
   largura: Yup.number(),
   comprimento: Yup.number(),
   peso: Yup.number(),
-  categoria_id: Yup.string()
+  categoria_id: Yup.string(),
+  atributo: Yup.object({
+    atributo_valor_id: Yup.string(),
+    nome: Yup.string()
+  }),
+  valorAtributo: Yup.string()
 })
 
 export default function CadastroProduto({
@@ -103,7 +115,7 @@ export default function CadastroProduto({
   const [passo, setPasso] = useState(0)
   const [dadosProduto, setDadosProduto] =
     useState<DadosProduto>(dadosProdutoInicial)
-  const [atributos, setAtributos] = useState([])
+  const [atributosSalvos, setAtributosSalvos] = useState([])
 
   const access_token = parseCookies()
 
@@ -112,35 +124,23 @@ export default function CadastroProduto({
       categoria => categoria.categoria_id === id
     )
 
-    getAtributosPorCategoriaID(id)
-
     return categoria.sub_categoria
   }
 
-  async function getAtributosPorCategoriaID(id: number) {
-    const { data } = await api.get(`/categoria/${id}`, {
-      headers: {
-        authorization: `Bearer ${access_token['access-token']}`
-      }
-    })
+  function getAtributos(id: number) {
+    const categoria = categorias.find(
+      categoria => categoria.categoria_id === id
+    )
 
-    const dados: Categoria = { ...data }
-
-    const atributosResponse = dados.atributos?.map(atributo => {
-      return atributo.nome
-    })
-
-    setAtributos([...atributos, ...atributosResponse])
+    return categoria.atributo
   }
 
   function SubmitInformacoesBasicas(values) {
     setDadosProduto({
       ...dadosProduto,
       nome: values.nome,
-      cor: values.cor,
-      tamanho: values.tamanho,
       marca: values.marca,
-      condicao: values.condicao,
+      produto_estado: values.produto_estado,
       valor: values.valor,
       valor_com_desconto: values.valorDesconto
     })
@@ -148,25 +148,45 @@ export default function CadastroProduto({
     setPasso(oldValue => oldValue + 1)
   }
 
-  async function SubmitInformacoesSecundarias(values) {
+  function SubmitInformacoesSecundarias(values) {
     setDadosProduto({
       ...dadosProduto,
-      subcategoria_id: values.subcategoria_id,
-      descricao: values.descricao
+      loja_id: '14',
+      codigo_produto: 'ksks5583',
+      subcategoria_id: String(values.subcategoria_id),
+      descricao: values.descricao,
+      peso: values.peso,
+      altura: values.altura,
+      largura: values.largura,
+      comprimento: values.comprimento,
+      categoria_id: String(values.categoria_id),
+      produto_atributo: atributosSalvos.map(atributo => {
+        return {
+          atributo_grupo_valor_id: String(atributo.atributo_grupo_valor_id),
+          valor: atributo.valor
+        }
+      })
     })
 
-    // try {
-    //   const response = await api.post('/produto', {
-    //     data,
-    //     headers: {
-    //       authorization: `Bearer ${access_token['access-token']}`
-    //     }
-    //   })
+    setPasso(oldValue => oldValue + 1)
+  }
 
-    //   console.log(response)
-    // } catch (error) {
-    //   console.log(error.response)
-    // }
+  const data = { ...dadosProduto }
+
+  async function PublicarProduto() {
+    console.log(data)
+
+    try {
+      const response = await api.post('/produto', data, {
+        headers: {
+          Authorization: `Bearer ${access_token['access-token']}`
+        }
+      })
+
+      console.log(response)
+    } catch (error) {
+      console.log(error.response)
+    }
   }
 
   function mudarConteudo(passo: number) {
@@ -220,7 +240,7 @@ export default function CadastroProduto({
                 cor: '',
                 tamanho: '',
                 marca: '',
-                condicao: '',
+                produto_estado: '',
                 valor: '',
                 valorDesconto: ''
               }}
@@ -247,8 +267,8 @@ export default function CadastroProduto({
                       <CustomField label="Marca" type="text" name="marca" />
                       <CustomDropdown
                         label="Condição"
-                        name="condicao"
-                        array={['Usado', 'Novo']}
+                        name="produto_estado"
+                        array={['usado', 'novo']}
                       />
                     </div>
                   </div>
@@ -316,7 +336,12 @@ export default function CadastroProduto({
                 comprimento: 0,
                 peso: 0,
                 categoria_id: '',
-                subcategoria_id: ''
+                subcategoria_id: '',
+                atributo: {
+                  atributo_valor_id: '',
+                  nome: ''
+                },
+                valorAtributo: ''
               }}
               onSubmit={values => SubmitInformacoesSecundarias(values)}
             >
@@ -410,13 +435,6 @@ export default function CadastroProduto({
                       <div>
                         <CustomDropdown
                           label="Categoria"
-                          initialValue={
-                            categorias.find(
-                              categoria =>
-                                categoria.categoria_id.toString() ===
-                                dadosProduto.categoria_id
-                            ).nome
-                          }
                           name="categoria_id"
                           categorias={categorias}
                         />
@@ -430,18 +448,48 @@ export default function CadastroProduto({
                           )}
                         />
                       </div>
+                      {atributosSalvos.map(atributoSalvo => (
+                        <div key={atributoSalvo.atributo_grupo_valor_id}>
+                          <label className={Styles.customInput}>
+                            <h2>Atributo</h2>
+                            <input value={atributoSalvo.nome} readOnly />
+                          </label>
+                          <label className={Styles.customInput}>
+                            <h2>Valor</h2>
+                            <input value={atributoSalvo.valor} readOnly />
+                          </label>
+                        </div>
+                      ))}
                       <div>
                         <CustomDropdown
                           label="Atributo"
-                          array={atributos}
-                          name=""
+                          atributos={getAtributos(
+                            values.categoria_id
+                              ? Number(values.categoria_id)
+                              : Number(dadosProduto.categoria_id)
+                          )}
+                          name="atributo"
                         />
                         <CustomField
                           label="Valor"
                           name="valorAtributo"
                           type="text"
                         />
-                        <button className={Styles.botãoFlutuante}>
+                        <button
+                          className={Styles.botãoFlutuante}
+                          type="button"
+                          onClick={() => {
+                            setAtributosSalvos([
+                              ...atributosSalvos,
+                              {
+                                atributo_grupo_valor_id:
+                                  values.atributo.atributo_valor_id,
+                                nome: values.atributo.nome,
+                                valor: values.valorAtributo
+                              }
+                            ])
+                          }}
+                        >
                           <img src="/mais.svg" alt="Operador de adição" />
                         </button>
                       </div>
@@ -511,29 +559,15 @@ export default function CadastroProduto({
                 </div>
               </div>
               <div className={Styles.informaçoes}>
-                <div className={Styles.tagsAnuncio}>
-                  <span>Exemplo tag 1</span>
-                  <span>Tag 2</span>
-                  <button className={Styles.botaoEditar}>
-                    <img src="/pencil.svg" alt="Botao de editar" />
-                    Editar
-                  </button>
-                </div>
                 <div className={Styles.tituloAnuncio}>
-                  <h1>Título do anúncio</h1>
+                  <h1>{dadosProduto.nome}</h1>
                   <button className={Styles.botaoEditar}>
                     <img src="/pencil.svg" alt="Botao de editar" />
                     Editar
                   </button>
                 </div>
                 <div className={Styles.descricaoAnuncio}>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry’s
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book.
-                  </p>
+                  <p>{dadosProduto.descricao}</p>
                   <button className={Styles.botaoEditar}>
                     <img src="/pencil.svg" alt="Botao de editar" />
                     Editar
@@ -548,9 +582,19 @@ export default function CadastroProduto({
                   </button>
                 </div>
                 <div className={Styles.preçoAnuncio}>
-                  <span>de R$320</span>
+                  <span>
+                    de{' '}
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(dadosProduto.valor)}
+                  </span>
                   <strong>
-                    <sup>por</sup>R$260
+                    <sup>por</sup>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(dadosProduto.valor_com_desconto)}
                   </strong>
                   <h2>R$360 preço estimado no varejo</h2>
                   <button className={Styles.botaoEditar}>
@@ -561,8 +605,10 @@ export default function CadastroProduto({
               </div>
             </section>
             <div className={Styles.buttonsLastPage}>
-              <button onClick={() => setPasso(3)}>Voltar</button>
-              <button>Publicar anúncio</button>
+              <button onClick={() => setPasso(passo => passo - 1)}>
+                Voltar
+              </button>
+              <button onClick={PublicarProduto}>Publicar anúncio</button>
             </div>
           </>
         )
@@ -615,6 +661,13 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
           subcategoria_id: sub_categoria.subcategoria_id,
           nome: sub_categoria.nome,
           descricao: sub_categoria.descricao
+        }
+      }),
+      atributo: categoria.atributo.map(atributo => {
+        return {
+          atributo_grupo_id: atributo.atributo_grupo_id,
+          data_adicionado: atributo.data_adicionado,
+          nome: atributo.nome
         }
       })
     }

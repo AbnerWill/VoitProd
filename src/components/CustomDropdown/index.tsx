@@ -21,6 +21,11 @@ interface CustomDropdownProps {
     nome: string
     descricao: string
   }[]
+  atributos?: {
+    atributo_grupo_id: number
+    nome: string
+    data_adicionado: string
+  }[]
 }
 
 export function CustomDropdown(props: CustomDropdownProps): JSX.Element {
@@ -80,6 +85,21 @@ export function CustomDropdown(props: CustomDropdownProps): JSX.Element {
                   }}
                 >
                   {categoria.nome}
+                </div>
+              ))
+            : props.atributos
+            ? props.atributos.map(atributo => (
+                <div
+                  key={atributo.atributo_grupo_id}
+                  onClick={() => {
+                    setName(atributo.nome)
+                    helpers.setValue({
+                      atributo_valor_id: atributo.atributo_grupo_id,
+                      nome: atributo.nome
+                    })
+                  }}
+                >
+                  {atributo.nome}
                 </div>
               ))
             : props.sub_categorias.map(subcategoria => (
