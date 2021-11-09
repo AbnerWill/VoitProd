@@ -135,6 +135,23 @@ export default function CadastroProduto({
     return categoria.atributo
   }
 
+  async function getAtributosFromID(id) {
+    try {
+      const { data } = await api.get(
+        `/atributo/categoria?atributo_grupo_id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token['access-token']}`
+          }
+        }
+      )
+
+      return data.atributo_valor
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+
   function SubmitInformacoesBasicas(values) {
     setDadosProduto({
       ...dadosProduto,
@@ -152,7 +169,7 @@ export default function CadastroProduto({
     setDadosProduto({
       ...dadosProduto,
       loja_id: '14',
-      codigo_produto: 'ksks5583',
+      codigo_produto: 'sdsd5583',
       subcategoria_id: String(values.subcategoria_id),
       descricao: values.descricao,
       peso: values.peso,
@@ -174,58 +191,24 @@ export default function CadastroProduto({
   const data = { ...dadosProduto }
 
   async function PublicarProduto() {
-    console.log(data)
+    console.log(dadosProduto.produto_atributo)
+    console.log(await getAtributosFromID(10))
 
-    try {
-      const response = await api.post('/produto', data, {
-        headers: {
-          Authorization: `Bearer ${access_token['access-token']}`
-        }
-      })
-
-      console.log(response)
-    } catch (error) {
-      console.log(error.response)
-    }
+    // try {
+    //   const response = await api.post('/produto', data, {
+    //     headers: {
+    //       Authorization: `Bearer ${access_token['access-token']}`
+    //     }
+    //   })
+    //   console.log(response)
+    // } catch (error) {
+    //   console.log(error.response)
+    // }
   }
 
   function mudarConteudo(passo: number) {
     switch (passo) {
       case 0:
-        return (
-          <>
-            <div className={Styles.title}>
-              <h1>Título</h1>
-              <img src="/img-padrao.svg" alt="Imagem" />
-            </div>
-            <h1 className={Styles.heading}>
-              Em que categoria seu produto se encaixa?
-            </h1>
-            <section className={Styles.content}>
-              <ul className={Styles.grid}>
-                {categorias.map(categorias => (
-                  <li
-                    key={categorias.categoria_id}
-                    onClick={() => {
-                      setDadosProduto({
-                        ...dadosProduto,
-                        categoria_id: String(categorias.categoria_id)
-                      })
-
-                      setPasso(oldValue => oldValue + 1)
-                    }}
-                  >
-                    <div>
-                      <img src="/img-padrao.svg" alt="default" />
-                    </div>
-                    <strong>{categorias.nome}</strong>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </>
-        )
-      case 1:
         return (
           <>
             <div className={Styles.title}>
@@ -319,7 +302,7 @@ export default function CadastroProduto({
             </Formik>
           </>
         )
-      case 2:
+      case 1:
         return (
           <>
             <div className={Styles.title}>
@@ -441,11 +424,15 @@ export default function CadastroProduto({
                         <CustomDropdown
                           label="Subcategoria"
                           name="subcategoria_id"
-                          sub_categorias={getSubcategorias(
+                          sub_categorias={
                             values.categoria_id
-                              ? Number(values.categoria_id)
-                              : Number(dadosProduto.categoria_id)
-                          )}
+                              ? getSubcategorias(
+                                  values.categoria_id
+                                    ? Number(values.categoria_id)
+                                    : Number(dadosProduto.categoria_id)
+                                )
+                              : []
+                          }
                         />
                       </div>
                       {atributosSalvos.map(atributoSalvo => (
@@ -463,11 +450,15 @@ export default function CadastroProduto({
                       <div>
                         <CustomDropdown
                           label="Atributo"
-                          atributos={getAtributos(
+                          atributos={
                             values.categoria_id
-                              ? Number(values.categoria_id)
-                              : Number(dadosProduto.categoria_id)
-                          )}
+                              ? getAtributos(
+                                  values.categoria_id
+                                    ? Number(values.categoria_id)
+                                    : Number(dadosProduto.categoria_id)
+                                )
+                              : []
+                          }
                           name="atributo"
                         />
                         <CustomField
@@ -507,7 +498,7 @@ export default function CadastroProduto({
           </>
         )
 
-      case 3:
+      case 2:
         return (
           <>
             <div className={Styles.titleLastPage}>
@@ -574,8 +565,8 @@ export default function CadastroProduto({
                   </button>
                 </div>
                 <div className={Styles.categoriaAnuncio}>
-                  <strong>Título Categoria</strong>
-                  <span>Lorem Ipsum is simply dummy text.</span>
+                  <strong>aaaa</strong>
+                  <span>aaaa</span>
                   <button className={Styles.botaoEditar}>
                     <img src="/pencil.svg" alt="Botao de editar" />
                     Editar
@@ -596,7 +587,6 @@ export default function CadastroProduto({
                       currency: 'BRL'
                     }).format(dadosProduto.valor_com_desconto)}
                   </strong>
-                  <h2>R$360 preço estimado no varejo</h2>
                   <button className={Styles.botaoEditar}>
                     <img src="/pencil.svg" alt="Botao de editar" />
                     Editar
