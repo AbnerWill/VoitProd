@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { ModalCadastro } from '../ModalEndereco'
 import { CustomCheckbox } from '../CustomCheckbox'
 import { ModalCartaoCredito } from '../ModalCartaoCredito'
+import InputMask from 'react-input-mask'
 
 export function PedidoInterna(): JSX.Element {
   const [estado, setEstado] = useState('Pedidos')
@@ -40,6 +41,12 @@ export function PedidoInterna(): JSX.Element {
         return <h1>Não encontrado</h1>
     }
   }
+  const MaskedInputCep = ({value , onChange}) => {
+    return <InputMask mask="99.999-999" value={value} onChange={onChange} />
+  }
+  const MaskedInputCpf = ({value , onChange}) => {
+    return <InputMask mask="999.999.999-99" value={value} onChange={onChange} />
+  }    
 
   const Pedidos = () => {
     return (
@@ -333,6 +340,8 @@ export function PedidoInterna(): JSX.Element {
   }
 
   const CadastroLoja = () => {
+    const [cep, setCep] = useState('')
+    const [cpf, setCpf] = useState('')
     return (
       <div className={`${Styles.divPedidos} col-12 col-md-10`}>
         <div className={Styles.divInputs}>
@@ -352,15 +361,15 @@ export function PedidoInterna(): JSX.Element {
                 placeholder="Razão Social"
               />
               <label htmlFor="cpf">CPF</label>
-              <input type="text" id="cpf" placeholder="CPF" />
+              <MaskedInputCpf value={cpf} onChange= {(event) => setCpf(event.target.value)} />
               <label htmlFor="cep">CEP</label>
-              <input type="text" id="cep" placeholder="CEP" />
+              <MaskedInputCep  value={cep} onChange= {(event) => setCep(event.target.value)} />
               <label htmlFor="rua">Rua</label>
               <input type="text" placeholder="Rua" />
               <label htmlFor="numero">Número</label> 
               <input type="number" placeholder="Número" />
               <label htmlFor="telefone">Telefone</label>
-              <input type="text" placeholder="Telefone" />
+              <input type="text" placeholder="Telefone"/>
             </div>
             <div className={`${Styles.divSeparador} col-1`}></div>
             <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
@@ -373,7 +382,35 @@ export function PedidoInterna(): JSX.Element {
               <label htmlFor="complemento">Complemento</label>
               <input type="text" placeholder="Complemento" />
               <label htmlFor="uf">UF</label>
-              <input type="text" placeholder="UF" />
+              <select placeholder="UF" >
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espirito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+              </select>
               <label htmlFor="email">E-mail</label>
               <input type="text" placeholder="E-mail" />
               <button className={`${Styles.btnEndereco} mb-5`}>

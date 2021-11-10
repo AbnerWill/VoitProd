@@ -223,6 +223,15 @@
     padding: 0.8rem;
     margin: 1.3rem 0;
   }
+
+  select {
+    margin: 1.3rem 0;
+    width: 28rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    border: 1px solid #D9DEEA;
+    background-color: #Fff;
+  }
 }
 
 .divRadio {
@@ -315,4 +324,8 @@
 
 .checkboxPreferencias {
   width: 3rem !important;
+}
+
+.selectUF{
+  margin: 1.3rem 0;
 }
