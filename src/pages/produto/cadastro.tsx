@@ -24,6 +24,11 @@ interface Categoria {
     atributo_grupo_id: number
     data_adicionado: string
     nome: string
+    atributo_grupo: {
+      atributo_grupo_valor_id: number
+      data_adicionado: string
+      nome: string
+    }[]
   }[]
   sub_categoria: {
     subcategoria_id: string
@@ -32,14 +37,18 @@ interface Categoria {
   }[]
 }
 
-interface Atributo {
-  atributo_grupo_id: number
+interface Cor {
+  cor_id: number
   data_adicionado: string
   nome: string
+  ordem: number
 }
 
-interface CadastroProdutoProps {
-  categorias: Categoria[]
+interface Tamanho {
+  tamanho_id: number
+  nome: string
+  ordem: number
+  data_adicionado: string
 }
 
 interface DadosProduto {
@@ -49,8 +58,8 @@ interface DadosProduto {
   nome: string
   valor: number
   codigo_produto?: string
-  cor?: string
-  tamanho?: number
+  cor_id?: string
+  tamanho_id?: string
   marca?: string
   produto_estado?: string
   valor_com_desconto?: number
@@ -64,6 +73,11 @@ interface DadosProduto {
     valor: string
   }[]
   foto?: string
+}
+
+interface CadastroProdutoProps {
+  cores: Cor[]
+  tamanhos: Tamanho[]
 }
 
 const dadosProdutoInicial: DadosProduto = {
@@ -101,23 +115,70 @@ const informaçõesSecundariasSchema = Yup.object().shape({
   largura: Yup.number(),
   comprimento: Yup.number(),
   peso: Yup.number(),
+  cor_id: Yup.number(),
+  tamanho_id: Yup.number(),
   categoria_id: Yup.string(),
   atributo: Yup.object({
-    atributo_valor_id: Yup.string(),
+    atributo_grupo_valor_id: Yup.string(),
     nome: Yup.string()
   }),
   valorAtributo: Yup.string()
 })
 
 export default function CadastroProduto({
-  categorias
+  cores,
+  tamanhos
 }: CadastroProdutoProps): JSX.Element {
   const [passo, setPasso] = useState(0)
   const [dadosProduto, setDadosProduto] =
     useState<DadosProduto>(dadosProdutoInicial)
   const [atributosSalvos, setAtributosSalvos] = useState([])
+  const [categorias, setCategorias] = useState<Categoria[]>([])
 
   const access_token = parseCookies()
+
+  useEffect(() => {
+    getCategorias()
+  }, [])
+
+  async function getCategorias() {
+    const categoriaResponse = await api.get('/categoria', {
+      headers: {
+        authorization: `Bearer ${access_token['access-token']}`
+      }
+    })
+
+    const newCategorias: Categoria[] = categoriaResponse.data.map(categoria => {
+      return {
+        categoria_id: categoria.categoria_id,
+        nome: categoria.nome,
+        descricao: categoria.descricao,
+        sub_categoria: categoria.sub_categoria.map(sub_categoria => {
+          return {
+            subcategoria_id: sub_categoria.subcategoria_id,
+            nome: sub_categoria.nome,
+            descricao: sub_categoria.descricao
+          }
+        }),
+        atributo: categoria.atributo.map(atributo => {
+          return {
+            atributo_grupo_id: atributo.atributo_grupo_id,
+            data_adicionado: atributo.data_adicionado,
+            nome: atributo.nome,
+            atributo_grupo: atributo.atributo_grupo.map(valor => {
+              return {
+                atributo_grupo_valor_id: valor.atributo_grupo_valor_id,
+                data_adicionado: valor.data_adicionado,
+                nome: valor.nome
+              }
+            })
+          }
+        })
+      }
+    })
+
+    setCategorias([...categorias, ...newCategorias])
+  }
 
   function getSubcategorias(id: number) {
     const categoria = categorias.find(
@@ -133,23 +194,6 @@ export default function CadastroProduto({
     )
 
     return categoria.atributo
-  }
-
-  async function getAtributosFromID(id) {
-    try {
-      const { data } = await api.get(
-        `/atributo/categoria?atributo_grupo_id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token['access-token']}`
-          }
-        }
-      )
-
-      return data.atributo_valor
-    } catch (error) {
-      console.log(error.response)
-    }
   }
 
   function SubmitInformacoesBasicas(values) {
@@ -169,7 +213,9 @@ export default function CadastroProduto({
     setDadosProduto({
       ...dadosProduto,
       loja_id: '14',
-      codigo_produto: 'sdsd5583',
+      codigo_produto: 'czxc1231',
+      cor_id: String(values.cor_id),
+      tamanho_id: String(values.tamanho_id),
       subcategoria_id: String(values.subcategoria_id),
       descricao: values.descricao,
       peso: values.peso,
@@ -188,11 +234,8 @@ export default function CadastroProduto({
     setPasso(oldValue => oldValue + 1)
   }
 
-  const data = { ...dadosProduto }
-
   async function PublicarProduto() {
-    console.log(dadosProduto.produto_atributo)
-    console.log(await getAtributosFromID(10))
+    const data = { ...dadosProduto }
 
     // try {
     //   const response = await api.post('/produto', data, {
@@ -200,7 +243,7 @@ export default function CadastroProduto({
     //       Authorization: `Bearer ${access_token['access-token']}`
     //     }
     //   })
-    //   console.log(response)
+    //   console.log(response.data)
     // } catch (error) {
     //   console.log(error.response)
     // }
@@ -220,8 +263,8 @@ export default function CadastroProduto({
               validationSchema={informaçoesBasicasSchema}
               initialValues={{
                 nome: '',
-                cor: '',
-                tamanho: '',
+                cor_id: '',
+                tamanho_id: '',
                 marca: '',
                 produto_estado: '',
                 valor: '',
@@ -240,15 +283,21 @@ export default function CadastroProduto({
                       placeholder="Digite o título do produto"
                     />
                     <div>
-                      <CustomField label="Cor" type="text" name="cor" />
-                      <CustomField
+                      <CustomDropdown
+                        contenttype="cor"
+                        label="Cor"
+                        name="cor_id"
+                        cor={cores}
+                      />
+                      <CustomDropdown
+                        contenttype="tamanho"
                         label="Tamanho"
-                        type="number"
-                        name="tamanho"
-                        min="0"
+                        name="tamanho_id"
+                        tamanho={tamanhos}
                       />
                       <CustomField label="Marca" type="text" name="marca" />
                       <CustomDropdown
+                        contenttype="strings"
                         label="Condição"
                         name="produto_estado"
                         array={['usado', 'novo']}
@@ -292,9 +341,6 @@ export default function CadastroProduto({
                     </div>
                   </div>
                   <div className={Styles.buttons}>
-                    <button type="button" onClick={() => setPasso(0)}>
-                      Voltar
-                    </button>
                     <button type="submit">Próximo</button>
                   </div>
                 </Form>
@@ -321,7 +367,7 @@ export default function CadastroProduto({
                 categoria_id: '',
                 subcategoria_id: '',
                 atributo: {
-                  atributo_valor_id: '',
+                  atributo_grupo_valor_id: '',
                   nome: ''
                 },
                 valorAtributo: ''
@@ -417,11 +463,13 @@ export default function CadastroProduto({
                     <div>
                       <div>
                         <CustomDropdown
+                          contenttype="categorias"
                           label="Categoria"
                           name="categoria_id"
                           categorias={categorias}
                         />
                         <CustomDropdown
+                          contenttype="sub_categorias"
                           label="Subcategoria"
                           name="subcategoria_id"
                           sub_categorias={
@@ -449,7 +497,9 @@ export default function CadastroProduto({
                       ))}
                       <div>
                         <CustomDropdown
+                          contenttype="atributos"
                           label="Atributo"
+                          name="atributo"
                           atributos={
                             values.categoria_id
                               ? getAtributos(
@@ -459,7 +509,6 @@ export default function CadastroProduto({
                                 )
                               : []
                           }
-                          name="atributo"
                         />
                         <CustomField
                           label="Valor"
@@ -474,7 +523,7 @@ export default function CadastroProduto({
                               ...atributosSalvos,
                               {
                                 atributo_grupo_valor_id:
-                                  values.atributo.atributo_valor_id,
+                                  values.atributo.atributo_grupo_valor_id,
                                 nome: values.atributo.nome,
                                 valor: values.valorAtributo
                               }
@@ -565,8 +614,30 @@ export default function CadastroProduto({
                   </button>
                 </div>
                 <div className={Styles.categoriaAnuncio}>
-                  <strong>aaaa</strong>
-                  <span>aaaa</span>
+                  <strong>
+                    {
+                      categorias.find(
+                        categoria =>
+                          String(categoria.categoria_id) ===
+                          dadosProduto.categoria_id
+                      ).nome
+                    }
+                  </strong>
+                  <span>
+                    {
+                      categorias
+                        .find(
+                          categoria =>
+                            String(categoria.categoria_id) ===
+                            dadosProduto.categoria_id
+                        )
+                        .sub_categoria.find(
+                          subcategoria =>
+                            String(subcategoria.subcategoria_id) ===
+                            dadosProduto.subcategoria_id
+                        ).nome
+                    }
+                  </span>
                   <button className={Styles.botaoEditar}>
                     <img src="/pencil.svg" alt="Botao de editar" />
                     Editar
@@ -635,37 +706,40 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 
-  const { data } = await api.get('/categoria', {
+  const corResponse = await api.get('/cor', {
     headers: {
       authorization: `Bearer ${access_token['access-token']}`
     }
   })
 
-  const categorias: Categoria[] = data.map(categoria => {
+  const cores: Cor[] = corResponse.data.map(cor => {
     return {
-      categoria_id: categoria.categoria_id,
-      nome: categoria.nome,
-      descricao: categoria.descricao,
-      sub_categoria: categoria.sub_categoria.map(sub_categoria => {
-        return {
-          subcategoria_id: sub_categoria.subcategoria_id,
-          nome: sub_categoria.nome,
-          descricao: sub_categoria.descricao
-        }
-      }),
-      atributo: categoria.atributo.map(atributo => {
-        return {
-          atributo_grupo_id: atributo.atributo_grupo_id,
-          data_adicionado: atributo.data_adicionado,
-          nome: atributo.nome
-        }
-      })
+      cor_id: cor.cor_id,
+      data_adicionado: cor.data_adicionado,
+      nome: cor.nome,
+      ordem: cor.ordem
+    }
+  })
+
+  const tamanhoResponse = await api.get('/tamanho', {
+    headers: {
+      authorization: `Bearer ${access_token['access-token']}`
+    }
+  })
+
+  const tamanhos: Tamanho[] = tamanhoResponse.data.map(tamanho => {
+    return {
+      tamanho_id: tamanho.tamanho_id,
+      data_adicionado: tamanho.data_adicionado,
+      nome: tamanho.nome,
+      ordem: tamanho.ordem
     }
   })
 
   return {
     props: {
-      categorias
+      cores,
+      tamanhos
     }
   }
 }

@@ -45,7 +45,7 @@
       padding: 0 2.4rem;
     }
 
-    .options {
+    .optionsContainer {
       display: flex;
       align-items: center;
       flex-direction: column;
@@ -64,28 +64,76 @@
       z-index: 10;
       top: 100%;
 
-      overflow: hidden;
+      max-height: 30rem;
+      overflow-y: scroll;
 
-      div {
-        width: 100%;
-        height: 6rem;
-        margin: 0;
-        padding: 0 2.4rem;
-
+      .optionsContent {
         display: flex;
+        flex-direction: column;
         align-items: center;
+        gap: 0;
+        margin: 0;
 
-        font-family: 'Kanit', sans-serif;
-        font-size: 1.8rem;
-        font-weight: 400;
-        color: #363940;
+        .options {
+          width: 100%;
+          height: 6rem;
+          margin: 0;
+          padding: 0 2.4rem;
 
-        transition: filter 0.2s;
-        cursor: pointer;
-        background: #ffffff;
+          display: flex;
+          align-items: center;
 
-        &:hover {
-          filter: brightness(0.8);
+          font-family: 'Kanit', sans-serif;
+          font-size: 1.8rem;
+          font-weight: 400;
+          color: #363940;
+
+          transition: filter 0.2s;
+          cursor: pointer;
+          background: #ffffff;
+
+          &:hover {
+            filter: brightness(0.8);
+          }
+        }
+
+        .optionGroup {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0;
+
+          > strong {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #363940;
+            height: 4rem;
+            padding-left: 2.4rem;
+
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            cursor: auto;
+          }
+
+          > div {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #5a5d64;
+            height: 4rem;
+            padding-left: 3rem;
+            cursor: pointer;
+
+            transition: filter 0.2s;
+            background: #ffffff;
+
+            &:hover {
+              filter: brightness(0.8);
+            }
+          }
         }
       }
     }

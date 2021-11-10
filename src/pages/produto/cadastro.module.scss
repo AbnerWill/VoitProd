@@ -241,6 +241,15 @@
   &:hover {
     filter: brightness(0.8);
   }
+
+  > img {
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .botaoEditar {

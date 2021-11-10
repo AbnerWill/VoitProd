@@ -11,6 +11,13 @@ interface CustomDropdownProps {
   name: string
   initialValue?: string
   array?: string[]
+  contenttype:
+    | 'strings'
+    | 'categorias'
+    | 'sub_categorias'
+    | 'atributos'
+    | 'cor'
+    | 'tamanho'
   categorias?: {
     categoria_id: number
     nome: string
@@ -25,6 +32,23 @@ interface CustomDropdownProps {
     atributo_grupo_id: number
     nome: string
     data_adicionado: string
+    atributo_grupo: {
+      atributo_grupo_valor_id: number
+      data_adicionado: string
+      nome: string
+    }[]
+  }[]
+  cor?: {
+    cor_id: number
+    data_adicionado: string
+    nome: string
+    ordem: number
+  }[]
+  tamanho?: {
+    tamanho_id: number
+    nome: string
+    ordem: number
+    data_adicionado: string
   }[]
 }
 
@@ -35,6 +59,96 @@ export function CustomDropdown(props: CustomDropdownProps): JSX.Element {
 
   function toggleIsOpen() {
     setIsOpen(!isOpen)
+  }
+
+  function switchOptions(type) {
+    switch (type) {
+      case 'strings':
+        return props.array.map((item, index) => (
+          <div
+            className={Styles.options}
+            key={index}
+            onClick={() => {
+              setName(item)
+              helpers.setValue(item)
+            }}
+          >
+            {item}
+          </div>
+        ))
+      case 'categorias':
+        return props.categorias.map(categoria => (
+          <div
+            className={Styles.options}
+            key={categoria.categoria_id}
+            onClick={() => {
+              setName(categoria.nome)
+              helpers.setValue(categoria.categoria_id)
+            }}
+          >
+            {categoria.nome}
+          </div>
+        ))
+      case 'sub_categorias':
+        return props.sub_categorias.map(subcategoria => (
+          <div
+            className={Styles.options}
+            key={subcategoria.subcategoria_id}
+            onClick={() => {
+              setName(subcategoria.nome)
+              helpers.setValue(subcategoria.subcategoria_id)
+            }}
+          >
+            {subcategoria.nome}
+          </div>
+        ))
+      case 'atributos':
+        return props.atributos.map(atributo => (
+          <div key={atributo.atributo_grupo_id} className={Styles.optionGroup}>
+            <strong>{atributo.nome}</strong>
+            {atributo.atributo_grupo.map(valor_grupo => (
+              <div
+                key={valor_grupo.atributo_grupo_valor_id}
+                onClick={() => {
+                  setName(valor_grupo.nome)
+                  helpers.setValue({
+                    nome: valor_grupo.nome,
+                    atributo_grupo_valor_id: valor_grupo.atributo_grupo_valor_id
+                  })
+                }}
+              >
+                {valor_grupo.nome}
+              </div>
+            ))}
+          </div>
+        ))
+      case 'cor':
+        return props.cor.map(cor => (
+          <div
+            className={Styles.options}
+            key={cor.cor_id}
+            onClick={() => {
+              setName(cor.nome)
+              helpers.setValue(cor.cor_id)
+            }}
+          >
+            {cor.nome}
+          </div>
+        ))
+      case 'tamanho':
+        return props.tamanho.map(tamanho => (
+          <div
+            className={Styles.options}
+            key={tamanho.tamanho_id}
+            onClick={() => {
+              setName(tamanho.nome)
+              helpers.setValue(tamanho.tamanho_id)
+            }}
+          >
+            {tamanho.nome}
+          </div>
+        ))
+    }
   }
 
   return (
@@ -58,61 +172,14 @@ export function CustomDropdown(props: CustomDropdownProps): JSX.Element {
           />
         </h2>
         <div
-          className={Styles.options}
+          className={Styles.optionsContainer}
           style={{
             display: isOpen ? 'flex' : 'none'
           }}
         >
-          {props.array
-            ? props.array.map((item, index) => (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setName(item)
-                    helpers.setValue(item)
-                  }}
-                >
-                  {item}
-                </div>
-              ))
-            : props.categorias
-            ? props.categorias.map(categoria => (
-                <div
-                  key={categoria.categoria_id}
-                  onClick={() => {
-                    setName(categoria.nome)
-                    helpers.setValue(categoria.categoria_id)
-                  }}
-                >
-                  {categoria.nome}
-                </div>
-              ))
-            : props.atributos
-            ? props.atributos.map(atributo => (
-                <div
-                  key={atributo.atributo_grupo_id}
-                  onClick={() => {
-                    setName(atributo.nome)
-                    helpers.setValue({
-                      atributo_valor_id: atributo.atributo_grupo_id,
-                      nome: atributo.nome
-                    })
-                  }}
-                >
-                  {atributo.nome}
-                </div>
-              ))
-            : props.sub_categorias.map(subcategoria => (
-                <div
-                  key={subcategoria.subcategoria_id}
-                  onClick={() => {
-                    setName(subcategoria.nome)
-                    helpers.setValue(subcategoria.subcategoria_id)
-                  }}
-                >
-                  {subcategoria.nome}
-                </div>
-              ))}
+          <div className={Styles.optionsContent}>
+            {switchOptions(props.contenttype)}
+          </div>
         </div>
       </div>
     </label>
