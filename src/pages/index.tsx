@@ -49,9 +49,9 @@ export default function Home(): JSX.Element {
       <section>
         <Modalidade />
       </section>
-
-      <SportSelection />
-
+      <section>
+        <SportSelection />
+      </section>
       <section>
         <NearestProducts />
       </section>

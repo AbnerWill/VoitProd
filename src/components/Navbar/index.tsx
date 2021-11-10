@@ -15,11 +15,10 @@ export default function NavbarVoit(): JSX.Element {
   }, [])
   const categorias = request.map((item, index) => {
     const { nome } = item
+
     const subCategoria = item.sub_categoria.map((item, index) => {
-      console.log(item)
       return (
         <ul key={index}>
-          <span>Subcategoria</span>
           <li>
             <a href="">{item.nome}</a>
           </li>
@@ -27,17 +26,10 @@ export default function NavbarVoit(): JSX.Element {
       )
     })
     return (
-      <>
-        <span key={index} className={styles.dropBtn}>
-          {nome}
-          <span className={styles.drop}>
-            {subCategoria}
-            <div>
-              <img src="/img-padrao.svg" alt="" />
-            </div>
-          </span>
-        </span>
-      </>
+      <span key={index} className={styles.dropBtn}>
+        {nome}
+        <span className={styles.drop}>{subCategoria}</span>
+      </span>
     )
   })
   return (
@@ -65,38 +57,40 @@ export default function NavbarVoit(): JSX.Element {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav>
-              <ul className={styles.divNav}>
-                <li className={styles.gps}>
-                  <Image
-                    className={styles.gpsImg}
-                    src="/gps.svg"
-                    alt="Logo voit"
-                    width={25}
-                    height={25}
-                  />
-                  <p>Informe seu endereço para entrega</p>
-                </li>
-                <li className={styles.divBuscar}>
-                  <input
-                    className={styles.inputBuscar}
-                    type="text"
-                    placeholder="Me diz o que está procurando..."
-                  />
-                  <i aria-hidden className="fas fa-search fa-2x"></i>
-                </li>
-                <li className={styles.entrar}>
-                  <i
-                    aria-hidden
-                    className="fas fa-shopping-basket fa-lg me-2"
-                  ></i>
-                  <a href="" className={styles.login}>
-                    <i aria-hidden className="fas fa-user me-1"></i>
-                    entrar
-                  </a>
-                </li>
-              </ul>
-            </Nav>
+            <div className="w-100">
+              <Nav>
+                <ul className={styles.divNav}>
+                  <li className={styles.gps}>
+                    <Image
+                      className={styles.gpsImg}
+                      src="/gps.svg"
+                      alt="Logo voit"
+                      width={25}
+                      height={25}
+                    />
+                    <p>Informe seu endereço para entrega</p>
+                  </li>
+                  <li className={styles.divBuscar}>
+                    <input
+                      className={styles.inputBuscar}
+                      type="text"
+                      placeholder="Me diz o que está procurando..."
+                    />
+                    <i aria-hidden className="fas fa-search fa-2x"></i>
+                  </li>
+                  <li className={styles.entrar}>
+                    <i
+                      aria-hidden
+                      className="fas fa-shopping-basket fa-2x me-2"
+                    ></i>
+                    <a href="" className={styles.login}>
+                      <i aria-hidden className="fas fa-user me-2"></i>
+                      entrar
+                    </a>
+                  </li>
+                </ul>
+              </Nav>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>
