@@ -14,7 +14,7 @@ export function ProdutoDestaque(): JSX.Element {
           </div>
           <div className="row">
             <div className="col-12 col-md-6">
-              <TituloSecao titulo="Produto Destaque" />
+              <h1 className={styles.titulo}>Produto Destaque</h1>
               <p className={styles.subTitulo}>
                 Equipamentos novos ou usados, aqui você encontra com preço justo
               </p>

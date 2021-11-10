@@ -84,7 +84,7 @@ export default function NavbarVoit(): JSX.Element {
                       className="fas fa-shopping-basket fa-2x me-2"
                     ></i>
                     <a href="" className={styles.login}>
-                      <i aria-hidden className="fas fa-user me-2"></i>
+                      <i aria-hidden className="fas fa-user fa-lg me-4"></i>
                       entrar
                     </a>
                   </li>

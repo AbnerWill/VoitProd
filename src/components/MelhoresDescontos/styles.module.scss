@@ -32,3 +32,39 @@
   text-transform: uppercase;
   letter-spacing: 0.32rem;
 }
+
+.nearestProductsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 19rem;
+
+  h1 {
+    font-size: 5.8rem;
+    font-weight: 500;
+    color: #363940;
+    text-align: center;
+    margin-bottom: 2.2rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: #95a1bb;
+    text-align: center;
+    max-width: 56rem;
+  }
+}
+
+.carouselContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media screen and (max-width: 576px) {
+  .carouselContainer {
+    max-width: 75%;
+  }
+}
