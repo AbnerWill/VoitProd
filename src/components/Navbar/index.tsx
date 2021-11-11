@@ -57,40 +57,38 @@ export default function NavbarVoit(): JSX.Element {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <div className="w-100">
-              <Nav>
-                <ul className={styles.divNav}>
-                  <li className={styles.gps}>
-                    <Image
-                      className={styles.gpsImg}
-                      src="/gps.svg"
-                      alt="Logo voit"
-                      width={25}
-                      height={25}
-                    />
-                    <p>Informe seu endereço para entrega</p>
-                  </li>
-                  <li className={styles.divBuscar}>
-                    <input
-                      className={styles.inputBuscar}
-                      type="text"
-                      placeholder="Me diz o que está procurando..."
-                    />
-                    <i aria-hidden className="fas fa-search fa-2x"></i>
-                  </li>
-                  <li className={styles.entrar}>
-                    <i
-                      aria-hidden
-                      className="fas fa-shopping-basket fa-2x me-2"
-                    ></i>
-                    <a href="" className={styles.login}>
-                      <i aria-hidden className="fas fa-user fa-lg me-4"></i>
-                      entrar
-                    </a>
-                  </li>
-                </ul>
-              </Nav>
-            </div>
+            <Nav>
+              <ul className={styles.divNav}>
+                <li className={styles.gps}>
+                  <Image
+                    className={styles.gpsImg}
+                    src="/gps.svg"
+                    alt="Logo voit"
+                    width={25}
+                    height={25}
+                  />
+                  <p>Informe seu endereço para entrega</p>
+                </li>
+                <li className={styles.divBuscar}>
+                  <input
+                    className={styles.inputBuscar}
+                    type="text"
+                    placeholder="Me diz o que está procurando..."
+                  />
+                  <i aria-hidden className="fas fa-search fa-2x"></i>
+                </li>
+                <li className={styles.entrar}>
+                  <i
+                    aria-hidden
+                    className="fas fa-shopping-basket fa-2x me-2"
+                  ></i>
+                  <a href="" className={styles.login}>
+                    <i aria-hidden className="fas fa-user fa-lg me-4"></i>
+                    entrar
+                  </a>
+                </li>
+              </ul>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
