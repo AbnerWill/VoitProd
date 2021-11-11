@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { ModalCadastro } from '../ModalEndereco'
 import { CustomCheckbox } from '../CustomCheckbox'
 import { ModalCartaoCredito } from '../ModalCartaoCredito'
+import InputMask from 'react-input-mask'
 
 export function PedidoInterna(): JSX.Element {
   const [estado, setEstado] = useState('Pedidos')
@@ -16,6 +17,8 @@ export function PedidoInterna(): JSX.Element {
   const [dadosAcesso, setDadosAcesso] = useState('')
   const [senha, setSenha] = useState('')
   const [novaSenha, setNovaSenha] = useState('')
+  const [nomeLoja, setNomeLoja] = useState('')
+  const [razaoSocial, setrazaoSocial] = useState('')
 
   function Conteudo() {
     switch (estado) {
@@ -31,10 +34,19 @@ export function PedidoInterna(): JSX.Element {
       case 'Meus Anúncios':
         return <MeusPedidos />
 
+      case 'Cadastro Loja':
+        return <CadastroLoja />  
+
       default:
         return <h1>Não encontrado</h1>
     }
   }
+  const MaskedInputCep = ({value , onChange}) => {
+    return <InputMask mask="99.999-999" value={value} onChange={onChange} />
+  }
+  const MaskedInputCpf = ({value , onChange}) => {
+    return <InputMask mask="999.999.999-99" value={value} onChange={onChange} />
+  }    
 
   const Pedidos = () => {
     return (
@@ -327,6 +339,90 @@ export function PedidoInterna(): JSX.Element {
     )
   }
 
+  const CadastroLoja = () => {
+    const [cep, setCep] = useState('')
+    const [cpf, setCpf] = useState('')
+    return (
+      <div className={`${Styles.divPedidos} col-12 col-md-10`}>
+        <div className={Styles.divInputs}>
+          <div className="row">
+            <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+              <label htmlFor="nomeLoja">Nome Fantasia</label>
+              <input
+                type="text"
+                id="nomeLoja"
+                placeholder="Nome Fantasia"
+                onBlur={evt => setNomeLoja(evt.target.value)}
+              />
+              <label htmlFor="razaoSocial">Razão Social</label>
+              <input
+                type="text"
+                id="razaoSocial"
+                placeholder="Razão Social"
+              />
+              <label htmlFor="cpf">CPF</label>
+              <MaskedInputCpf value={cpf} onChange= {(event) => setCpf(event.target.value)} />
+              <label htmlFor="cep">CEP</label>
+              <MaskedInputCep  value={cep} onChange= {(event) => setCep(event.target.value)} />
+              <label htmlFor="rua">Rua</label>
+              <input type="text" placeholder="Rua" />
+              <label htmlFor="numero">Número</label> 
+              <input type="number" placeholder="Número" />
+              <label htmlFor="telefone">Telefone</label>
+              <input type="text" placeholder="Telefone"/>
+            </div>
+            <div className={`${Styles.divSeparador} col-1`}></div>
+            <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+              <label htmlFor="complemento">Complemento</label>
+              <input type="text" placeholder="Complemento" />
+              <label htmlFor="bairro">Bairro</label>
+              <input type="text" placeholder="Bairro" />
+              <label htmlFor="cidade">Cidade</label>
+              <input type="text" placeholder="Cidade" />
+              <label htmlFor="complemento">Complemento</label>
+              <input type="text" placeholder="Complemento" />
+              <label htmlFor="uf">UF</label>
+              <select placeholder="UF" >
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espirito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+              </select>
+              <label htmlFor="email">E-mail</label>
+              <input type="text" placeholder="E-mail" />
+              <button className={`${Styles.btnEndereco} mb-5`}>
+                Cadastrar Loja
+              </button>
+            </div>  
+          </div>
+        </div>
+      </div> 
+    )
+  }     
+
   return (
     <div>
       <Container>
@@ -370,6 +466,14 @@ export function PedidoInterna(): JSX.Element {
               onClick={() => setEstado('Meus Anúncios')}
             >
               Meus Anúncios
+            </a>
+            <hr className={Styles.separadorLinks} />
+            <a
+              href="#"
+              className={Styles.links}
+              onClick={() => setEstado('Cadastro Loja')}
+            >
+              Cadastro Loja
             </a>
             <hr className={Styles.separadorLinks} />
             <a href="#" className={Styles.links}>

@@ -1,4 +1,4 @@
-import { Container, Dropdown, Nav, Navbar } from 'react-bootstrap'
+import { Container, Dropdown, Nav, Navbar, NavItem } from 'react-bootstrap'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,18 +6,41 @@ import { useEffect, useState } from 'react'
 import api from '../../services/api'
 
 export default function NavbarVoit(): JSX.Element {
-  const [request, setRequest] = useState('')
-  // useEffect(() => {
-  //   async function getCategorias() {
-  //     const { data } = await api.get('/atributo', {
-  //       headers: {
-  //         authorization: 'Bearer 116|pqBaGSXTynyTJePMaPbaTXNDR80NQxNFMSwo62SJ'
-  //       }
-  //     })
-  //     console.log(data)
-  //   }
-  //   getCategorias()
-  // }, [])
+  const [request, setRequest] = useState([])
+  useEffect(() => {
+    async function getCategorias() {
+      const { data } = await api.get('/categoria/publica')
+      setRequest(data)
+    }
+    getCategorias()
+  }, [])
+  const categorias = request.map((item, index) => {
+    const { nome } = item
+    const subCategoria = item.sub_categoria.map((item, index) => {
+      console.log(item)
+      return (
+        <ul key={index}>
+          <span>Subcategoria</span>
+          <li>
+            <a href="">{item.nome}</a>
+          </li>
+        </ul>
+      )
+    })
+    return (
+      <>
+        <span key={index} className={styles.dropBtn}>
+          {nome}
+          <span className={styles.drop}>
+            {subCategoria}
+            <div>
+              <img src="/img-padrao.svg" alt="" />
+            </div>
+          </span>
+        </span>
+      </>
+    )
+  })
   return (
     <section className={styles.bordaNav}>
       <div className={styles.limitado}>
@@ -81,153 +104,15 @@ export default function NavbarVoit(): JSX.Element {
         </Container>
       </Navbar>
       <Container>
-        <Dropdown>
-          <div className={styles.categorias}>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              basquete
-            </Dropdown.Toggle>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              bike
-            </Dropdown.Toggle>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              corrida
-            </Dropdown.Toggle>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              futebol
-            </Dropdown.Toggle>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              handebol
-            </Dropdown.Toggle>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              lutas
-            </Dropdown.Toggle>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              fitness
-            </Dropdown.Toggle>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              pesca
-            </Dropdown.Toggle>
-            <Dropdown.Toggle className={styles.dropBtn} id="dropdown-basic">
-              outros
-            </Dropdown.Toggle>
-            <li>
-              <a href="" className={styles.voitPro}>
-                voit pro
-              </a>
-            </li>
-            <button className={styles.btnVender}>quero vender</button>
-          </div>
-          <Dropdown.Menu>
-            <div className="row">
-              <div className="col-2 text-center">
-                <Dropdown.Item href="#/action-1">Subcategoria</Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-2">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-3">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-4">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-5">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-6">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-7">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-8">
-                  Produto
-                </Dropdown.Item>
-              </div>
-              <div className="col-2 text-center">
-                <Dropdown.Item href="#/action-1">Subcategoria</Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-2">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-3">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-4">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-5">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-6">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-7">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-8">
-                  Produto
-                </Dropdown.Item>
-              </div>
-              <div className="col-2 text-center">
-                <Dropdown.Item href="#/action-1">Subcategoria</Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-2">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-3">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-4">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-5">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-6">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-7">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-8">
-                  Produto
-                </Dropdown.Item>
-              </div>
-              <div className="col-2 text-center">
-                <Dropdown.Item href="#/action-1">Subcategoria</Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-2">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-3">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-4">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-5">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-6">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-7">
-                  Produto
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.divDropNav} href="#/action-8">
-                  Produto
-                </Dropdown.Item>
-              </div>
-              <div className="col-4 d-flex justify-content-center align-items-center">
-                <div className={styles.dropImg}>
-                  <Image
-                    src="/img-padrao.svg"
-                    alt="Logo voit"
-                    width={170}
-                    height={170}
-                  />
-                </div>
-              </div>
-            </div>
-          </Dropdown.Menu>
-        </Dropdown>
+        <div className={styles.categorias}>
+          {categorias}
+          <li>
+            <a href="" className={styles.voitPro}>
+              voit pro
+            </a>
+          </li>
+          <button className={styles.btnVender}>quero vender</button>
+        </div>
       </Container>
     </section>
   )

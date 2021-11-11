@@ -1,14 +1,209 @@
-.bgCarousel {
-  background-color: #F6F7FA;
-  border-radius: 1rem;
+.resumoAnuncio {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  align-items: flex-start;
+  gap: 7.8rem;
+
+  width: 100%;
+
+  .imagens {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 91rem;
+
+    .imagemGrande {
+      width: 100%;
+      height: 40rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #f6f7fa;
+      border-radius: 18px;
+
+      position: relative;
+
+      > img {
+        width: 14.78rem;
+      }
+
+      > button {
+        position: absolute;
+        top: 4rem;
+        right: 4rem;
+        width: 13.3rem;
+        height: 4rem;
+      }
+    }
+
+    .carrossel {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      padding: 0 5rem;
+
+      margin-top: 4.7rem;
+
+      .imagensCarrossel {
+        width: 12.8rem;
+        height: 9.6rem;
+
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #f6f7fa;
+        border-radius: 18px;
+
+        img {
+          width: 5.62rem;
+        }
+      }
+    }
+  }
+
+  .informaçoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    .tagsAnuncio {
+      display: flex;
+      align-items: center;
+      gap: 1.3rem;
+      width: 100%;
+
+      margin-bottom: 3.5rem;
+
+      position: relative;
+
+      span {
+        font-size: 1.6rem;
+        line-height: 3.2rem;
+        font-weight: 500;
+        color: #ffffff;
+        border-radius: 4px;
+        padding: 0 3rem;
+        background: #0000ff;
+
+        & + span {
+          padding: 0 2rem;
+          background: #ff6600;
+        }
+      }
+    }
+
+    .tituloAnuncio {
+      width: 100%;
+      margin-bottom: 2.2rem;
+      position: relative;
+
+      > button {
+        top: 50%;
+      }
+
+      h1 {
+        font-size: 3.6rem;
+        font-weight: 500;
+        color: #363940;
+        margin: 0;
+      }
+    }
+
+    .descricaoAnuncio {
+      width: 100%;
+      padding-bottom: 2.7rem;
+      border-bottom: 1px solid #d8e1ff;
+
+      display: flex;
+      align-items: center;
+
+      position: relative;
+
+      p {
+        font-size: 1.8rem;
+        font-weight: 400;
+        color: #95a1bb;
+        max-width: 50rem;
+      }
+    }
+
+    .categoriaAnuncio {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+
+      position: relative;
+
+      width: 100%;
+      padding: 2.7rem 0;
+      border-bottom: 1px solid #d8e1ff;
+
+      strong {
+        font-size: 2rem;
+        font-weight: 500;
+        color: #363940;
+        padding: 1.8rem 3.4rem;
+        background: #f6f7fa;
+      }
+
+      span {
+        font-size: 1.8rem;
+        font-weight: 400;
+        color: #95a1bb;
+        max-width: 20rem;
+      }
+    }
+
+    .preçoAnuncio {
+      position: relative;
+      width: 100%;
+      padding-top: 2.7rem;
+
+      span {
+        font-size: 2.6rem;
+        font-weight: 500;
+        color: #cad1e1;
+        text-decoration: line-through;
+        margin-right: 1rem;
+      }
+
+      strong {
+        font-size: 3.6rem;
+        font-weight: 500;
+        color: #25e484;
+
+        position: relative;
+
+        sup {
+          position: absolute;
+          left: 0;
+          top: 5px;
+
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: #25e484;
+        }
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: #363940;
+        margin: 0;
+      }
+
+      > button {
+        top: 50%;
+      }
+    }
+  }
 }
 
-.imgCarousel {
-  width: 20rem;
-  height: 20rem;
-}
+
