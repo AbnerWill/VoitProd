@@ -19,7 +19,7 @@ export function ProdutoHome(props): JSX.Element {
   }
 
   return (
-    <div className="row">
+    <div className="d-flex flex-md-row flex-column">
       <div className="col-2 d-none d-md-block"></div>
       <div className={'col-12 col-md-5'}>
         <p className={styles.produtoTitulo}>{renderizarResposta(0)}</p>
@@ -28,7 +28,7 @@ export function ProdutoHome(props): JSX.Element {
           <Image src="/check.svg" alt="imagem produto" width={25} height={25} />
           {renderizarResposta(2)}
         </p>
-        <p className={styles.teste}>
+        <p className={styles.produtoCheck}>
           <Image src="/check.svg" alt="imagem produto" width={25} height={25} />
           {renderizarResposta(3)}
         </p>
@@ -37,7 +37,9 @@ export function ProdutoHome(props): JSX.Element {
           {renderizarResposta(4)}
         </p>
         <span className={styles.divPrecoProduto}>
-          <span className={styles.produtoPreco}>{renderizarResposta(5)}</span>
+          <span className={styles.produtoPreco}>{`R$ ${renderizarResposta(
+            5
+          )}`}</span>
           <Button title="compre agora !" />
         </span>
       </div>

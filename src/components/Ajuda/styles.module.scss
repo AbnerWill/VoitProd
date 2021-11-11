@@ -8,11 +8,16 @@
   padding: 4rem 0;
 }
 
+.tituloDiv {
+  max-width: 70rem;
+}
+
 .subTitulo {
-  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 400;
   color: #95a1bb;
-  font-size: 1.6rem;
-  width: 42rem;
+  text-align: center;
+  max-width: 56rem;
 }
 
 @media screen and(max-width: 476px) {

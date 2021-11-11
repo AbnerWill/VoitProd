@@ -16,11 +16,10 @@ export default function NavbarVoit(): JSX.Element {
   }, [])
   const categorias = request.map((item, index) => {
     const { nome } = item
+
     const subCategoria = item.sub_categoria.map((item, index) => {
-      console.log(item)
       return (
         <ul key={index}>
-          <span>Subcategoria</span>
           <li>
             <a href="">{item.nome}</a>
           </li>
@@ -28,17 +27,10 @@ export default function NavbarVoit(): JSX.Element {
       )
     })
     return (
-      <>
-        <span key={index} className={styles.dropBtn}>
-          {nome}
-          <span className={styles.drop}>
-            {subCategoria}
-            <div>
-              <img src="/img-padrao.svg" alt="" />
-            </div>
-          </span>
-        </span>
-      </>
+      <span key={index} className={styles.dropBtn}>
+        {nome}
+        <span className={styles.drop}>{subCategoria}</span>
+      </span>
     )
   })
   return (
@@ -89,7 +81,7 @@ export default function NavbarVoit(): JSX.Element {
                 <li className={styles.entrar}>
                   <i
                     aria-hidden
-                    className="fas fa-shopping-basket fa-lg me-2"
+                    className="fas fa-shopping-basket fa-2x me-2"
                   ></i>
                   <Link href="/usuario/login" passHref>
                     <a className={styles.login}>

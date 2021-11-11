@@ -45,9 +45,6 @@ export default function Produto({ products }): JSX.Element {
                     </span>
                   </div>
                 </div>
-                <p className={Styles.precoVarejo}>
-                  R$1400 preço estimado no varejo
-                </p>
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center">
                 <button className={Styles.btnComprar}>

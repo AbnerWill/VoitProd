@@ -4,7 +4,7 @@ import Styles from './styles.module.scss'
 
 export function PalavrasMaisBuscadas(): JSX.Element {
   return (
-    <div>
+    <div className={Styles.divBuscadas}>
       <Container>
         <div className="text-center">
           <TituloSecao titulo="Palavras mais buscadas" />
