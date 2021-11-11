@@ -72,13 +72,13 @@ interface DadosProduto {
     atributo_grupo_valor_id: string
     valor: string
   }[]
-  foto?: string
+  imagens?: string[]
 }
 
-interface CadastroProdutoProps {
-  cores: Cor[]
-  tamanhos: Tamanho[]
-}
+// interface CadastroProdutoProps {
+//   cores: Cor[]
+//   tamanhos: Tamanho[]
+// }
 
 const dadosProdutoInicial: DadosProduto = {
   loja_id: '',
@@ -106,6 +106,7 @@ const informaçoesBasicasSchema = Yup.object().shape({
   tamanho: Yup.number(),
   marca: Yup.string(),
   produto_estado: Yup.string()
+  // imagens: Yup.array().of(Yup.string())
 })
 
 const informaçõesSecundariasSchema = Yup.object().shape({
@@ -125,21 +126,79 @@ const informaçõesSecundariasSchema = Yup.object().shape({
   valorAtributo: Yup.string()
 })
 
-export default function CadastroProduto({
-  cores,
-  tamanhos
-}: CadastroProdutoProps): JSX.Element {
+export default function CadastroProduto(): JSX.Element {
   const [passo, setPasso] = useState(0)
   const [dadosProduto, setDadosProduto] =
     useState<DadosProduto>(dadosProdutoInicial)
   const [atributosSalvos, setAtributosSalvos] = useState([])
   const [categorias, setCategorias] = useState<Categoria[]>([])
+  const [cores, setCores] = useState<Cor[]>([])
+  const [tamanhos, setTamanhos] = useState<Tamanho[]>([])
+  const [listaImagens, setListaImagens] = useState<File[]>([])
+  const [imagemPreview, setImagemPreview] = useState<string>('')
+
+  const [loadingCores, setLoadingCores] = useState<boolean>(false)
+  const [loadingTamanhos, setLoadingTamanhos] = useState<boolean>(false)
 
   const access_token = parseCookies()
 
   useEffect(() => {
     getCategorias()
+    getCores()
+    getTamanhos()
   }, [])
+
+  async function getCores() {
+    try {
+      setLoadingCores(true)
+      const corResponse = await api.get('/cor', {
+        headers: {
+          authorization: `Bearer ${access_token['access-token']}`
+        }
+      })
+      setLoadingCores(false)
+
+      const newCores: Cor[] = corResponse.data.map(cor => {
+        return {
+          cor_id: cor.cor_id,
+          data_adicionado: cor.data_adicionado,
+          nome: cor.nome,
+          ordem: cor.ordem
+        }
+      })
+
+      setCores([...cores, ...newCores])
+    } catch (error) {
+      setLoadingCores(false)
+      console.log(error)
+    }
+  }
+
+  async function getTamanhos() {
+    try {
+      setLoadingTamanhos(true)
+      const tamanhoResponse = await api.get('/tamanho', {
+        headers: {
+          authorization: `Bearer ${access_token['access-token']}`
+        }
+      })
+      setLoadingTamanhos(false)
+
+      const newTamanhos: Tamanho[] = tamanhoResponse.data.map(tamanho => {
+        return {
+          tamanho_id: tamanho.tamanho_id,
+          data_adicionado: tamanho.data_adicionado,
+          nome: tamanho.nome,
+          ordem: tamanho.ordem
+        }
+      })
+
+      setTamanhos([...tamanhos, ...newTamanhos])
+    } catch (error) {
+      setLoadingTamanhos(false)
+      console.log(error)
+    }
+  }
 
   async function getCategorias() {
     const categoriaResponse = await api.get('/categoria', {
@@ -205,6 +264,8 @@ export default function CadastroProduto({
       valor: values.valor,
       valor_com_desconto: values.valorDesconto
     })
+
+    setImagemPreview(URL.createObjectURL(listaImagens[0]))
 
     setPasso(oldValue => oldValue + 1)
   }
@@ -272,7 +333,7 @@ export default function CadastroProduto({
               }}
               onSubmit={values => SubmitInformacoesBasicas(values)}
             >
-              {({ dirty }) => (
+              {({ values, dirty, handleChange }) => (
                 <Form>
                   <div className={Styles.informaçoesBasicas}>
                     <CustomField
@@ -288,12 +349,14 @@ export default function CadastroProduto({
                         label="Cor"
                         name="cor_id"
                         cor={cores}
+                        loading={loadingCores}
                       />
                       <CustomDropdown
                         contenttype="tamanho"
                         label="Tamanho"
                         name="tamanho_id"
                         tamanho={tamanhos}
+                        loading={loadingTamanhos}
                       />
                       <CustomField label="Marca" type="text" name="marca" />
                       <CustomDropdown
@@ -327,18 +390,27 @@ export default function CadastroProduto({
                   <div className={Styles.adicionarFotos}>
                     <h1>Adicione Fotos</h1>
                     <h2>Adicione fotos do produto</h2>
-                    <div>
+                    <label>
                       <img src="/img-padrao.svg" alt="img" />
                       <strong>Arraste imagens aqui</strong>
-                      <label>
+                      <div>
                         Adicionar foto{' '}
                         <input
                           type="file"
                           multiple
                           accept=".jpg, .png, .jpeg"
+                          onChange={event => {
+                            setListaImagens([
+                              ...listaImagens,
+                              ...Object.values(event.currentTarget.files)
+                            ])
+                          }}
                         />
-                      </label>
-                    </div>
+                      </div>
+                      {listaImagens.map((imagem, index) => (
+                        <span key={index}>{imagem.name}</span>
+                      ))}
+                    </label>
                   </div>
                   <div className={Styles.buttons}>
                     <button type="submit">Próximo</button>
@@ -556,8 +628,12 @@ export default function CadastroProduto({
             </div>
             <section className={Styles.resumoAnuncio}>
               <div className={Styles.imagens}>
-                <div className={Styles.imagemGrande}>
-                  <img src="/img-padrao.svg" alt="Img" />
+                <div
+                  style={{
+                    backgroundImage: `URL(${imagemPreview})`
+                  }}
+                  className={Styles.imagemGrande}
+                >
                   <button className={Styles.botaoEditar}>
                     <img src="/pencil.svg" alt="Botao de editar" />
                     Editar
@@ -565,36 +641,21 @@ export default function CadastroProduto({
                 </div>
                 <div className={Styles.carrossel}>
                   <Slider {...settings}>
-                    <div>
-                      <div className={Styles.imagensCarrossel}>
-                        <img src="/img-padrao.svg" alt="Img" />
+                    {listaImagens.map((imagem, index) => (
+                      <div key={index}>
+                        <div
+                          onClick={() =>
+                            setImagemPreview(URL.createObjectURL(imagem))
+                          }
+                          style={{
+                            backgroundImage: `URL(${URL.createObjectURL(
+                              imagem
+                            )})`
+                          }}
+                          className={Styles.imagensCarrossel}
+                        ></div>
                       </div>
-                    </div>
-                    <div>
-                      <div className={Styles.imagensCarrossel}>
-                        <img src="/img-padrao.svg" alt="Img" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className={Styles.imagensCarrossel}>
-                        <img src="/img-padrao.svg" alt="Img" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className={Styles.imagensCarrossel}>
-                        <img src="/img-padrao.svg" alt="Img" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className={Styles.imagensCarrossel}>
-                        <img src="/img-padrao.svg" alt="Img" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className={Styles.imagensCarrossel}>
-                        <img src="/img-padrao.svg" alt="Img" />
-                      </div>
-                    </div>
+                    ))}
                   </Slider>
                 </div>
               </div>
@@ -706,40 +767,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 
-  const corResponse = await api.get('/cor', {
-    headers: {
-      authorization: `Bearer ${access_token['access-token']}`
-    }
-  })
-
-  const cores: Cor[] = corResponse.data.map(cor => {
-    return {
-      cor_id: cor.cor_id,
-      data_adicionado: cor.data_adicionado,
-      nome: cor.nome,
-      ordem: cor.ordem
-    }
-  })
-
-  const tamanhoResponse = await api.get('/tamanho', {
-    headers: {
-      authorization: `Bearer ${access_token['access-token']}`
-    }
-  })
-
-  const tamanhos: Tamanho[] = tamanhoResponse.data.map(tamanho => {
-    return {
-      tamanho_id: tamanho.tamanho_id,
-      data_adicionado: tamanho.data_adicionado,
-      nome: tamanho.nome,
-      ordem: tamanho.ordem
-    }
-  })
-
   return {
-    props: {
-      cores,
-      tamanhos
-    }
+    props: {}
   }
 }
