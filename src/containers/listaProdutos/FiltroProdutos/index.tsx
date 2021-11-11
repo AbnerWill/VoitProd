@@ -48,8 +48,6 @@ export function FiltroProdutos(): JSX.Element {
   function adicionarFiltro(filtro: Filtros) {
     const newFiltros = [...filtros, filtro]
 
-    console.log(newFiltros)
-
     setFiltros(newFiltros)
   }
 

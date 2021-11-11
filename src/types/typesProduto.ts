@@ -49,6 +49,8 @@ export interface AtributosProduto {
 }
 
 export interface DadosPublicosProduto {
+  produto_id: number
+  data_adicionado: string
   codigo_produto: string
   nome: string
   descricao: string
@@ -59,4 +61,8 @@ export interface DadosPublicosProduto {
   foto: string
   valor: number
   valor_com_desconto: number
+  categoria_id: number
+  subcategoria_id: number
+  usuario_id: number
+  loja_id: number
 }

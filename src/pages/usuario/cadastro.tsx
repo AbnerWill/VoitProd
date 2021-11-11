@@ -3,6 +3,8 @@ import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 import Link from 'next/link'
 
+import { Spinner } from 'react-bootstrap'
+
 import api from '../../services/api'
 
 import { mascaraCelular } from '../../utils/mascaraCelular'
@@ -11,6 +13,7 @@ import { mascaraCPF } from '../../utils/mascaraCPF'
 import { PrevArrow } from '../../components/Arrows'
 
 import Styles from '../../styles/cadastro.module.scss'
+import { FormEnviado } from '../../containers/CadastroUsuario/PaginaRedirecionar'
 
 interface DadosCadastroUsuario {
   nome: string
@@ -27,7 +30,9 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email('Digite um email válido')
     .required('Este campo é obrigatório'),
-  senha: Yup.string().required('Este campo é obrigatório'),
+  senha: Yup.string()
+    .min(8, 'Digite uma senha de no mínimo 8 caracteres')
+    .required('Este campo é obrigatório'),
   cpf: Yup.string()
     .max(14)
     .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX'),
@@ -36,16 +41,27 @@ const schema = Yup.object().shape({
 
 export default function Cadastro(): JSX.Element {
   const [formEnviado, setFormEnviado] = useState<boolean>(false)
+  const [mensagemErro, setMensagemErro] = useState<string[]>([''])
+  const [loading, setLoading] = useState<boolean>(false)
 
   async function onSubmit(dados: DadosCadastroUsuario) {
     try {
-      const response = await api.post('/usuario', {
-        data: dados
-      })
+      setMensagemErro([''])
+      setLoading(true)
+      const response = await api.post('/usuario', dados)
+      setLoading(false)
 
-      console.log(response)
+      if (response.status === 201) {
+        setFormEnviado(true)
+      }
     } catch (error) {
-      console.log(error.response.data.message)
+      setLoading(false)
+      setMensagemErro([
+        ...mensagemErro,
+        ...error.response.data.cpf,
+        ...error.response.data.email
+      ])
+      console.log(mensagemErro)
     }
   }
 
@@ -61,12 +77,7 @@ export default function Cadastro(): JSX.Element {
       </header>
       <section className={Styles.container}>
         {formEnviado ? (
-          <div className={Styles.formEnviado}>
-            <h1>Cadastro criado com sucesso</h1>
-            <h2>
-              Você será redirecionado para a página de início em 5 segundos
-            </h2>
-          </div>
+          <FormEnviado />
         ) : (
           <div className={Styles.content}>
             <h1>Crie sua conta na voit</h1>
@@ -159,8 +170,21 @@ export default function Cadastro(): JSX.Element {
                       <strong>{errors.celular}</strong>
                     )}
                   </label>
-
-                  <button type="submit">Criar conta</button>
+                  {mensagemErro &&
+                    mensagemErro.map((msg, index) => (
+                      <div className={Styles.mensagemErro} key={index}>
+                        <strong>{msg}</strong>
+                      </div>
+                    ))}
+                  <button type="submit">
+                    {loading ? (
+                      <Spinner animation="border">
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    ) : (
+                      <span>Criar conta</span>
+                    )}
+                  </button>
                 </Form>
               )}
             </Formik>

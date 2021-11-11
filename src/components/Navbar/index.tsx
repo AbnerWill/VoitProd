@@ -1,6 +1,7 @@
 import { Container, Dropdown, Nav, Navbar, NavItem } from 'react-bootstrap'
 import styles from './styles.module.scss'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import api from '../../services/api'
 
@@ -90,10 +91,12 @@ export default function NavbarVoit(): JSX.Element {
                     aria-hidden
                     className="fas fa-shopping-basket fa-lg me-2"
                   ></i>
-                  <a href="" className={styles.login}>
-                    <i aria-hidden className="fas fa-user me-1"></i>
-                    entrar
-                  </a>
+                  <Link href="/usuario/login" passHref>
+                    <a className={styles.login}>
+                      <i aria-hidden className="fas fa-user me-1"></i>
+                      entrar
+                    </a>
+                  </Link>
                 </li>
               </ul>
             </Nav>

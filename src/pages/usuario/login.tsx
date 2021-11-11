@@ -1,6 +1,10 @@
+import { setCookie } from 'nookies'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import Link from 'next/link'
+import Router from 'next/router'
+
+import { Spinner } from 'react-bootstrap'
 
 import { PrevArrow } from '../../components/Arrows'
 import { BotaoLoginFacebook } from '../../containers/login/BotãoLoginFacebook'
@@ -8,6 +12,8 @@ import { BotaoLoginGoogle } from '../../containers/login/BotãoLoginGoogle'
 
 import Styles from '../../styles/login.module.scss'
 import api from '../../services/api'
+import { useState } from 'react'
+import { ModalEsqueciSenha } from '../../containers/CadastroUsuario/ModalEsqueciSenha'
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -17,14 +23,29 @@ const schema = Yup.object().shape({
 })
 
 export default function Login(): JSX.Element {
+  const [mensagemErro, setMensagemErro] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const [mostrarSenha, setMostrarSenha] = useState<boolean>(false)
+  const [abrirModal, setAbrirModal] = useState(false)
+
+  const toggleMostrarSenha = () => setMostrarSenha(!mostrarSenha)
+
   async function onSubmit(dados) {
     try {
-      const { data } = await api.post('/login', {
-        data: dados
+      setMensagemErro('')
+      setLoading(true)
+      const { data } = await api.post('/login', dados)
+      setLoading(false)
+
+      setCookie(null, 'access-token', data?.access_token, {
+        path: '/',
+        maxAge: 60 * 60 * 24
       })
-      console.log(data)
+
+      Router.push('/pedidos')
     } catch (error) {
-      console.log(error.response)
+      setLoading(false)
+      setMensagemErro(error.response.data.mensagem)
     }
   }
 
@@ -56,6 +77,7 @@ export default function Login(): JSX.Element {
                 <Field
                   type="email"
                   name="email"
+                  placeholder="Digite seu email"
                   className={
                     errors.email && touched.email && dirty ? Styles.erro : ''
                   }
@@ -67,17 +89,50 @@ export default function Login(): JSX.Element {
               <label>
                 <h2>Senha*</h2>
                 <Field
-                  type="password"
+                  type={mostrarSenha ? 'text' : 'password'}
                   name="senha"
+                  placeholder="Digite sua senha"
                   className={
                     errors.senha && touched.senha && dirty ? Styles.erro : ''
                   }
                 />
+                <button
+                  className={Styles.mostrarSenha}
+                  type="button"
+                  onClick={toggleMostrarSenha}
+                >
+                  {touched.senha && !errors.senha ? (
+                    mostrarSenha ? (
+                      <img src="/escondersenha.svg" alt="Esconder senha" />
+                    ) : (
+                      <img src="/mostrarsenha.svg" alt="Mostrar senha" />
+                    )
+                  ) : null}
+                </button>
                 {dirty && errors.senha && touched.senha && (
                   <strong>{errors.senha}</strong>
                 )}
               </label>
-              <button type="submit">Entrar</button>
+              <a
+                className={Styles.esqueciSenha}
+                onClick={() => setAbrirModal(true)}
+              >
+                Esqueceu sua senha?
+              </a>
+              {mensagemErro && (
+                <div className={Styles.mensagemErro}>
+                  <strong>{mensagemErro}</strong>
+                </div>
+              )}
+              <button type="submit" className={Styles.submitButton}>
+                {loading ? (
+                  <Spinner animation="border">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                ) : (
+                  <span>Entrar</span>
+                )}
+              </button>
             </Form>
           )}
         </Formik>
@@ -89,6 +144,11 @@ export default function Login(): JSX.Element {
       <footer className={Styles.footer}>
         voit.co Copyright &copy; 2020. All rights reserved.
       </footer>
+
+      <ModalEsqueciSenha
+        onHide={() => setAbrirModal(false)}
+        show={abrirModal}
+      />
     </>
   )
 }
