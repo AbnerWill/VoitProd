@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Button } from '../Button/index'
 import styles from './styles.module.scss'
@@ -25,15 +24,15 @@ export function ProdutoHome(props): JSX.Element {
         <p className={styles.produtoTitulo}>{renderizarResposta(0)}</p>
         <p className={styles.produtoDescricao}>{renderizarResposta(1)}</p>
         <p className={styles.produtoCheck}>
-          <Image src="/check.svg" alt="imagem produto" width={25} height={25} />
+          <img src="/check.svg" alt="imagem produto" width={25} height={25} />
           {renderizarResposta(2)}
         </p>
         <p className={styles.produtoCheck}>
-          <Image src="/check.svg" alt="imagem produto" width={25} height={25} />
+          <img src="/check.svg" alt="imagem produto" width={25} height={25} />
           {renderizarResposta(3)}
         </p>
         <p className={styles.produtoCheck}>
-          <Image src="/check.svg" alt="imagem produto" width={25} height={25} />
+          <img src="/check.svg" alt="imagem produto" width={25} height={25} />
           {renderizarResposta(4)}
         </p>
         <span className={styles.divPrecoProduto}>
@@ -49,7 +48,7 @@ export function ProdutoHome(props): JSX.Element {
         }
       >
         <div className={styles.divImgProduto}>
-          <Image
+          <img
             src="/img-padrao.svg"
             alt="imagem produto"
             width={170}

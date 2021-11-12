@@ -1,6 +1,5 @@
 import { Container } from 'react-bootstrap'
 import Styles from './styles.module.scss'
-import Image from 'next/image'
 
 export function PergunteVendedor(): JSX.Element {
   return (
@@ -23,7 +22,7 @@ export function PergunteVendedor(): JSX.Element {
             </Container>
             <Container>
               <div className="d-flex align-items-center">
-                <Image
+                <img
                   src="/img-pergunte-vendedor.svg"
                   alt="imagem usuário"
                   width={50}
@@ -35,7 +34,7 @@ export function PergunteVendedor(): JSX.Element {
               </div>
               <Container>
                 <div className="d-flex align-items-center">
-                  <Image
+                  <img
                     src="/linha-pergunte.svg"
                     alt="linha"
                     height={12}
@@ -53,7 +52,7 @@ export function PergunteVendedor(): JSX.Element {
             <hr className={Styles.separador2} />
             <div className="d-flex justify-content-around align-items-center">
               <div className="d-flex">
-                <Image
+                <img
                   src="/img-pergunte-vendedor.svg"
                   alt="imagem usuário"
                   width={50}
@@ -71,7 +70,7 @@ export function PergunteVendedor(): JSX.Element {
             <div className="d-flex align-items-center justify-content-around mt-5">
               <div className="d-flex flex-column  justify-content-center align-items-center">
                 <span className={Styles.subTitulo}>Avaliações</span>
-                <Image
+                <img
                   src="/estrelas.svg"
                   alt="avaliação"
                   width={100}
