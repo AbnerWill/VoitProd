@@ -1,0 +1,141 @@
+.productContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  padding: 3rem 3.7rem 2.6rem 2.8rem;
+  border: 1px solid #cad1e1;
+  border-radius: 18px;
+
+  max-height: 27.6rem;
+  gap: 1.2rem;
+
+  header {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+
+    .productImage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 5.3rem 7.2rem;
+      background: #f6f7fa;
+
+      border-radius: 18px;
+
+      img {
+        width: 11.2rem;
+        height: 6.1rem;
+      }
+    }
+
+    .itemDescription {
+      display: flex;
+      flex-direction: column;
+
+      max-width: 30rem;
+      margin-left: 3.3rem;
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 500;
+        color: #000000;
+        margin-bottom: 0;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: #95a1bb;
+        margin-bottom: 1.3rem;
+
+        strong {
+          color: #6e38f7;
+        }
+      }
+
+      span {
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: #95a1bb;
+
+        strong {
+          color: #000000;
+        }
+      }
+
+      span:last-child {
+        margin-top: 1.6rem;
+      }
+    }
+
+    > button {
+      border: 0;
+      margin-left: auto;
+    }
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .itemQuantity {
+      display: flex;
+      align-items: center;
+
+      strong {
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: #000000;
+        margin-right: 2.6rem;
+      }
+
+      div {
+        margin: 0 1.3rem;
+
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: #cad1e1;
+
+        border: 1px solid #cad1e1;
+        border-radius: 8px;
+
+        width: 4rem;
+        height: 4rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 2px;
+        background: #fff;
+      }
+    }
+
+    .productPrice {
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: #95a1bb;
+      text-decoration: line-through;
+
+      strong {
+        color: #000000;
+        text-decoration: none;
+        margin-left: 1.8rem;
+      }
+    }
+  }
+}

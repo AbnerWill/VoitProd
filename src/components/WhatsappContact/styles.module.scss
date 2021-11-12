@@ -1,0 +1,27 @@
+.whatsappButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.45rem;
+
+  background: #25e484;
+  border-radius: 18px;
+
+  padding: 1.1rem 2rem;
+  max-width: 22.8rem;
+
+  border: none;
+
+  img {
+    width: 2.36rem;
+  }
+
+  span {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 2rem;
+    color: #000000;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}

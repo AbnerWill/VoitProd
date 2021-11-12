@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="arrowdown" transform="translate(0.001)">
+    <g id="Icon_Down" data-name="Icon/Down" transform="translate(0)">
+      <rect id="Base" width="28" height="28" transform="translate(-0.001)" fill="none"/>
+      <path id="Shape" d="M1.614,0,6.867,5.242,12.121,0l1.614,1.614L6.867,8.481,0,1.614Z" transform="translate(7.132 10.566)" fill="#95a1bb"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,47 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Kanit', sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+
+  @media only screen and (max-width: 1440px) {
+    font-size: 56.25%;
+  }
+
+  @media only screen and (max-width: 992px) {
+    font-size: 50%;
+  }
+
+  @media only screen and (max-width: 576px) {
+    font-size: 37.5%;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  min-width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+button {
+  cursor: pointer;
+}
+
+.slick-next,
+.slick-prev {
+  width: 6rem;
+  height: 6rem;
+}
+
+[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

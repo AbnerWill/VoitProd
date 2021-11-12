@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="32" viewBox="0 0 160 32">
+  <g id="Group_16" data-name="Group 16" transform="translate(-170 -7324)">
+    <g id="Star" transform="translate(298 7324)">
+      <g id="Icon_Star" data-name="Icon/Star">
+        <rect id="Base" width="32" height="32" transform="translate(0 0)" fill="none"/>
+        <path id="Mask" d="M21.277,24.985l-2.15-9.243L26.3,9.526l-9.456-.811L13.15,0,9.456,8.714,0,9.526l7.173,6.216-2.15,9.243,8.127-4.9Z" transform="translate(2.63 2.63)" fill="#cad1e1"/>
+      </g>
+    </g>
+    <g id="Star-2" data-name="Star" transform="translate(170 7324)">
+      <g id="Icon_Star-2" data-name="Icon/Star" transform="translate(0 0)">
+        <rect id="Base-2" data-name="Base" width="32" height="32" transform="translate(0 0)" fill="none"/>
+        <path id="Mask-2" data-name="Mask" d="M21.277,24.985l-2.15-9.243L26.3,9.526l-9.456-.811L13.15,0,9.456,8.714,0,9.526l7.173,6.216-2.15,9.243,8.127-4.9Z" transform="translate(2.63 2.63)" fill="#25e484"/>
+      </g>
+    </g>
+    <g id="Star-3" data-name="Star" transform="translate(202 7324)">
+      <g id="Icon_Star-3" data-name="Icon/Star" transform="translate(0 0)">
+        <rect id="Base-3" data-name="Base" width="32" height="32" transform="translate(0 0)" fill="none"/>
+        <path id="Mask-3" data-name="Mask" d="M21.277,24.985l-2.15-9.243L26.3,9.526l-9.456-.811L13.15,0,9.456,8.714,0,9.526l7.173,6.216-2.15,9.243,8.127-4.9Z" transform="translate(2.63 2.63)" fill="#25e484"/>
+      </g>
+    </g>
+    <g id="Star-4" data-name="Star" transform="translate(234 7324)">
+      <g id="Icon_Star-4" data-name="Icon/Star" transform="translate(0 0)">
+        <rect id="Base-4" data-name="Base" width="32" height="32" transform="translate(0 0)" fill="none"/>
+        <path id="Mask-4" data-name="Mask" d="M21.277,24.985l-2.15-9.243L26.3,9.526l-9.456-.811L13.15,0,9.456,8.714,0,9.526l7.173,6.216-2.15,9.243,8.127-4.9Z" transform="translate(2.63 2.63)" fill="#25e484"/>
+      </g>
+    </g>
+    <g id="Star-5" data-name="Star" transform="translate(266 7324)">
+      <g id="Icon_Star-5" data-name="Icon/Star" transform="translate(0 0)">
+        <rect id="Base-5" data-name="Base" width="32" height="32" transform="translate(0 0)" fill="none"/>
+        <path id="Mask-5" data-name="Mask" d="M21.277,24.985l-2.15-9.243L26.3,9.526l-9.456-.811L13.15,0,9.456,8.714,0,9.526l7.173,6.216-2.15,9.243,8.127-4.9Z" transform="translate(2.63 2.63)" fill="#25e484"/>
+      </g>
+    </g>
+  </g>
+</svg>

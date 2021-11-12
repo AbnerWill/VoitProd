@@ -1,0 +1,48 @@
+.divDestaque {
+  margin-top: 10rem;
+}
+
+.bgDestaque {
+  background-color: #f6f7fa;
+  width: 100%;
+  padding: 4rem;
+  border-radius: 1rem;
+}
+
+.titulo {
+  font-size: 5.8rem;
+  font-weight: 500;
+  color: #363940;
+  margin-bottom: 2.2rem;
+}
+
+.subTitulo {
+  color: #95a1bb;
+  width: 35rem;
+  font-size: 1.6rem;
+}
+
+@media screen and(max-width: 476px) {
+  .subTitulo {
+    width: 100%;
+    text-align: center;
+  }
+
+  .produto,
+  .preco {
+    text-align: center;
+  }
+}
+
+.produto {
+  color: #363940;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.preco {
+  color: #0000ff;
+  font-weight: bold;
+  letter-spacing: 0.16rem;
+  font-size: 1.4rem;
+}

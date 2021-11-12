@@ -1,0 +1,53 @@
+.divBlog {
+  margin: 10rem 0 0 0;
+  background-color: #4d75f4;
+  height: 60rem;
+  padding: 10rem 0;
+}
+
+.blogTitulo {
+  color: #fff;
+  font-weight: 26px;
+  font-size: 2.4rem;
+}
+
+.primeiroPost {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 4rem;
+}
+
+.dataPrimeiroPost {
+  color: #95a1bb;
+  text-transform: uppercase;
+  letter-spacing: 0.32rem;
+  font-size: 1.8rem;
+}
+
+.tituloPrimeiroPost {
+  color: #363940;
+  font-size: 1.6rem;
+}
+
+.divImgBlog {
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dataOutros {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.32rem;
+  font-size: 1.8rem;
+}
+
+.tituloOutros {
+  color: #fff;
+  font-size: 1.6rem;
+}

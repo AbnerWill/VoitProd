@@ -1,0 +1,66 @@
+.bgEspeciais {
+  background-color: #eaedf5;
+  padding: 4rem 0;
+}
+
+.divTitulo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 0;
+}
+
+.subTitulo {
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: #95a1bb;
+  text-align: center;
+  max-width: 56rem;
+}
+
+.divCard {
+  border: 1px solid #95a1bb;
+  border-radius: 10px;
+  height: max-content;
+  padding: 2rem;
+}
+
+.divImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tituloPromo {
+  color: #363940;
+  font-size: 2rem;
+}
+
+.descricao {
+  color: #95a1bb;
+  font-size: 1.6rem;
+}
+
+.promocao {
+  color: #3b266f;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+}
+
+.btnPromocao {
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  background-color: #95a1bb;
+  color: #fff;
+  padding: 1.4rem 0;
+  width: 15rem;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16rem;
+}
+
+.btnPromocao:hover {
+  transform: scale(1.1);
+}

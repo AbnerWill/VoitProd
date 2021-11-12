@@ -1,0 +1,61 @@
+.titulo {
+  color: #363940;
+  font-size: 2rem;
+}
+
+.formEndereco {
+  font-size: 1.6rem;
+  color: #95A1BB;
+
+  input {
+    border: 1px solid #D9DEEA;
+    border-radius: 1.5rem;
+    padding: 0.6rem;
+  }
+
+  input::placeholder {
+    color: #95A1BB;
+  }
+}
+
+.btnConfirmar {
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  background-color: #95A1BB;
+  color: #fff;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  padding: 1rem;
+}
+
+.btnCancelar {
+  border: none;
+  background-color: #fff;
+  color: #95A1BB;
+  font-size: 1.4rem;
+  letter-spacing: 0.2rem;
+}
+
+.btnCancelar:hover, .btnConfirmar:hover {
+  color: #00ff00;
+  background-color: #fff;
+}
+
+.btnEndereco {
+  border: none;
+  border-radius: 1rem;
+  text-transform: uppercase;
+  color: #Fff;
+  background-color: #95A1BB;
+  font-size: 1.2rem;
+  letter-spacing: 0.3rem;
+  width: 20rem;
+  padding: 1rem;
+  margin: 3rem 0 0 0;
+}
+
+.btnEndereco:hover {
+  color: #00ff00;
+  background-color: #fff;
+}
