@@ -5,6 +5,7 @@ import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { parseCookies } from 'nookies'
 import { useEffect, useState } from 'react'
+import imageToBase64 from 'image-to-base64/browser'
 import Slider from 'react-slick'
 
 import { NextArrow, PrevArrow } from '../../components/Arrows'
@@ -72,8 +73,17 @@ interface DadosProduto {
     atributo_grupo_valor_id: string
     valor: string
   }[]
-  imagens?: string[]
+  foto?: string
+  fotos?: {
+    ordem: number
+    base64: Promise<string | ArrayBuffer>
+  }[]
 }
+
+// interface ImagensBase64 {
+//   ordem: number
+//   base64: string | ArrayBuffer
+// }
 
 // interface CadastroProdutoProps {
 //   cores: Cor[]
@@ -136,6 +146,7 @@ export default function CadastroProduto(): JSX.Element {
   const [tamanhos, setTamanhos] = useState<Tamanho[]>([])
   const [listaImagens, setListaImagens] = useState<File[]>([])
   const [imagemPreview, setImagemPreview] = useState<string>('')
+  const [imagensBase64, setImagensBase64] = useState([])
 
   const [loadingCores, setLoadingCores] = useState<boolean>(false)
   const [loadingTamanhos, setLoadingTamanhos] = useState<boolean>(false)
@@ -255,15 +266,42 @@ export default function CadastroProduto(): JSX.Element {
     return categoria.atributo
   }
 
-  function SubmitInformacoesBasicas(values) {
+  function toBase64(file: File) {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = error => reject(error)
+    })
+  }
+
+  async function SubmitInformacoesBasicas(values) {
+    const newImagensBase64 = [...imagensBase64]
+
+    for (const imagem of listaImagens) {
+      const response = await toBase64(imagem)
+      // console.log(response)
+      newImagensBase64.push(response)
+    }
+
+    const newFotos = newImagensBase64.map((valor, index) => {
+      return {
+        ordem: String(index),
+        base64: valor
+      }
+    })
+
     setDadosProduto({
       ...dadosProduto,
       nome: values.nome,
       marca: values.marca,
       produto_estado: values.produto_estado,
       valor: values.valor,
-      valor_com_desconto: values.valorDesconto
+      valor_com_desconto: values.valorDesconto,
+      foto: newFotos[0].base64
     })
+
+    setImagensBase64(newFotos)
 
     setImagemPreview(URL.createObjectURL(listaImagens[0]))
 
@@ -274,7 +312,7 @@ export default function CadastroProduto(): JSX.Element {
     setDadosProduto({
       ...dadosProduto,
       loja_id: '14',
-      codigo_produto: 'czxc1231',
+      codigo_produto: 'cvbj8345',
       cor_id: String(values.cor_id),
       tamanho_id: String(values.tamanho_id),
       subcategoria_id: String(values.subcategoria_id),
@@ -292,22 +330,39 @@ export default function CadastroProduto(): JSX.Element {
       })
     })
 
+    console.log(dadosProduto)
+
     setPasso(oldValue => oldValue + 1)
   }
 
   async function PublicarProduto() {
     const data = { ...dadosProduto }
+    const imagensData = {
+      loja_id: '14',
+      fotos: [...imagensBase64]
+    }
 
-    // try {
-    //   const response = await api.post('/produto', data, {
-    //     headers: {
-    //       Authorization: `Bearer ${access_token['access-token']}`
-    //     }
-    //   })
-    //   console.log(response.data)
-    // } catch (error) {
-    //   console.log(error.response)
-    // }
+    console.log(dadosProduto)
+
+    try {
+      const produtoResponse = await api.post('/produto', data, {
+        headers: {
+          Authorization: `Bearer ${access_token['access-token']}`
+        }
+      })
+
+      const imagensResponse = await api.post(
+        `/produto/${produtoResponse.data.produto_id}/foto`,
+        imagensData,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token['access-token']}`
+          }
+        }
+      )
+    } catch (error) {
+      console.log(error.response)
+    }
   }
 
   function mudarConteudo(passo: number) {
@@ -323,13 +378,13 @@ export default function CadastroProduto(): JSX.Element {
             <Formik
               validationSchema={informaçoesBasicasSchema}
               initialValues={{
-                nome: '',
-                cor_id: '',
-                tamanho_id: '',
-                marca: '',
-                produto_estado: '',
-                valor: '',
-                valorDesconto: ''
+                nome: '' || dadosProduto.nome,
+                cor_id: '' || dadosProduto.cor_id,
+                tamanho_id: '' || dadosProduto.tamanho_id,
+                marca: '' || dadosProduto.marca,
+                produto_estado: '' || dadosProduto.produto_estado,
+                valor: dadosProduto.valor || '',
+                valorDesconto: '' || dadosProduto.valor_com_desconto
               }}
               onSubmit={values => SubmitInformacoesBasicas(values)}
             >
@@ -340,6 +395,7 @@ export default function CadastroProduto(): JSX.Element {
                       label="Título do produto"
                       type="text"
                       name="nome"
+                      value={values.nome}
                       dirty={dirty}
                       placeholder="Digite o título do produto"
                     />
@@ -358,7 +414,12 @@ export default function CadastroProduto(): JSX.Element {
                         tamanho={tamanhos}
                         loading={loadingTamanhos}
                       />
-                      <CustomField label="Marca" type="text" name="marca" />
+                      <CustomField
+                        value={values.marca}
+                        label="Marca"
+                        type="text"
+                        name="marca"
+                      />
                       <CustomDropdown
                         contenttype="strings"
                         label="Condição"
@@ -372,7 +433,12 @@ export default function CadastroProduto(): JSX.Element {
                     <h1>Qual o valor?</h1>
                     <div>
                       <div>
-                        <CustomField label="Valor" name="valor" type="number" />
+                        <CustomField
+                          value={values.valor}
+                          label="Valor"
+                          name="valor"
+                          type="number"
+                        />
                         <span>Quanto deseja receber + 20% de taxa</span>
                       </div>
                       <span>ou</span>
@@ -381,6 +447,7 @@ export default function CadastroProduto(): JSX.Element {
                           label="Quanto quer receber?"
                           name="valorDesconto"
                           type="number"
+                          value={values.valorDesconto}
                         />
                         <span>Valor total - 20% de taxa</span>
                       </div>
@@ -431,11 +498,11 @@ export default function CadastroProduto(): JSX.Element {
             <Formik
               validationSchema={informaçõesSecundariasSchema}
               initialValues={{
-                descricao: '',
-                altura: 0,
-                largura: 0,
-                comprimento: 0,
-                peso: 0,
+                descricao: '' || dadosProduto.descricao,
+                altura: 0 || dadosProduto.altura,
+                largura: 0 || dadosProduto.largura,
+                comprimento: 0 || dadosProduto.comprimento,
+                peso: 0 || dadosProduto.peso,
                 categoria_id: '',
                 subcategoria_id: '',
                 atributo: {
@@ -608,7 +675,10 @@ export default function CadastroProduto(): JSX.Element {
                     </div>
                   </div>
                   <div className={Styles.buttons}>
-                    <button type="button" onClick={() => setPasso(1)}>
+                    <button
+                      type="button"
+                      onClick={() => setPasso(oldValue => oldValue - 1)}
+                    >
                       Voltar
                     </button>
                     <button type="submit">Próximo</button>

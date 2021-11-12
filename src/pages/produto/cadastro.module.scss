@@ -707,8 +707,9 @@
       background: #f6f7fa;
       border-radius: 18px;
 
-      background-size: contain;
+      background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
 
       position: relative;
 
