@@ -35,18 +35,18 @@ export function PedidoInterna(): JSX.Element {
         return <MeusPedidos />
 
       case 'Cadastro Loja':
-        return <CadastroLoja />  
+        return <CadastroLoja />
 
       default:
         return <h1>Não encontrado</h1>
     }
   }
-  const MaskedInputCep = ({value , onChange}) => {
+  const MaskedInputCep = ({ value, onChange }) => {
     return <InputMask mask="99.999-999" value={value} onChange={onChange} />
   }
-  const MaskedInputCpf = ({value , onChange}) => {
+  const MaskedInputCpf = ({ value, onChange }) => {
     return <InputMask mask="999.999.999-99" value={value} onChange={onChange} />
-  }    
+  }
 
   const Pedidos = () => {
     return (
@@ -355,21 +355,23 @@ export function PedidoInterna(): JSX.Element {
                 onBlur={evt => setNomeLoja(evt.target.value)}
               />
               <label htmlFor="razaoSocial">Razão Social</label>
-              <input
-                type="text"
-                id="razaoSocial"
-                placeholder="Razão Social"
-              />
+              <input type="text" id="razaoSocial" placeholder="Razão Social" />
               <label htmlFor="cpf">CPF</label>
-              <MaskedInputCpf value={cpf} onChange= {(event) => setCpf(event.target.value)} />
+              <MaskedInputCpf
+                value={cpf}
+                onChange={event => setCpf(event.target.value)}
+              />
               <label htmlFor="cep">CEP</label>
-              <MaskedInputCep  value={cep} onChange= {(event) => setCep(event.target.value)} />
+              <MaskedInputCep
+                value={cep}
+                onChange={event => setCep(event.target.value)}
+              />
               <label htmlFor="rua">Rua</label>
               <input type="text" placeholder="Rua" />
-              <label htmlFor="numero">Número</label> 
+              <label htmlFor="numero">Número</label>
               <input type="number" placeholder="Número" />
               <label htmlFor="telefone">Telefone</label>
-              <input type="text" placeholder="Telefone"/>
+              <input type="text" placeholder="Telefone" />
             </div>
             <div className={`${Styles.divSeparador} col-1`}></div>
             <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
@@ -382,7 +384,7 @@ export function PedidoInterna(): JSX.Element {
               <label htmlFor="complemento">Complemento</label>
               <input type="text" placeholder="Complemento" />
               <label htmlFor="uf">UF</label>
-              <select placeholder="UF" >
+              <select placeholder="UF">
                 <option value="AC">Acre</option>
                 <option value="AL">Alagoas</option>
                 <option value="AP">Amapá</option>
@@ -416,12 +418,12 @@ export function PedidoInterna(): JSX.Element {
               <button className={`${Styles.btnEndereco} mb-5`}>
                 Cadastrar Loja
               </button>
-            </div>  
+            </div>
           </div>
         </div>
-      </div> 
+      </div>
     )
-  }     
+  }
 
   return (
     <div>

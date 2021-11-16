@@ -1,7 +1,6 @@
 import { Container } from 'react-bootstrap'
 import Styles from './styles.module.scss'
 import Image from 'next/image'
-import { TituloSecao } from '../TituloSecao'
 
 export function SobreNos(): JSX.Element {
   return (
@@ -20,9 +19,9 @@ export function SobreNos(): JSX.Element {
           </div>
           <div className="col-12 col-lg-8 mt-3 mt-lg-0">
             <div className={Styles.divTitulo}>
-              <TituloSecao titulo="Sobre Nós" />
+              <h1 className={Styles.titulo}>Sobre Nós</h1>
             </div>
-            <div className="d-flex flex-sm-row flex-column align-items-center">
+            <div className="d-flex flex-sm-row flex-column">
               <p className={Styles.textoSobre}>
                 Acreditamos que a experiência do nosso cliente deve ser única e
                 exclusiva em cada detalhe e que para se alcançar isso a
