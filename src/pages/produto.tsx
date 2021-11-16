@@ -7,14 +7,43 @@ import { CompreJunto } from '../components/CompreJunto'
 import { Caracteristicas } from '../components/Caracteristicas'
 import { CarouselProduto } from '../components/Carousel/index'
 import { Voltar } from '../components/Voltar/index'
-import { Container } from 'react-bootstrap'
+import { Container, Spinner } from 'react-bootstrap'
 import Styles from '../components/product/styles.module.scss'
+import { parseCookies } from 'nookies'
+import { mascaraCep } from '../utils/mascaraCep'
 
 import api from '../services/api'
 import { GetStaticProps } from 'next'
+import { useState } from 'react'
 
 export default function Produto({ products }): JSX.Element {
   const Produto = props => {
+    const [cep, setCep] = useState('')
+    const [frete, setFrete] = useState('')
+    const [loading, setLoading] = useState<boolean>(false)
+    const access_token = parseCookies()
+    async function getFrete() {
+      setLoading(true)
+      const { data } = await api.post('/frete/produto', {
+        headers: {
+          authorization: `Bearer ${access_token['access-token']}`
+        },
+        cep_entrega: cep,
+        produto_id: '15'
+      })
+
+      setLoading(false)
+
+      data.map(item => {
+        const { vlrFrete } = item
+        const valor = new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        }).format(vlrFrete.toString())
+        setFrete(valor)
+        return valor
+      })
+    }
     return (
       <Container>
         <Voltar />
@@ -62,15 +91,29 @@ export default function Produto({ products }): JSX.Element {
               </p>
               <div className={Styles.divConsultar}>
                 <input
+                  value={mascaraCep(cep)}
+                  maxLength={9}
                   type="text"
                   placeholder="Insira o CEP"
                   className={Styles.inputCep}
+                  onChange={evt => setCep(evt.currentTarget.value)}
                 />
                 <button
                   className={`${Styles.btnConsultar} mt-3 md-sm-0 mt-md-3 mt-lg-0`}
+                  onClick={getFrete}
                 >
                   consultar
+                  {loading ? (
+                    <Spinner animation="border">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  ) : (
+                    <span></span>
+                  )}
                 </button>
+                {frete && (
+                  <p className={Styles.frete}>Valor do frete: {frete}</p>
+                )}
               </div>
             </div>
           </div>
