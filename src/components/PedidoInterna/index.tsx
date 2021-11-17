@@ -12,6 +12,7 @@ import api from '../../services/api'
 import { Spinner } from 'react-bootstrap'
 import { mascaraCPF } from '../../utils/mascaraCPF'
 import { mascaraCelular } from '../../utils/mascaraCelular'
+import { mascaraCep } from '../../utils/mascaraCep'
 import { CustomField } from '../../components/CustomField'
 import { CustomDropdown } from '../CustomDropdown'
 
@@ -46,7 +47,7 @@ export function PedidoInterna(): JSX.Element {
         return <MeusPedidos />
 
       case 'Cadastro Loja':
-        return <CadastroLoja />  
+        return <CadastroLoja />
 
       default:
         return <h1>Não encontrado</h1>
@@ -75,8 +76,10 @@ export function PedidoInterna(): JSX.Element {
     razao_social: Yup.string().required('Este campo é obrigatório'),
     cpf: Yup.string()
     .max(14)
-    .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX'),
+    .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
+    .required('Este campo é obrigatório'),
     cep: Yup.string()
+    .max(9)
     .required('Digite um CEP')
     .matches(regexCep, 'Digite um CEP válido'),
     rua: Yup.string().required('Este campo é obrigatório'),
@@ -107,14 +110,6 @@ export function PedidoInterna(): JSX.Element {
       console.log(mensagemErro)
     }
   }
-
-  const MaskedInputCep = ({value , onChange}) => {
-    return <InputMask mask="99.999-999" value={value} onChange={onChange} />
-  }
-
-  const MaskedInputCpf = ({value , onChange}) => {
-    return <InputMask mask="999.999.999-99" value={value} onChange={onChange} />
-  }    
 
   const Pedidos = () => {
     return (
@@ -460,6 +455,8 @@ export function PedidoInterna(): JSX.Element {
                             type="text"
                             name="cep"
                             label="CEP*"
+                            maxLength={9}
+                            value={mascaraCep(values.cep)}
                             dirty={dirty}
                           />
                           <CustomField
@@ -515,7 +512,7 @@ export function PedidoInterna(): JSX.Element {
                             label="Email*"
                             dirty={dirty}
                           />
-                        <button type="submit">
+                        <button type="submit" className={`${Styles.btnEndereco} mb-5`} >
                           {loading ? (
                             <Spinner animation="border">
                               <span className="visually-hidden">Loading...</span>
@@ -532,7 +529,7 @@ export function PedidoInterna(): JSX.Element {
             )}                  
       </Formik>
     )
-  }     
+  }
 
   return (
     <div>
