@@ -48,12 +48,11 @@
     transition: all 0.2s;
 
     &::after {
-      content: '✓';
-      font-weight: 900;
+      content: url('/whiteCheck.svg');
       position: absolute;
-      color: #fff;
       opacity: 0;
-      transform: scale(1.5);
+      width: 30px;
+      height: 30px;
     }
   }
 

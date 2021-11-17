@@ -32,7 +32,7 @@ export function ProductItemCard({
           }).format(valor / 12)}
         </span>
         <button type="button">
-          Adcionar produto <img src="buycartIcon.svg" alt="Icone de comprar" />
+          Adcionar produto <img src="/buycartIcon.svg" alt="Icone de comprar" />
         </button>
       </div>
     </div>

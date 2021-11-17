@@ -59,7 +59,10 @@ export default function Cadastro(): JSX.Element {
       setMensagemErro([
         ...mensagemErro,
         ...error.response.data.cpf,
-        ...error.response.data.email
+        ...error.response.data.email,
+        ...error.response.data.celular,
+        ...error.response.data.senha,
+        ...error.response.data.nome
       ])
       console.log(mensagemErro)
     }

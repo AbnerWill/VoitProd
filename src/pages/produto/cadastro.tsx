@@ -330,8 +330,6 @@ export default function CadastroProduto(): JSX.Element {
       })
     })
 
-    console.log(dadosProduto)
-
     setPasso(oldValue => oldValue + 1)
   }
 
@@ -341,8 +339,6 @@ export default function CadastroProduto(): JSX.Element {
       loja_id: '14',
       fotos: [...imagensBase64]
     }
-
-    console.log(dadosProduto)
 
     try {
       const produtoResponse = await api.post('/produto', data, {
