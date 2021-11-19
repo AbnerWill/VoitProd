@@ -131,7 +131,7 @@ export function PedidoInterna(): JSX.Element {
     try {
       setMensagemErro([''])
       setLoading(true)
-      const response = await api.post('/loja', dados)
+      const response = await api.post('/loja/31', dados)
       setLoading(false)
 
     } catch (error) {
