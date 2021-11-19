@@ -136,7 +136,7 @@ const informaçõesSecundariasSchema = Yup.object().shape({
   valorAtributo: Yup.string()
 })
 
-export default function CadastroProduto(): JSX.Element {
+export default function CadastroProduto({ loja_id }): JSX.Element {
   const [passo, setPasso] = useState(0)
   const [dadosProduto, setDadosProduto] =
     useState<DadosProduto>(dadosProdutoInicial)
@@ -311,8 +311,7 @@ export default function CadastroProduto(): JSX.Element {
   function SubmitInformacoesSecundarias(values) {
     setDadosProduto({
       ...dadosProduto,
-      loja_id: '14',
-      codigo_produto: 'cvbj8345',
+      loja_id: String(loja_id),
       cor_id: String(values.cor_id),
       tamanho_id: String(values.tamanho_id),
       subcategoria_id: String(values.subcategoria_id),
@@ -336,9 +335,12 @@ export default function CadastroProduto(): JSX.Element {
   async function PublicarProduto() {
     const data = { ...dadosProduto }
     const imagensData = {
-      loja_id: '14',
+      loja_id: String(loja_id),
       fotos: [...imagensBase64]
     }
+
+    console.log('DADOS', data)
+    console.log('FOTOS', imagensData)
 
     try {
       const produtoResponse = await api.post('/produto', data, {
@@ -833,7 +835,26 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 
+  const response = await api.get('/loja', {
+    headers: {
+      Authorization: `Bearer ${access_token['access-token']}`
+    }
+  })
+
+  const loja_id = response.data[0].loja_id
+
+  if (!loja_id) {
+    return {
+      redirect: {
+        destination: '/pedidos',
+        permanent: false
+      }
+    }
+  }
+
   return {
-    props: {}
+    props: {
+      loja_id
+    }
   }
 }

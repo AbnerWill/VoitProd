@@ -1,4 +1,8 @@
 /* eslint-disable camelcase */
+
+import { useRouter } from 'next/router'
+import { Spinner } from 'react-bootstrap'
+
 import { Footer } from '../../../components/Footer'
 import NavbarVoit from '../../../components/Navbar'
 import { ProductItemCard } from '../../../containers/listaProdutos/BuyProductItemCard'
@@ -11,9 +15,15 @@ import { MostSearchedWords } from '../../../components/MostSearchedWords'
 import Styles from '../../../styles/produtos.module.scss'
 import api from '../../../services/api'
 
-import { DadosPublicosProduto } from '../../../types/typesProduto'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { Paginacao } from '../../../containers/listaProdutos/Paginacao'
+import { useEffect, useState } from 'react'
 
+type Link = {
+  url: string
+  label: string
+  active: boolean
+}
 interface Produto {
   produto_id: number
   data_adicionadio: string
@@ -35,39 +45,163 @@ interface Produto {
   produto_estado: string
 }
 
-interface ProductsResponse {
+interface ProductPagination {
   data: Produto[]
+  links: Link[]
   current_page: number
   first_page_url: number
   last_page: number
   last_page_url: string
+  prev_page_url: string
   next_page_url: string
+  total: number
+  per_page: number
+}
+
+interface AtributosResponse {
+  atributo_grupo_id: number
+  nome: string
+  atributo_grupo: {
+    atributo_grupo_valor_id: number
+    nome: string
+  }[]
 }
 
 interface ProductsPageProps {
-  ProductProps: ProductsResponse
+  produtosPagination: ProductPagination
+  atributos: AtributosResponse[]
 }
 
 export default function ProductsPage({
-  ProductProps
+  produtosPagination,
+  atributos
 }: ProductsPageProps): JSX.Element {
+  const [paginacao, setPaginacao] = useState<ProductPagination>({
+    ...produtosPagination,
+    links: [...produtosPagination.links]
+  })
+  const [currentPage, setCurrentPage] = useState<Link>(
+    paginacao.links.find(pagina => pagina.active === true)
+  )
+  const [produtos, setProdutos] = useState([...produtosPagination.data])
+  const [atributosFiltro, setAtributosFiltro] = useState({})
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const { query } = useRouter()
+  const { categoria_id, subcategoria_id } = query
+  const urlParams = {
+    categoria_id: String(categoria_id),
+    subcategoria_id: String(subcategoria_id)
+  }
+
+  useEffect(() => {
+    getPageItems(currentPage)
+  }, [currentPage])
+
+  async function getPageItems(page: Link) {
+    try {
+      setLoading(true)
+      const response = await api.get(page.url, {
+        params: {
+          ...urlParams,
+          page_size: 20
+        }
+      })
+      setLoading(false)
+
+      const newPaginacao = response.data
+      const newProdutos = response.data.data
+
+      setProdutos(newProdutos)
+      setPaginacao(newPaginacao)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function nextPage() {
+    try {
+      setLoading(true)
+      const response = await api.get(paginacao.next_page_url, {
+        params: {
+          ...urlParams,
+          page_size: 20
+        }
+      })
+      setLoading(false)
+
+      const newPaginacao = response.data
+      const newProdutos = response.data.data
+
+      setProdutos(newProdutos)
+      setPaginacao(newPaginacao)
+
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+
+  async function prevPage() {
+    try {
+      setLoading(true)
+      const response = await api.get(paginacao.prev_page_url, {
+        params: {
+          ...urlParams,
+          page_size: 20
+        }
+      })
+      setLoading(false)
+
+      const newPaginacao = response.data
+      const newProdutos = response.data.data
+
+      setProdutos(newProdutos)
+      setPaginacao(newPaginacao)
+
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+
   return (
     <>
       <NavbarVoit />
       <ProdutoDestaque />
       <main className={Styles.main}>
         <div className={Styles.wrapper}>
-          <FiltroProdutos />
-          <section className={Styles.productsGrid}>
-            {ProductProps.data?.map(produto => (
-              <ProductItemCard
-                key={produto.produto_id}
-                nome={produto.nome}
-                valor={produto.valor}
-                foto={produto.foto}
+          <FiltroProdutos atributos={atributos} />
+          <div>
+            {loading ? (
+              <div className={Styles.skeleton}>
+                <Spinner animation="border">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : (
+              <section className={Styles.productsGrid}>
+                {produtos.map(produto => {
+                  return (
+                    <ProductItemCard
+                      key={produto.produto_id}
+                      nome={produto.nome}
+                      valor={produto.valor}
+                      foto={produto.foto}
+                    />
+                  )
+                })}
+              </section>
+            )}
+            <div>
+              <Paginacao
+                setCurrentPage={setCurrentPage}
+                pages={paginacao.links}
+                nextPage={nextPage}
+                prevPage={prevPage}
               />
-            ))}
-          </section>
+            </div>
+          </div>
         </div>
         <SportSelection />
         <NearestProducts />
@@ -101,8 +235,19 @@ export const getStaticProps: GetStaticProps = async ctx => {
     }
   })
 
-  const ProductProps: ProductsResponse = {
-    ...produtosResponse.data
+  const produtosPagination = {
+    current_page: produtosResponse.data.current_page,
+    last_page: produtosResponse.data.last_page,
+    first_page_url: produtosResponse.data.first_page_url,
+    last_page_url: produtosResponse.data.last_page_url,
+    prev_page_url: produtosResponse.data.prev_page_url,
+    next_page_url: produtosResponse.data.next_page_url,
+    per_page: Number(produtosResponse.data.per_page),
+    from: produtosResponse.data.from,
+    to: produtosResponse.data.to,
+    total: produtosResponse.data.total,
+    data: produtosResponse.data.data,
+    links: produtosResponse.data.links
   }
 
   const atributosResponse = await api.get('/atributo/publica', {
@@ -111,11 +256,23 @@ export const getStaticProps: GetStaticProps = async ctx => {
     }
   })
 
-  console.log(atributosResponse.data)
+  const atributos = atributosResponse.data.map(atributo => {
+    return {
+      atributo_grupo_id: atributo.atributo_grupo_id,
+      nome: atributo.nome,
+      atributo_grupo: atributo.atributo_grupo.map(atributo_valor => {
+        return {
+          atributo_grupo_valor_id: atributo_valor.atributo_grupo_valor_id,
+          nome: atributo_valor.nome
+        }
+      })
+    }
+  })
 
   return {
     props: {
-      ProductProps
+      produtosPagination,
+      atributos
     }
   }
 }

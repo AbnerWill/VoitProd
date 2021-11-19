@@ -5,7 +5,7 @@ import Styles from './styles.module.scss'
 export function FormEnviado(): JSX.Element {
   useEffect(() => {
     setTimeout(() => {
-      Router.push('/')
+      Router.push('/usuario/login')
     }, 5000)
   }, [])
 
