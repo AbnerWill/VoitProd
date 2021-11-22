@@ -1,6 +1,5 @@
 import styles from './styles.module.scss'
 import { TituloSecao } from '../TituloSecao'
-import Image from 'next/image'
 import { Container } from 'react-bootstrap'
 
 export function PromocoesEspeciais(): JSX.Element {
@@ -17,7 +16,7 @@ export function PromocoesEspeciais(): JSX.Element {
           <div className={'col-12 col-lg-3'}>
             <div className={styles.divCard}>
               <div className={styles.divImg}>
-                <Image
+                <img
                   src="/img-padrao.svg"
                   alt="imagem produto promocional"
                   height={190}
@@ -35,7 +34,7 @@ export function PromocoesEspeciais(): JSX.Element {
           <div className={'col-12 col-lg-3 mt-3 mt-lg-0'}>
             <div className={styles.divCard}>
               <div className={styles.divImg}>
-                <Image
+                <img
                   src="/img-padrao.svg"
                   alt="imagem produto promocional"
                   height={190}
@@ -53,7 +52,7 @@ export function PromocoesEspeciais(): JSX.Element {
           <div className={'col-12 col-lg-3 mt-3 mt-lg-0'}>
             <div className={styles.divCard}>
               <div className={styles.divImg}>
-                <Image
+                <img
                   src="/img-padrao.svg"
                   alt="imagem produto promocional"
                   height={190}

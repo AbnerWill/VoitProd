@@ -1,5 +1,4 @@
 import Styles from './styles.module.scss'
-import Image from 'next/image'
 import { Container } from 'react-bootstrap'
 
 export function Footer(): JSX.Element {
@@ -33,7 +32,7 @@ export function Footer(): JSX.Element {
             </p>
             <div className="d-flex justify-content-between">
               <div className={Styles.divCarta}>
-                <Image src="/carta.svg" alt="carta" height={25} width={25} />
+                <img src="/carta.svg" alt="carta" height={25} width={25} />
                 <span className={Styles.contato}>oi@voit.co</span>
               </div>
               <div className={Styles.divIcons}>

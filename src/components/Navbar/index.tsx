@@ -1,4 +1,4 @@
-import { Container, Dropdown, Nav, Navbar, NavItem } from 'react-bootstrap'
+import { Container, Nav, Navbar } from 'react-bootstrap'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -21,7 +21,9 @@ export default function NavbarVoit(): JSX.Element {
       return (
         <ul key={index}>
           <li>
-            <a href="">{item.nome}</a>
+            <Link href="/produtos" passHref>
+              <a className={styles.login}>{item.nome}</a>
+            </Link>
           </li>
         </ul>
       )
@@ -105,7 +107,9 @@ export default function NavbarVoit(): JSX.Element {
               voit pro
             </a>
           </li>
-          <button className={styles.btnVender}>quero vender</button>
+          <Link href="/usuario/login" passHref>
+            <button className={styles.btnVender}>quero vender</button>
+          </Link>
         </div>
       </Container>
     </section>

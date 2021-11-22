@@ -3,7 +3,6 @@ import Slider from 'react-slick'
 import { NextArrow, PrevArrow } from '../Arrows'
 import { StarredItemCard } from '../StarredProductItemCard'
 import Styles from './styles.module.scss'
-import { TituloSecao } from '../TituloSecao'
 
 export function PodeGostar(): JSX.Element {
   const settings = {

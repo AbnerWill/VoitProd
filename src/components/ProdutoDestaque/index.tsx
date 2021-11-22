@@ -1,7 +1,5 @@
 import { Container } from 'react-bootstrap'
 import styles from './styles.module.scss'
-import Image from 'next/image'
-import { TituloSecao } from '../TituloSecao'
 import { Desconto } from '../Desconto'
 
 export function ProdutoDestaque(): JSX.Element {
@@ -22,7 +20,7 @@ export function ProdutoDestaque(): JSX.Element {
               <p className={styles.preco}>R$ 290</p>
             </div>
             <div className="col-12 col-md-6 d-flex justify-content-center align-items-center">
-              <Image
+              <img
                 src="/img-padrao.svg"
                 alt="imagem produto"
                 height={150}
