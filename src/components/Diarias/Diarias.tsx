@@ -1,7 +1,6 @@
 import { Container } from 'react-bootstrap'
 import styles from './styles.module.scss'
 import { Descontaco } from '../Descontaco/Descontaco'
-// import Usado from '../Usado'
 import { TituloSecao } from '../TituloSecao'
 import Image from 'next/image'
 

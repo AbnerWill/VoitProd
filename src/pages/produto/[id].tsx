@@ -1,49 +1,21 @@
-import Navbar from '../components/Navbar'
-import { Footer } from '../components/Footer'
-import { PergunteVendedor } from '../components/PergunteVendedor'
-import { PalavrasMaisBuscadas } from '../components/PalavrasMaisBuscadas'
-import { PodeGostar } from '../components/PodeGostar'
-import { CompreJunto } from '../components/CompreJunto'
-import { Caracteristicas } from '../components/Caracteristicas'
-import { CarouselProduto } from '../components/Carousel/index'
-import { Voltar } from '../components/Voltar/index'
-import { Container, Spinner } from 'react-bootstrap'
-import Styles from '../components/product/styles.module.scss'
-import { parseCookies } from 'nookies'
-import { mascaraCep } from '../utils/mascaraCep'
+import Navbar from '../../components/Navbar'
+import { Footer } from '../../components/Footer'
+import { PergunteVendedor } from '../../components/PergunteVendedor'
+import { PalavrasMaisBuscadas } from '../../components/PalavrasMaisBuscadas'
+import { PodeGostar } from '../../components/PodeGostar'
+import { CompreJunto } from '../../components/CompreJunto'
+import { Caracteristicas } from '../../components/Caracteristicas'
+import { CarouselProduto } from '../../components/Carousel/index'
+import { Voltar } from '../../components/Voltar/index'
+import { Container } from 'react-bootstrap'
 
-import api from '../services/api'
-import { GetStaticProps } from 'next'
-import { useState } from 'react'
+import Styles from '../../components/product/styles.module.scss'
 
-export default function Produto({ products }): JSX.Element {
+import api from '../../services/api'
+import { GetStaticPaths, GetStaticProps } from 'next'
+
+export default function Produto({ product }): JSX.Element {
   const Produto = props => {
-    const [cep, setCep] = useState('')
-    const [frete, setFrete] = useState('')
-    const [loading, setLoading] = useState<boolean>(false)
-    const access_token = parseCookies()
-    async function getFrete() {
-      setLoading(true)
-      const { data } = await api.post('/frete/produto', {
-        headers: {
-          authorization: `Bearer ${access_token['access-token']}`
-        },
-        cep_entrega: cep,
-        produto_id: '15'
-      })
-
-      setLoading(false)
-
-      data.map(item => {
-        const { vlrFrete } = item
-        const valor = new Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL'
-        }).format(vlrFrete.toString())
-        setFrete(valor)
-        return valor
-      })
-    }
     return (
       <Container>
         <Voltar />
@@ -74,6 +46,9 @@ export default function Produto({ products }): JSX.Element {
                     </span>
                   </div>
                 </div>
+                <p className={Styles.precoVarejo}>
+                  R$1400 preço estimado no varejo
+                </p>
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center">
                 <button className={Styles.btnComprar}>
@@ -91,29 +66,15 @@ export default function Produto({ products }): JSX.Element {
               </p>
               <div className={Styles.divConsultar}>
                 <input
-                  value={mascaraCep(cep)}
-                  maxLength={9}
                   type="text"
                   placeholder="Insira o CEP"
                   className={Styles.inputCep}
-                  onChange={evt => setCep(evt.currentTarget.value)}
                 />
                 <button
                   className={`${Styles.btnConsultar} mt-3 md-sm-0 mt-md-3 mt-lg-0`}
-                  onClick={getFrete}
                 >
                   consultar
-                  {loading ? (
-                    <Spinner animation="border">
-                      <span className="visually-hidden">Loading...</span>
-                    </Spinner>
-                  ) : (
-                    <span></span>
-                  )}
                 </button>
-                {frete && (
-                  <p className={Styles.frete}>Valor do frete: {frete}</p>
-                )}
               </div>
             </div>
           </div>
@@ -128,11 +89,10 @@ export default function Produto({ products }): JSX.Element {
       </section>
       <section>
         <Produto
-          key="1"
-          nome={products[1].nome}
-          valor={products[1].valor}
-          descricao={products[1].descricao}
-          valor_com_desconto={products[1].valor_com_desconto}
+          nome={product.nome}
+          valor={product.valor}
+          descricao={product.descricao}
+          valor_com_desconto={product.valor_com_desconto}
         />
       </section>
       <section>
@@ -157,21 +117,30 @@ export default function Produto({ products }): JSX.Element {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('/produto/publica', {
-    // headers: {
-    //   authorization: 'Bearer ${token de autorização}'
-    // },
-    params: {
-      loja_id: '3'
-    }
-  })
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking'
+  }
+}
 
-  const products = [...data]
+export const getStaticProps: GetStaticProps = async ctx => {
+  const { params } = ctx
+  const { id } = params
+
+  const { data } = await api.get(`/produto/publica/${id}`)
+
+  const product = {
+    produto_id: data.produto_id,
+    nome: data.nome,
+    valor: data.valor,
+    valor_com_desconto: data.valor_com_desconto,
+    descricao: data.descricao
+  }
 
   return {
     props: {
-      products
+      product
     }
   }
 }

@@ -6,6 +6,13 @@
 
   .imgContainer {
     padding: 10rem 8.8rem;
+    cursor: pointer;
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
 
     img {
       width: 6.34rem;

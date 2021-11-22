@@ -5,7 +5,9 @@ import Styles from './styles.module.scss'
 export function Ajuda(): JSX.Element {
   return (
     <div className={Styles.divAjuda}>
-      <TituloSecao titulo="Precisa de ajuda? Chame um especialista" />
+      <div className={Styles.tituloDiv}>
+        <TituloSecao titulo="Precisa de ajuda? Chame um especialista" />
+      </div>
       <p className={Styles.subTitulo}>
         Temos uma equipe especializada pronta para te atender no WhatsApp,
         qualquer coisa é só chamar

@@ -13,44 +13,23 @@ interface AtributosResponse {
   }[]
 }
 
-type atributos_grupo = {
-  atributo_grupo_id: string
-}
-
-type atributos_grupo_valor = {
-  atributo_grupo_id: string
-  atributo_grupo_valor_id: string
-}
-
 interface FiltroProdutosProps {
   atributos: AtributosResponse[]
-  atributosFiltro?: atributos_grupo[] | atributos_grupo_valor[]
-  setAtributosFiltro?: (
-    value: atributos_grupo[] | atributos_grupo_valor[]
-  ) => void
 }
 
 export function FiltroProdutos({
-  atributos,
-  atributosFiltro,
-  setAtributosFiltro
+  atributos
 }: FiltroProdutosProps): JSX.Element {
   const [filtros, setFiltros] = useState([])
 
-  function removerFiltro(filtro, atributoFiltro) {
+  function removerFiltro(filtro) {
     const newFiltros = [...filtros]
-    const newAtributosFiltro = [...atributosFiltro]
 
     const indexFiltro = newFiltros.findIndex(f => f === filtro)
-    const indexAtributoFiltro = newAtributosFiltro.findIndex(
-      f => f === atributoFiltro
-    )
 
     newFiltros.splice(indexFiltro, 1)
-    newAtributosFiltro.splice(indexAtributoFiltro, 1)
 
     setFiltros(newFiltros)
-    setAtributosFiltro(newAtributosFiltro)
   }
 
   function adicionarFiltro(filtro) {
@@ -59,9 +38,9 @@ export function FiltroProdutos({
     setFiltros(newFiltros)
   }
 
-  function toggleFiltro(filtro, atributoFiltro) {
+  function toggleFiltro(filtro) {
     filtros.find(f => f === filtro)
-      ? removerFiltro(filtro, atributoFiltro)
+      ? removerFiltro(filtro)
       : adicionarFiltro(filtro)
   }
 

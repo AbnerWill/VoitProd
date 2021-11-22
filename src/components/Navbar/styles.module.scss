@@ -58,10 +58,12 @@
 
 .divNav {
   display: flex;
+  justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
   margin: 0;
   padding: 0;
-  flex-wrap: wrap;
 }
 
 @media screen and (max-width: 768px) {
@@ -74,7 +76,7 @@
 
 @media screen and (max-width: 1200px) {
   .divBuscar {
-    width: 36rem !important;
+    width: 45rem !important;
   }
 }
 
@@ -86,7 +88,7 @@
 
 @media screen and (max-width: 476px) {
   .divBuscar {
-    width: 250px !important;
+    width: 25rem !important;
     margin: 0;
   }
 
@@ -123,7 +125,7 @@
 .divBuscar {
   border: none;
   border-radius: 10px;
-  width: 52rem;
+  width: 67rem;
   background-color: #f6f7fa;
   padding: 1rem;
   display: flex;
@@ -134,8 +136,8 @@
 .inputBuscar {
   border: none;
   background-color: #f6f7fa;
-  padding: 1rem;
-  width: 40rem;
+  padding: 0.7rem;
+  width: 50rem;
 }
 
 .inputBuscar::-webkit-input-placeholder {
@@ -157,11 +159,16 @@
   justify-content: center;
   font-size: 1.4rem;
   text-transform: uppercase;
-  letter-spacing: 0.16rem;
+  letter-spacing: 0.2rem;
   color: #95a1bb;
   margin-left: 1rem;
+  padding: 0 6rem;
   border-bottom: 2px solid #cad1e1;
   width: 8rem;
+
+  i {
+    color: #CAD1E1;
+  }
 }
 
 .entrar a:hover {

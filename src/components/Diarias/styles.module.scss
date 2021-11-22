@@ -3,10 +3,12 @@
 }
 
 .subTitulo {
-  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 400;
   color: #95a1bb;
-  font-size: 1.6rem;
-  width: 35rem;
+  text-align: center;
+  max-width: 56rem;
+  margin-bottom: 5rem;
 }
 
 .cardDiarias {
@@ -20,13 +22,14 @@
   color: #363940;
   margin-top: 3rem;
   height: 3rem;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 .preco {
   color: #0000ff;
   letter-spacing: 0.16rem;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: 500;
   margin-top: 3rem;
 }

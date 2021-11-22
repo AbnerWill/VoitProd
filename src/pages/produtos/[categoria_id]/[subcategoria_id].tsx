@@ -188,6 +188,7 @@ export default function ProductsPage({
                       nome={produto.nome}
                       valor={produto.valor}
                       foto={produto.foto}
+                      id={produto.produto_id}
                     />
                   )
                 })}

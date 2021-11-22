@@ -1,24 +1,42 @@
 import { Container, Table } from 'react-bootstrap'
 import Styles from './styles.module.scss'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ModalCadastro } from '../ModalEndereco'
 import { CustomCheckbox } from '../CustomCheckbox'
 import { ModalCartaoCredito } from '../ModalCartaoCredito'
 import InputMask from 'react-input-mask'
+import { Formik, Field, Form } from 'formik'
+import * as Yup from 'yup'
+import api from '../../services/api'
+import { Spinner } from 'react-bootstrap'
+import { mascaraCPF } from '../../utils/mascaraCPF'
+import { mascaraCelular } from '../../utils/mascaraCelular'
+import { mascaraCep } from '../../utils/mascaraCep'
+import { mascaraData } from '../../utils/mascaraData'
+import { CustomField } from '../../components/CustomField'
+import { CustomDropdown } from '../CustomDropdown'
 
-export function PedidoInterna(): JSX.Element {
+interface PedidoInternaProps {
+  token: string
+}
+
+export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
+
+  const [mensagemErro, setMensagemErro] = useState<string[]>([''])
+  const [loading, setLoading] = useState<boolean>(false)
   const [estado, setEstado] = useState('Pedidos')
-  const [nome, setNome] = useState('')
-  const [data, setData] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [genero, setGenero] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [dadosAcesso, setDadosAcesso] = useState('')
-  const [senha, setSenha] = useState('')
-  const [novaSenha, setNovaSenha] = useState('')
-  const [nomeLoja, setNomeLoja] = useState('')
-  const [razaoSocial, setrazaoSocial] = useState('')
+  const [dadosUsuario, setDadosUsuario] = useState({})
+  const [dadosCadastroLoja, setDadosCadastroLoja] = useState({})
+  const [lojaUsuario, setLojaUsuario] = useState({})
+  const [usuariotemLoja, setUsuariotemLoja] = useState<boolean>(false)
+  
+  useEffect(() => {
+    getDadosUsuario()
+    getLojaUsuario()
+  }, [])
+
+
 
   function Conteudo() {
     switch (estado) {
@@ -35,18 +53,162 @@ export function PedidoInterna(): JSX.Element {
         return <MeusPedidos />
 
       case 'Cadastro Loja':
-        return <CadastroLoja />  
+        return <CadastroLoja />
 
       default:
         return <h1>Não encontrado</h1>
     }
   }
-  const MaskedInputCep = ({value , onChange}) => {
-    return <InputMask mask="99.999-999" value={value} onChange={onChange} />
+
+  interface DadosCadastroLoja {
+    nome_fantasia: string
+    razao_social: string
+    cnpj_cpf: string
+    cep: string
+    rua: string
+    numero: string
+    complemento: string
+    bairro: string
+    cidade: string
+    uf: string
+    logo: string
+    email: string
+    telefone: string
   }
-  const MaskedInputCpf = ({value , onChange}) => {
-    return <InputMask mask="999.999.999-99" value={value} onChange={onChange} />
-  }    
+
+  interface DadosUsuario{
+    nome: string
+    cpf: string
+    celular: string
+    email: string
+  }
+  
+  const regexCpf = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/
+  const regexCep = 	/^\d{5}-\d{3}$/
+
+  const schemaCadastroLoja = Yup.object().shape({
+    nome_fantasia: Yup.string().required('Este campo é obrigatório'),
+    razao_social: Yup.string().required('Este campo é obrigatório'),
+    cnpj_cpf: Yup.string()
+    .max(14)
+    .required('Este campo é obrigatório'),
+    cep: Yup.string()
+    .max(9)
+    .required('Digite um CEP')
+    .matches(regexCep, 'Digite um CEP válido'),
+    rua: Yup.string().required('Este campo é obrigatório'),
+    numero: Yup.string().required('Digite o número'),
+    telefone: Yup.string()
+    .min(13, 'Digite o numero completo')
+    .required('Este campo é obrigatório'),
+    bairro: Yup.string().required('Este campo é obrigatório'),
+    cidade: Yup.string().required('Este campo é obrigatório'),
+    uf: Yup.string().required('Este campo é obrigatório'),
+    email: Yup.string()
+      .email('Digite um email válido')
+      .required('Este campo é obrigatório')
+  })
+
+  const schemaDadosUsuario = Yup.object().shape({
+    nome: Yup.string().required('Este campo é obrigatório'),
+    cpf: Yup.string()
+    .max(14)
+    .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
+    .required('Este campo é obrigatório'),
+    celular: Yup.string()
+    .min(13, 'Digite o numero completo')
+    .required('Este campo é obrigatório'),
+    email: Yup.string()
+    .email('Digite um email válido')
+    .required('Este campo é obrigatório'),
+  })
+
+  async function onSubmitCadastroLoja(dados: DadosCadastroLoja) {
+    
+    const data = { ...dados, telefone: mascaraCelular(dados.telefone) }
+
+    try {
+      setMensagemErro([''])
+      setLoading(true)
+      if(usuariotemLoja){
+        const response = await api.put(`/loja/${dadosCadastroLoja.loja_id}`, data ,{
+          headers:{
+            authorization: `Bearer ${token}`
+          } 
+        })
+      }
+      else{
+        const response = await api.post('/loja', data ,{
+          headers:{
+            authorization: `Bearer ${token}`
+          } 
+        })
+      }  
+      
+      setLoading(false)
+
+    } catch (err) {
+      console.log("ops! ocorreu um erro" + err.response);
+    }
+  }
+  
+
+  async function onSubmitDadosUsuario(dados: DadosUsuario) {
+    
+    
+    try {
+      setMensagemErro([''])
+      setLoading(true)
+      const {data} = await api.put(`/usuario/${dadosUsuario.usuario_id}`, dados, {
+        headers:{
+          authorization: `Bearer ${token}`
+        } 
+      })
+      setLoading(false)
+      getDadosUsuario()
+
+    } catch (err) {
+        console.error("ops! ocorreu um erro" + err);
+    }
+  }
+  
+
+    async function getDadosUsuario(){
+      try{
+        const {data} = await api.get('/usuario/logado', {
+          headers:{
+            authorization: `Bearer ${token}`
+          }
+        })
+        console.log(data)
+        setDadosUsuario(data)
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
+
+    async function getLojaUsuario(){
+      try{
+        const {data} = await api.get('/loja', {
+          headers:{
+            authorization: `Bearer ${token}`
+          }
+        })
+        data.length === 0 ? setUsuariotemLoja(false) : setUsuariotemLoja(true)
+          setLojaUsuario(data)
+          console.log(data.loja_id)
+          const response = await api.get(`/loja/${data[0].loja_id}`, {
+            headers:{
+              authorization: `Bearer ${token}`
+            }
+          })
+        setDadosCadastroLoja(response.data)
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
 
   const Pedidos = () => {
     return (
@@ -165,91 +327,71 @@ export function PedidoInterna(): JSX.Element {
 
   const MeusDados = () => {
     return (
-      <div className={`${Styles.divPedidos} col-12 col-md-10`}>
-        <div className={Styles.divInputs}>
-          <div className="row">
-            <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
-              <label htmlFor="nome">Nome Completo</label>
-              <input
-                type="text"
-                id="nome"
-                placeholder="Nome Completo"
-                onBlur={evt => setNome(evt.target.value)}
-              />
-              <label htmlFor="dataNascimento">Data Nascimento</label>
-              <input
-                type="text"
-                id="dataNascimento"
-                placeholder="Data Nascimento"
-              />
-              <label htmlFor="cpf">CPF</label>
-              <input type="text" id="cpf" placeholder="CPF" />
-              <div className={Styles.divRadio}>
-                <input type="radio" id="masculino" />
-                <label htmlFor="masculino">Masculino</label>
-                <input type="radio" id="feminino" />
-                <label htmlFor="feminino">Feminino</label>
-              </div>
-              <label htmlFor="telefone">Telefone</label>
-              <input type="text" placeholder="Telefone" />
-            </div>
-            <div className={`${Styles.divSeparador} col-1`}></div>
-            <div className={`${Styles.inputsForm} col-12 col-sm-6`}>
-              <label htmlFor="acesso">Dados de Acesso</label>
-              <input type="text" id="acesso" placeholder="Dados de Acesso" />
-              <label htmlFor="senha">Senha</label>
-              <input type="password" id="senha" placeholder="Senha" />
-              <label htmlFor="novaSenha">Nova Senha</label>
-              <input type="password" id="novaSenha" placeholder="Nova Senha" />
-              <p className={Styles.checkboxTexto}>Preferências</p>
-              <div className="d-flex align-items-center ">
-                <input
-                  type="checkbox"
-                  id="checkbox1"
-                  className={Styles.checkboxPreferencias}
-                />
-                <label htmlFor="checkbox1">
-                  Quero receber por e-mail ofertas e novidades
-                </label>
-              </div>
-              <div className="d-flex align-items-center ">
-                <input
-                  type="checkbox"
-                  id="checkbox2"
-                  className={Styles.checkboxPreferencias}
-                />
-                <label htmlFor="checkbox2">
-                  Quero receber notificações dos meus pedidos por SMS
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p className={Styles.titulo}>Endereço</p>
-        <div className={`${Styles.divInputs} mt-5`}>
-          <div className="row">
-            <div className="col-12 col-sm-6 col-lg-4">
-              <div className={Styles.divEndereco}>
-                <p className={Styles.nome}>Nome da pessoa</p>
-                <div className={Styles.endereco}>
-                  <span>Rua Santos Mauro, 468</span>
-                  <span>Centro - Ponta Grossa - PR</span>
-                  <span>CEP: 84063-160</span>
-                  <div className="d-flex justify-content-end">
-                    <i className="fas fa-pen me-2">
-                      <span>Alterar</span>
-                    </i>
-                    <i className="fas fa-trash me-2 ">
-                      <span>Excluir</span>
-                    </i>
+      <Formik
+      validationSchema={schemaDadosUsuario}
+      validateOnBlur
+      initialValues={{
+        nome: dadosUsuario.nome ?? '',
+        cpf: dadosUsuario.cpf ?? '',
+        celular: dadosUsuario.celular ?? '',
+        email: dadosUsuario.email ?? '',
+      }}
+      onSubmit={values => onSubmitDadosUsuario(values)}
+      >
+            {({ values, dirty, errors }) => (
+            <div className={`${Styles.divPedidos} col-12 col-md-10`}>
+              <Form>
+
+                <div className={Styles.divInputs}>
+                  <div className="row">
+                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+                          <CustomField
+                            type="text"
+                            name="nome"
+                            label="Nome Completo*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="text"
+                            name="cpf"
+                            label="CPF*"
+                            maxLength={14}
+                            value={mascaraCPF(values.cpf)}
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="phone"
+                            name="celular"
+                            label="Telefone"
+                            value={mascaraCelular(values.celular)}
+                            maxLength={14}
+                            dirty={dirty}
+                          />
+                      </div>
+                      <div className={`${Styles.divSeparador} col-1`}></div>
+                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+                          <CustomField
+                            type="email"
+                            name="email"
+                            label="E-mail*"
+                            dirty={dirty}
+                          />
+                        <button type="submit" className={`${Styles.btnEndereco} mb-5`} >
+                          {loading ? (
+                            <Spinner animation="border">
+                              <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                          ) : (
+                            <span>Alterar Dados</span>
+                          )}
+                        </button>
+                      </div>  
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ModalCadastro />
-        </div>
-      </div>
+                </div>  
+              </Form> 
+            </div>   
+            )}                  
+      </Formik>
     )
   }
 
@@ -340,88 +482,139 @@ export function PedidoInterna(): JSX.Element {
   }
 
   const CadastroLoja = () => {
-    const [cep, setCep] = useState('')
-    const [cpf, setCpf] = useState('')
+
     return (
-      <div className={`${Styles.divPedidos} col-12 col-md-10`}>
-        <div className={Styles.divInputs}>
-          <div className="row">
-            <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
-              <label htmlFor="nomeLoja">Nome Fantasia</label>
-              <input
-                type="text"
-                id="nomeLoja"
-                placeholder="Nome Fantasia"
-                onBlur={evt => setNomeLoja(evt.target.value)}
-              />
-              <label htmlFor="razaoSocial">Razão Social</label>
-              <input
-                type="text"
-                id="razaoSocial"
-                placeholder="Razão Social"
-              />
-              <label htmlFor="cpf">CPF</label>
-              <MaskedInputCpf value={cpf} onChange= {(event) => setCpf(event.target.value)} />
-              <label htmlFor="cep">CEP</label>
-              <MaskedInputCep  value={cep} onChange= {(event) => setCep(event.target.value)} />
-              <label htmlFor="rua">Rua</label>
-              <input type="text" placeholder="Rua" />
-              <label htmlFor="numero">Número</label> 
-              <input type="number" placeholder="Número" />
-              <label htmlFor="telefone">Telefone</label>
-              <input type="text" placeholder="Telefone"/>
-            </div>
-            <div className={`${Styles.divSeparador} col-1`}></div>
-            <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
-              <label htmlFor="complemento">Complemento</label>
-              <input type="text" placeholder="Complemento" />
-              <label htmlFor="bairro">Bairro</label>
-              <input type="text" placeholder="Bairro" />
-              <label htmlFor="cidade">Cidade</label>
-              <input type="text" placeholder="Cidade" />
-              <label htmlFor="complemento">Complemento</label>
-              <input type="text" placeholder="Complemento" />
-              <label htmlFor="uf">UF</label>
-              <select placeholder="UF" >
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espirito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-              </select>
-              <label htmlFor="email">E-mail</label>
-              <input type="text" placeholder="E-mail" />
-              <button className={`${Styles.btnEndereco} mb-5`}>
-                Cadastrar Loja
-              </button>
-            </div>  
-          </div>
-        </div>
-      </div> 
+      <Formik
+      validationSchema={schemaCadastroLoja}
+      validateOnBlur
+      initialValues={{
+        nome_fantasia: dadosCadastroLoja.nome_fantasia ?? '',
+        razao_social: dadosCadastroLoja.razao_social ?? '',
+        cnpj_cpf: dadosCadastroLoja.cnpj_cpf ?? '',
+        cep: dadosCadastroLoja.cep ?? '',
+        rua: dadosCadastroLoja.rua ?? '',
+        numero: dadosCadastroLoja.numero ?? '',
+        complemento: dadosCadastroLoja.complemento ?? '',
+        bairro: dadosCadastroLoja.bairro ?? '',
+        cidade: dadosCadastroLoja.cidade ?? '',
+        uf: dadosCadastroLoja.uf ?? '',
+        logo: dadosCadastroLoja.logo ?? '',
+        email: dadosCadastroLoja.email ?? '',
+        telefone: dadosCadastroLoja.telefone ?? ''
+      }}
+      onSubmit={values => onSubmitCadastroLoja(values)}
+      >
+            {({ values, dirty, errors }) => (
+            <div className={`${Styles.divPedidos} col-12 col-md-10`}>
+              <Form>
+
+                <div className={Styles.divInputs}>
+                  <div className="row">
+                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+                          <CustomField
+                            type="text"
+                            name="nome_fantasia"
+                            label="Nome Fantasia*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="text"
+                            name="razao_social"
+                            label="Razão Social*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="text"
+                            name="cnpj_cpf"
+                            label="CPF*"
+                            maxLength={14}
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="text"
+                            name="cep"
+                            label="CEP*"
+                            maxLength={9}
+                            value={mascaraCep(values.cep)}
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="text"
+                            name="rua"
+                            label="Rua*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="text"
+                            name="numero"
+                            label="Número*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="text"
+                            name="complemento"
+                            label="Complemento"
+                            dirty={dirty}
+                          />
+                      </div>
+                      <div className={`${Styles.divSeparador} col-1`}></div>
+                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+                          <CustomField
+                            type="text"
+                            name="bairro"
+                            label="Bairro*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="text"
+                            name="cidade"
+                            label="Cidade*"
+                            dirty={dirty}
+                          />
+                          <CustomDropdown
+                            contenttype="strings"
+                            label="UF*"
+                            name="uf"
+                            array={['AC', 'AL' , 'AP' , 'AM' , 'BA' , 'CE' , 'DF' , 'ES' , 'GO' , 'MA' , 'MS' , 'MT' , 'MG' , 'PA' , 'PB' , 'PR' , 'PE' , 'PI' , 'RJ' , 'RN' , 'RS' , 'RO' , 'RR' , 'SC' , 'SP' , 'SE' , 'TO']}
+                          />
+                          <CustomField
+                            type="text"
+                            name="logo"
+                            label="Logo*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="email"
+                            name="email"
+                            label="Email*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="phone"
+                            name="telefone"
+                            label="Telefone"
+                            value={mascaraCelular(values.telefone)}
+                            maxLength={14}
+                            dirty={dirty}
+                          />
+                        <button type="submit" className={`${Styles.btnEndereco} mb-5`} >
+                          {loading ? (
+                            <Spinner animation="border">
+                              <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                          ) : (
+                            <span>Cadastrar Loja</span>
+                          )}
+                        </button>
+                      </div>  
+                  </div>
+                </div>  
+              </Form> 
+            </div>   
+            )}                  
+      </Formik>
     )
-  }     
+  }
 
   return (
     <div>
