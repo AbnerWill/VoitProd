@@ -1,4 +1,5 @@
-import { Container, Table } from 'react-bootstrap'
+/* eslint-disable camelcase */
+import { Container, Table, Spinner } from 'react-bootstrap'
 import Styles from './styles.module.scss'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -9,7 +10,6 @@ import InputMask from 'react-input-mask'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 import api from '../../services/api'
-import { Spinner } from 'react-bootstrap'
 import { mascaraCPF } from '../../utils/mascaraCPF'
 import { mascaraCelular } from '../../utils/mascaraCelular'
 import { mascaraCep } from '../../utils/mascaraCep'
@@ -35,35 +35,33 @@ interface DadosCadastroLoja {
   logo: string
   email: string
   telefone: string | number
-  loja_id: string | number
+  loja_id?: string | number
 }
 
-interface DadosUsuario{
+interface DadosUsuario {
   nome: string
   cpf: string
   celular: string
   email: string
-  usuario_id: string | number
+  usuario_id?: string | number
 }
 
 const regexCpf = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/
-const regexCep = 	/^\d{5}-\d{3}$/
+const regexCep = /^\d{5}-\d{3}$/
 
 const schemaCadastroLoja = Yup.object().shape({
   nome_fantasia: Yup.string().required('Este campo é obrigatório'),
   razao_social: Yup.string().required('Este campo é obrigatório'),
-  cnpj_cpf: Yup.string()
-  .max(14)
-  .required('Este campo é obrigatório'),
+  cnpj_cpf: Yup.string().max(14).required('Este campo é obrigatório'),
   cep: Yup.string()
-  .max(9)
-  .required('Digite um CEP')
-  .matches(regexCep, 'Digite um CEP válido'),
+    .max(9)
+    .required('Digite um CEP')
+    .matches(regexCep, 'Digite um CEP válido'),
   rua: Yup.string().required('Este campo é obrigatório'),
   numero: Yup.string().required('Digite o número'),
   telefone: Yup.string()
-  .min(13, 'Digite o numero completo')
-  .required('Este campo é obrigatório'),
+    .min(13, 'Digite o numero completo')
+    .required('Este campo é obrigatório'),
   bairro: Yup.string().required('Este campo é obrigatório'),
   cidade: Yup.string().required('Este campo é obrigatório'),
   uf: Yup.string().required('Este campo é obrigatório'),
@@ -75,24 +73,24 @@ const schemaCadastroLoja = Yup.object().shape({
 const schemaDadosUsuario = Yup.object().shape({
   nome: Yup.string().required('Este campo é obrigatório'),
   cpf: Yup.string()
-  .max(14)
-  .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
-  .required('Este campo é obrigatório'),
+    .max(14)
+    .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
+    .required('Este campo é obrigatório'),
   celular: Yup.string()
-  .min(13, 'Digite o numero completo')
-  .required('Este campo é obrigatório'),
+    .min(13, 'Digite o numero completo')
+    .required('Este campo é obrigatório'),
   email: Yup.string()
-  .email('Digite um email válido')
-  .required('Este campo é obrigatório'),
+    .email('Digite um email válido')
+    .required('Este campo é obrigatório')
 })
 
-export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
-
+export function PedidoInterna({ token }: PedidoInternaProps): JSX.Element {
   const [mensagemErro, setMensagemErro] = useState<string[]>([''])
   const [loading, setLoading] = useState<boolean>(false)
   const [estado, setEstado] = useState('Pedidos')
   const [dadosUsuario, setDadosUsuario] = useState<DadosUsuario>()
-  const [dadosCadastroLoja, setDadosCadastroLoja] = useState<DadosCadastroLoja>()
+  const [dadosCadastroLoja, setDadosCadastroLoja] =
+    useState<DadosCadastroLoja>()
   const [lojaUsuario, setLojaUsuario] = useState({})
   const [usuariotemLoja, setUsuariotemLoja] = useState<boolean>(false)
 
@@ -100,8 +98,6 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
     getDadosUsuario()
     getLojaUsuario()
   }, [])
-
-
 
   function Conteudo() {
     switch (estado) {
@@ -126,91 +122,89 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
   }
 
   async function onSubmitCadastroLoja(dados: DadosCadastroLoja) {
-
     const data = { ...dados, telefone: mascaraCelular(dados.telefone) }
 
     try {
       setMensagemErro([''])
       setLoading(true)
-      if(usuariotemLoja){
-        const response = await api.put(`/loja/${dadosCadastroLoja.loja_id}`, data ,{
-          headers:{
-            authorization: `Bearer ${token}`
+      if (usuariotemLoja) {
+        const response = await api.put(
+          `/loja/${dadosCadastroLoja.loja_id}`,
+          data,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
           }
-        })
-      }
-      else{
-        const response = await api.post('/loja', data ,{
-          headers:{
+        )
+      } else {
+        const response = await api.post('/loja', data, {
+          headers: {
             authorization: `Bearer ${token}`
           }
         })
       }
 
       setLoading(false)
-
     } catch (err) {
-      console.log("ops! ocorreu um erro" + err.response);
+      console.log('ops! ocorreu um erro' + err.response)
     }
   }
 
-
   async function onSubmitDadosUsuario(dados: DadosUsuario) {
-
-
     try {
       setMensagemErro([''])
       setLoading(true)
-      const {data} = await api.put(`/usuario/${dadosUsuario.usuario_id}`, dados, {
-        headers:{
-          authorization: `Bearer ${token}`
+      const { data } = await api.put(
+        `/usuario/${dadosUsuario.usuario_id}`,
+        dados,
+        {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       setLoading(false)
       getDadosUsuario()
-
     } catch (err) {
-        console.error("ops! ocorreu um erro" + err);
+      console.error('ops! ocorreu um erro' + err)
     }
   }
 
-
-    async function getDadosUsuario(){
-      try{
-        const {data} = await api.get('/usuario/logado', {
-          headers:{
-            authorization: `Bearer ${token}`
-          }
-        })
-        console.log(data)
-        setDadosUsuario(data)
-      }
-      catch(error){
-        console.log(error)
-      }
+  async function getDadosUsuario() {
+    try {
+      const { data } = await api.get('/usuario/logado', {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      console.log(data)
+      setDadosUsuario(data)
+    } catch (error) {
+      console.log(error)
     }
+  }
 
-    async function getLojaUsuario(){
-      try{
-        const {data} = await api.get('/loja', {
-          headers:{
-            authorization: `Bearer ${token}`
-          }
-        })
-        data.length === 0 ? setUsuariotemLoja(false) : setUsuariotemLoja(true)
-          setLojaUsuario(data)
-          console.log(data.loja_id)
-          const response = await api.get(`/loja/${data[0].loja_id}`, {
-            headers:{
-              authorization: `Bearer ${token}`
-            }
-          })
-        setDadosCadastroLoja(response.data)
-      }
-      catch(error){
-        console.log(error)
-      }
+  async function getLojaUsuario() {
+    try {
+      const { data } = await api.get('/loja', {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      data.length === 0 ? setUsuariotemLoja(false) : setUsuariotemLoja(true)
+      setLojaUsuario(data)
+      console.log(data.loja_id)
+      const response = await api.get(`/loja/${data[0].loja_id}`, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      setDadosCadastroLoja(response.data)
+    } catch (error) {
+      console.log(error)
     }
+  }
 
   const Pedidos = () => {
     return (
@@ -330,69 +324,71 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
   const MeusDados = () => {
     return (
       <Formik
-      validationSchema={schemaDadosUsuario}
-      validateOnBlur
-      initialValues={{
-        nome: dadosUsuario.nome ?? '',
-        cpf: dadosUsuario.cpf ?? '',
-        celular: dadosUsuario.celular ?? '',
-        email: dadosUsuario.email ?? '',
-      }}
-      onSubmit={values => onSubmitDadosUsuario(values)}
+        validationSchema={schemaDadosUsuario}
+        validateOnBlur
+        initialValues={{
+          nome: dadosUsuario.nome ?? '',
+          cpf: dadosUsuario.cpf ?? '',
+          celular: dadosUsuario.celular ?? '',
+          email: dadosUsuario.email ?? ''
+        }}
+        onSubmit={values => onSubmitDadosUsuario(values)}
       >
-            {({ values, dirty, errors }) => (
-            <div className={`${Styles.divPedidos} col-12 col-md-10`}>
-              <Form>
-
-                <div className={Styles.divInputs}>
-                  <div className="row">
-                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
-                          <CustomField
-                            type="text"
-                            name="nome"
-                            label="Nome Completo*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="cpf"
-                            label="CPF*"
-                            maxLength={14}
-                            value={mascaraCPF(values.cpf)}
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="phone"
-                            name="celular"
-                            label="Telefone"
-                            value={mascaraCelular(values.celular)}
-                            maxLength={14}
-                            dirty={dirty}
-                          />
-                      </div>
-                      <div className={`${Styles.divSeparador} col-1`}></div>
-                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
-                          <CustomField
-                            type="email"
-                            name="email"
-                            label="E-mail*"
-                            dirty={dirty}
-                          />
-                        <button type="submit" className={`${Styles.btnEndereco} mb-5`} >
-                          {loading ? (
-                            <Spinner animation="border">
-                              <span className="visually-hidden">Loading...</span>
-                            </Spinner>
-                          ) : (
-                            <span>Alterar Dados</span>
-                          )}
-                        </button>
-                      </div>
+        {({ values, dirty, errors }) => (
+          <div className={`${Styles.divPedidos} col-12 col-md-10`}>
+            <Form>
+              <div className={Styles.divInputs}>
+                <div className="row">
+                  <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+                    <CustomField
+                      type="text"
+                      name="nome"
+                      label="Nome Completo*"
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="text"
+                      name="cpf"
+                      label="CPF*"
+                      maxLength={14}
+                      value={mascaraCPF(values.cpf)}
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="phone"
+                      name="celular"
+                      label="Telefone"
+                      value={mascaraCelular(values.celular)}
+                      maxLength={14}
+                      dirty={dirty}
+                    />
+                  </div>
+                  <div className={`${Styles.divSeparador} col-1`}></div>
+                  <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+                    <CustomField
+                      type="email"
+                      name="email"
+                      label="E-mail*"
+                      dirty={dirty}
+                    />
+                    <button
+                      type="submit"
+                      className={`${Styles.btnEndereco} mb-5`}
+                    >
+                      {loading ? (
+                        <Spinner animation="border">
+                          <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                      ) : (
+                        <span>Alterar Dados</span>
+                      )}
+                    </button>
                   </div>
                 </div>
-              </Form>
-            </div>
-            )}
+              </div>
+            </Form>
+          </div>
+        )}
       </Formik>
     )
   }
@@ -484,136 +480,165 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
   }
 
   const CadastroLoja = () => {
-
     return (
       <Formik
-      validationSchema={schemaCadastroLoja}
-      validateOnBlur
-      initialValues={{
-        nome_fantasia: dadosCadastroLoja.nome_fantasia ?? '',
-        razao_social: dadosCadastroLoja.razao_social ?? '',
-        cnpj_cpf: dadosCadastroLoja.cnpj_cpf ?? '',
-        cep: dadosCadastroLoja.cep ?? '',
-        rua: dadosCadastroLoja.rua ?? '',
-        numero: dadosCadastroLoja.numero ?? '',
-        complemento: dadosCadastroLoja.complemento ?? '',
-        bairro: dadosCadastroLoja.bairro ?? '',
-        cidade: dadosCadastroLoja.cidade ?? '',
-        uf: dadosCadastroLoja.uf ?? '',
-        logo: dadosCadastroLoja.logo ?? '',
-        email: dadosCadastroLoja.email ?? '',
-        telefone: dadosCadastroLoja.telefone ?? ''
-      }}
-      onSubmit={values => onSubmitCadastroLoja(values)}
+        validationSchema={schemaCadastroLoja}
+        validateOnBlur
+        initialValues={{
+          nome_fantasia: dadosCadastroLoja.nome_fantasia ?? '',
+          razao_social: dadosCadastroLoja.razao_social ?? '',
+          cnpj_cpf: dadosCadastroLoja.cnpj_cpf ?? '',
+          cep: dadosCadastroLoja.cep ?? '',
+          rua: dadosCadastroLoja.rua ?? '',
+          numero: dadosCadastroLoja.numero ?? '',
+          complemento: dadosCadastroLoja.complemento ?? '',
+          bairro: dadosCadastroLoja.bairro ?? '',
+          cidade: dadosCadastroLoja.cidade ?? '',
+          uf: dadosCadastroLoja.uf ?? '',
+          logo: dadosCadastroLoja.logo ?? '',
+          email: dadosCadastroLoja.email ?? '',
+          telefone: dadosCadastroLoja.telefone ?? ''
+        }}
+        onSubmit={values => onSubmitCadastroLoja(values)}
       >
-            {({ values, dirty, errors }) => (
-            <div className={`${Styles.divPedidos} col-12 col-md-10`}>
-              <Form>
-
-                <div className={Styles.divInputs}>
-                  <div className="row">
-                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
-                          <CustomField
-                            type="text"
-                            name="nome_fantasia"
-                            label="Nome Fantasia*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="razao_social"
-                            label="Razão Social*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="cnpj_cpf"
-                            label="CPF*"
-                            maxLength={14}
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="cep"
-                            label="CEP*"
-                            maxLength={9}
-                            value={mascaraCep(values.cep)}
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="rua"
-                            label="Rua*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="numero"
-                            label="Número*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="complemento"
-                            label="Complemento"
-                            dirty={dirty}
-                          />
-                      </div>
-                      <div className={`${Styles.divSeparador} col-1`}></div>
-                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
-                          <CustomField
-                            type="text"
-                            name="bairro"
-                            label="Bairro*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="cidade"
-                            label="Cidade*"
-                            dirty={dirty}
-                          />
-                          <CustomDropdown
-                            contenttype="strings"
-                            label="UF*"
-                            name="uf"
-                            array={['AC', 'AL' , 'AP' , 'AM' , 'BA' , 'CE' , 'DF' , 'ES' , 'GO' , 'MA' , 'MS' , 'MT' , 'MG' , 'PA' , 'PB' , 'PR' , 'PE' , 'PI' , 'RJ' , 'RN' , 'RS' , 'RO' , 'RR' , 'SC' , 'SP' , 'SE' , 'TO']}
-                          />
-                          <CustomField
-                            type="text"
-                            name="logo"
-                            label="Logo*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="email"
-                            name="email"
-                            label="Email*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="phone"
-                            name="telefone"
-                            label="Telefone"
-                            value={mascaraCelular(values.telefone)}
-                            maxLength={14}
-                            dirty={dirty}
-                          />
-                        <button type="submit" className={`${Styles.btnEndereco} mb-5`} >
-                          {loading ? (
-                            <Spinner animation="border">
-                              <span className="visually-hidden">Loading...</span>
-                            </Spinner>
-                          ) : (
-                            <span>Cadastrar Loja</span>
-                          )}
-                        </button>
-                      </div>
+        {({ values, dirty, errors }) => (
+          <div className={`${Styles.divPedidos} col-12 col-md-10`}>
+            <Form>
+              <div className={Styles.divInputs}>
+                <div className="row">
+                  <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+                    <CustomField
+                      type="text"
+                      name="nome_fantasia"
+                      label="Nome Fantasia*"
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="text"
+                      name="razao_social"
+                      label="Razão Social*"
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="text"
+                      name="cnpj_cpf"
+                      label="CPF*"
+                      maxLength={14}
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="text"
+                      name="cep"
+                      label="CEP*"
+                      maxLength={9}
+                      value={mascaraCep(values.cep)}
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="text"
+                      name="rua"
+                      label="Rua*"
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="text"
+                      name="numero"
+                      label="Número*"
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="text"
+                      name="complemento"
+                      label="Complemento"
+                      dirty={dirty}
+                    />
+                  </div>
+                  <div className={`${Styles.divSeparador} col-1`}></div>
+                  <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
+                    <CustomField
+                      type="text"
+                      name="bairro"
+                      label="Bairro*"
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="text"
+                      name="cidade"
+                      label="Cidade*"
+                      dirty={dirty}
+                    />
+                    <CustomDropdown
+                      contenttype="strings"
+                      label="UF*"
+                      name="uf"
+                      array={[
+                        'AC',
+                        'AL',
+                        'AP',
+                        'AM',
+                        'BA',
+                        'CE',
+                        'DF',
+                        'ES',
+                        'GO',
+                        'MA',
+                        'MS',
+                        'MT',
+                        'MG',
+                        'PA',
+                        'PB',
+                        'PR',
+                        'PE',
+                        'PI',
+                        'RJ',
+                        'RN',
+                        'RS',
+                        'RO',
+                        'RR',
+                        'SC',
+                        'SP',
+                        'SE',
+                        'TO'
+                      ]}
+                    />
+                    <CustomField
+                      type="text"
+                      name="logo"
+                      label="Logo*"
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="email"
+                      name="email"
+                      label="Email*"
+                      dirty={dirty}
+                    />
+                    <CustomField
+                      type="phone"
+                      name="telefone"
+                      label="Telefone"
+                      value={mascaraCelular(values.telefone)}
+                      maxLength={14}
+                      dirty={dirty}
+                    />
+                    <button
+                      type="submit"
+                      className={`${Styles.btnEndereco} mb-5`}
+                    >
+                      {loading ? (
+                        <Spinner animation="border">
+                          <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                      ) : (
+                        <span>Cadastrar Loja</span>
+                      )}
+                    </button>
                   </div>
                 </div>
-              </Form>
-            </div>
-            )}
+              </div>
+            </Form>
+          </div>
+        )}
       </Formik>
     )
   }
