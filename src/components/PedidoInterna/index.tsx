@@ -21,16 +21,81 @@ interface PedidoInternaProps {
   token: string
 }
 
+interface DadosCadastroLoja {
+  nome_fantasia: string
+  razao_social: string
+  cnpj_cpf: string | number
+  cep: string | number
+  rua: string | number
+  numero: string | number
+  complemento: string | number
+  bairro: string
+  cidade: string
+  uf: string
+  logo: string
+  email: string
+  telefone: string | number
+  loja_id: string | number
+}
+
+interface DadosUsuario{
+  nome: string
+  cpf: string
+  celular: string
+  email: string
+  usuario_id: string | number
+}
+
+const regexCpf = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/
+const regexCep = 	/^\d{5}-\d{3}$/
+
+const schemaCadastroLoja = Yup.object().shape({
+  nome_fantasia: Yup.string().required('Este campo é obrigatório'),
+  razao_social: Yup.string().required('Este campo é obrigatório'),
+  cnpj_cpf: Yup.string()
+  .max(14)
+  .required('Este campo é obrigatório'),
+  cep: Yup.string()
+  .max(9)
+  .required('Digite um CEP')
+  .matches(regexCep, 'Digite um CEP válido'),
+  rua: Yup.string().required('Este campo é obrigatório'),
+  numero: Yup.string().required('Digite o número'),
+  telefone: Yup.string()
+  .min(13, 'Digite o numero completo')
+  .required('Este campo é obrigatório'),
+  bairro: Yup.string().required('Este campo é obrigatório'),
+  cidade: Yup.string().required('Este campo é obrigatório'),
+  uf: Yup.string().required('Este campo é obrigatório'),
+  email: Yup.string()
+    .email('Digite um email válido')
+    .required('Este campo é obrigatório')
+})
+
+const schemaDadosUsuario = Yup.object().shape({
+  nome: Yup.string().required('Este campo é obrigatório'),
+  cpf: Yup.string()
+  .max(14)
+  .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
+  .required('Este campo é obrigatório'),
+  celular: Yup.string()
+  .min(13, 'Digite o numero completo')
+  .required('Este campo é obrigatório'),
+  email: Yup.string()
+  .email('Digite um email válido')
+  .required('Este campo é obrigatório'),
+})
+
 export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
 
   const [mensagemErro, setMensagemErro] = useState<string[]>([''])
   const [loading, setLoading] = useState<boolean>(false)
   const [estado, setEstado] = useState('Pedidos')
-  const [dadosUsuario, setDadosUsuario] = useState({})
-  const [dadosCadastroLoja, setDadosCadastroLoja] = useState({})
+  const [dadosUsuario, setDadosUsuario] = useState<DadosUsuario>()
+  const [dadosCadastroLoja, setDadosCadastroLoja] = useState<DadosCadastroLoja>()
   const [lojaUsuario, setLojaUsuario] = useState({})
   const [usuariotemLoja, setUsuariotemLoja] = useState<boolean>(false)
-  
+
   useEffect(() => {
     getDadosUsuario()
     getLojaUsuario()
@@ -60,71 +125,8 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
     }
   }
 
-  interface DadosCadastroLoja {
-    nome_fantasia: string
-    razao_social: string
-    cnpj_cpf: string
-    cep: string
-    rua: string
-    numero: string
-    complemento: string
-    bairro: string
-    cidade: string
-    uf: string
-    logo: string
-    email: string
-    telefone: string
-  }
-
-  interface DadosUsuario{
-    nome: string
-    cpf: string
-    celular: string
-    email: string
-  }
-  
-  const regexCpf = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/
-  const regexCep = 	/^\d{5}-\d{3}$/
-
-  const schemaCadastroLoja = Yup.object().shape({
-    nome_fantasia: Yup.string().required('Este campo é obrigatório'),
-    razao_social: Yup.string().required('Este campo é obrigatório'),
-    cnpj_cpf: Yup.string()
-    .max(14)
-    .required('Este campo é obrigatório'),
-    cep: Yup.string()
-    .max(9)
-    .required('Digite um CEP')
-    .matches(regexCep, 'Digite um CEP válido'),
-    rua: Yup.string().required('Este campo é obrigatório'),
-    numero: Yup.string().required('Digite o número'),
-    telefone: Yup.string()
-    .min(13, 'Digite o numero completo')
-    .required('Este campo é obrigatório'),
-    bairro: Yup.string().required('Este campo é obrigatório'),
-    cidade: Yup.string().required('Este campo é obrigatório'),
-    uf: Yup.string().required('Este campo é obrigatório'),
-    email: Yup.string()
-      .email('Digite um email válido')
-      .required('Este campo é obrigatório')
-  })
-
-  const schemaDadosUsuario = Yup.object().shape({
-    nome: Yup.string().required('Este campo é obrigatório'),
-    cpf: Yup.string()
-    .max(14)
-    .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
-    .required('Este campo é obrigatório'),
-    celular: Yup.string()
-    .min(13, 'Digite o numero completo')
-    .required('Este campo é obrigatório'),
-    email: Yup.string()
-    .email('Digite um email válido')
-    .required('Este campo é obrigatório'),
-  })
-
   async function onSubmitCadastroLoja(dados: DadosCadastroLoja) {
-    
+
     const data = { ...dados, telefone: mascaraCelular(dados.telefone) }
 
     try {
@@ -134,35 +136,35 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
         const response = await api.put(`/loja/${dadosCadastroLoja.loja_id}`, data ,{
           headers:{
             authorization: `Bearer ${token}`
-          } 
+          }
         })
       }
       else{
         const response = await api.post('/loja', data ,{
           headers:{
             authorization: `Bearer ${token}`
-          } 
+          }
         })
-      }  
-      
+      }
+
       setLoading(false)
 
     } catch (err) {
       console.log("ops! ocorreu um erro" + err.response);
     }
   }
-  
+
 
   async function onSubmitDadosUsuario(dados: DadosUsuario) {
-    
-    
+
+
     try {
       setMensagemErro([''])
       setLoading(true)
       const {data} = await api.put(`/usuario/${dadosUsuario.usuario_id}`, dados, {
         headers:{
           authorization: `Bearer ${token}`
-        } 
+        }
       })
       setLoading(false)
       getDadosUsuario()
@@ -171,7 +173,7 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
         console.error("ops! ocorreu um erro" + err);
     }
   }
-  
+
 
     async function getDadosUsuario(){
       try{
@@ -385,12 +387,12 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
                             <span>Alterar Dados</span>
                           )}
                         </button>
-                      </div>  
+                      </div>
                   </div>
-                </div>  
-              </Form> 
-            </div>   
-            )}                  
+                </div>
+              </Form>
+            </div>
+            )}
       </Formik>
     )
   }
@@ -606,12 +608,12 @@ export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
                             <span>Cadastrar Loja</span>
                           )}
                         </button>
-                      </div>  
+                      </div>
                   </div>
-                </div>  
-              </Form> 
-            </div>   
-            )}                  
+                </div>
+              </Form>
+            </div>
+            )}
       </Formik>
     )
   }
