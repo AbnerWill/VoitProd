@@ -291,7 +291,7 @@
   width: 100%;
   max-width: 77.6rem;
 
-  div {
+  > div {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -371,7 +371,7 @@
     margin-bottom: 2.5rem;
   }
 
-  > div {
+  > label {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -396,7 +396,7 @@
       margin-top: 1.57rem;
     }
 
-    label {
+    div {
       border-radius: 18px;
       border: 1px solid #95a1bb;
       background: none;
@@ -410,7 +410,7 @@
       height: 4rem;
       padding: 0 2.8rem;
 
-      margin: 3.85rem 0 5.25rem 0;
+      margin: 3.85rem 0;
 
       display: flex;
       align-items: center;
@@ -423,6 +423,19 @@
         width: 100%;
         height: 100%;
         opacity: 0;
+      }
+    }
+
+    > span {
+      font-size: 1.6rem;
+      font-weight: 500;
+
+      & + span {
+        margin-top: 1rem;
+      }
+
+      &:last-child {
+        margin-bottom: 1rem;
       }
     }
   }
@@ -694,11 +707,11 @@
       background: #f6f7fa;
       border-radius: 18px;
 
-      position: relative;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
 
-      > img {
-        width: 14.78rem;
-      }
+      position: relative;
 
       > button {
         position: absolute;
@@ -731,9 +744,8 @@
         background: #f6f7fa;
         border-radius: 18px;
 
-        img {
-          width: 5.62rem;
-        }
+        background-size: cover;
+        background-position: center;
       }
     }
   }

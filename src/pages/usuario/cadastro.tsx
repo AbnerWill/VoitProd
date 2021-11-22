@@ -45,21 +45,27 @@ export default function Cadastro(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(false)
 
   async function onSubmit(dados: DadosCadastroUsuario) {
+    const data = { ...dados, celular: mascaraCelular(dados.celular) }
+
     try {
       setMensagemErro([''])
       setLoading(true)
-      const response = await api.post('/usuario', dados)
+      const response = await api.post('/usuario', data)
       setLoading(false)
 
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 200) {
         setFormEnviado(true)
       }
     } catch (error) {
+      console.log(data)
       setLoading(false)
       setMensagemErro([
         ...mensagemErro,
         ...error.response.data.cpf,
-        ...error.response.data.email
+        ...error.response.data.email,
+        ...error.response.data.celular,
+        ...error.response.data.senha,
+        ...error.response.data.nome
       ])
       console.log(mensagemErro)
     }
@@ -156,7 +162,7 @@ export default function Cadastro(): JSX.Element {
                   <label>
                     <h2>Celular</h2>
                     <Field
-                      type="phone"
+                      type="tel"
                       name="celular"
                       value={mascaraCelular(values.celular)}
                       maxLength={14}

@@ -1,5 +1,7 @@
 .main {
-  padding: 0 17rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1% 0 9%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,8 +13,8 @@
 
 .productsGrid {
   flex: 1;
-  padding: 0 2%;
   display: block;
+  max-width: 1180px;
 
   > div {
     display: inline-flex;
@@ -22,7 +24,42 @@
 .wrapper {
   display: flex;
   width: 100%;
+  gap: 7.5%;
   margin-top: 8.2rem;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    > div {
+      max-width: 1180px;
+      display: flex;
+      justify-content: center;
+
+      ul {
+        margin-bottom: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .skeleton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    padding: 8rem 0;
+    background-color: rgba(0, 0, 0, 0.1);
+
+    border-radius: 18px;
+
+    > div {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
 }
 
 .sportSelectionSection {

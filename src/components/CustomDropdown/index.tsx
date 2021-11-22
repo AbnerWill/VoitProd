@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable @next/next/no-img-element */
+import { Spinner } from 'react-bootstrap'
 
 import { useState } from 'react'
 import { useField } from 'formik'
@@ -10,6 +11,7 @@ interface CustomDropdownProps {
   label: string
   name: string
   initialValue?: string
+  loading?: boolean
   array?: string[]
   contenttype:
     | 'strings'
@@ -162,25 +164,35 @@ export function CustomDropdown(props: CustomDropdownProps): JSX.Element {
           borderRadius: isOpen ? '18px 18px 0 0' : '18px'
         }}
       >
-        <h2>
-          {name}
-          <img
-            src="/arrowdown.svg"
-            alt="Seta"
-            className={Styles.arrow}
-            style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(360deg)' }}
-          />
-        </h2>
-        <div
-          className={Styles.optionsContainer}
-          style={{
-            display: isOpen ? 'flex' : 'none'
-          }}
-        >
-          <div className={Styles.optionsContent}>
-            {switchOptions(props.contenttype)}
-          </div>
-        </div>
+        {props.loading ? (
+          <Spinner animation="border">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : (
+          <>
+            <h2>
+              {name}
+              <img
+                src="/arrowdown.svg"
+                alt="Seta"
+                className={Styles.arrow}
+                style={{
+                  transform: isOpen ? 'rotate(180deg)' : 'rotate(360deg)'
+                }}
+              />
+            </h2>
+            <div
+              className={Styles.optionsContainer}
+              style={{
+                display: isOpen ? 'flex' : 'none'
+              }}
+            >
+              <div className={Styles.optionsContent}>
+                {switchOptions(props.contenttype)}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </label>
   )

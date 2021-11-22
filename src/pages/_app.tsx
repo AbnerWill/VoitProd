@@ -9,14 +9,17 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import '../styles/globals.scss'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import SSRProvider from 'react-bootstrap/SSRProvider'
+import { ListagemProdutosProvider } from '../contexts/ListagemProdutoContext'
 
 library.add(fab, faCoffee)
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
-    <SSRProvider>
-      <Component {...pageProps} />
-    </SSRProvider>
+    <ListagemProdutosProvider>
+      <SSRProvider>
+        <Component {...pageProps} />
+      </SSRProvider>
+    </ListagemProdutosProvider>
   )
 }
 
