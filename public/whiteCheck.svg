@@ -1,0 +1,4 @@
+<svg id="check" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <rect id="Base" width="30" height="30" fill="none"/>
+  <path id="Mask" d="M6.988,13.225,1.775,8.012,0,9.775l6.988,6.987,15-15L20.225,0Z" transform="translate(3.75 6.25)" fill="#FFF"/>
+</svg>

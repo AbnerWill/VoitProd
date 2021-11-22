@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin-top: 10rem;
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    li {
+      list-style: none;
+      width: 6rem;
+      height: 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      border: 1px solid #cad1e1;
+      color: #cad1e1;
+
+      font-size: 2rem;
+    }
+
+    .activePage {
+      border-color: #00ff00;
+      background: #00ff00;
+      color: #000000;
+    }
+  }
+
+  .prev,
+  .next {
+    list-style: none;
+  }
+
+  .prev {
+    margin-right: 7rem;
+  }
+
+  .next {
+    margin-left: 7rem;
+
+    img {
+      transform: rotate(180deg);
+    }
+  }
+
+  li {
+    transition: filter 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+}

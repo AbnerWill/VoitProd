@@ -32,6 +32,7 @@
     "@types/slick-carousel": "^1.6.37",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
+    "@types/image-to-base64": "^2.1.0",
     "axios": "0.21.1",
     "bootstrap": "^5.1.1",
     "eslint": "^7.32.0",
@@ -50,6 +51,7 @@
     "sass": "^1.42.1",
     "slick-carousel": "^1.8.1",
     "typescript": "^4.4.3",
+    "image-to-base64": "^2.2.0",
     "yup": "^0.32.11"
   }
 }

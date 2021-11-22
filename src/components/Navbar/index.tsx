@@ -1,12 +1,17 @@
-import { Container, Nav, Navbar } from 'react-bootstrap'
+/* eslint-disable camelcase */
+import { Container, Dropdown, Nav, Navbar, NavItem } from 'react-bootstrap'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import api from '../../services/api'
+import { useListagemProdutos } from '../../contexts/ListagemProdutoContext'
 
 export default function NavbarVoit(): JSX.Element {
+  const { setCategoria_id, setSubcategoria_id, setNome } = useListagemProdutos()
+
   const [request, setRequest] = useState([])
+
   useEffect(() => {
     async function getCategorias() {
       const { data } = await api.get('/categoria/publica')
@@ -14,25 +19,33 @@ export default function NavbarVoit(): JSX.Element {
     }
     getCategorias()
   }, [])
-  const categorias = request.map((item, index) => {
-    const { nome } = item
-
-    const subCategoria = item.sub_categoria.map((item, index) => {
+  const categorias = request.map((categoria, index) => {
+    const { nome } = categoria
+    const subCategoria = categoria.sub_categoria.map((subcategoria, index) => {
       return (
         <ul key={index}>
           <li>
-            <Link href="/produtos" passHref>
-              <a className={styles.login}>{item.nome}</a>
+            <Link
+              href={`/produtos/${categoria.categoria_id}/${subcategoria.subcategoria_id}`}
+            >
+              <a>{subcategoria.nome}</a>
             </Link>
           </li>
         </ul>
       )
     })
     return (
-      <span key={index} className={styles.dropBtn}>
-        {nome}
-        <span className={styles.drop}>{subCategoria}</span>
-      </span>
+      <>
+        <a key={index} className={styles.dropBtn}>
+          {nome}
+          <span className={styles.drop}>
+            {subCategoria}
+            <div>
+              <img src="/img-padrao.svg" alt="" />
+            </div>
+          </span>
+        </a>
+      </>
     )
   })
   return (

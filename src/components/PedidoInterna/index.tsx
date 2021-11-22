@@ -1,7 +1,7 @@
 import { Container, Table } from 'react-bootstrap'
 import Styles from './styles.module.scss'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ModalCadastro } from '../ModalEndereco'
 import { CustomCheckbox } from '../CustomCheckbox'
 import { ModalCartaoCredito } from '../ModalCartaoCredito'
@@ -17,21 +17,26 @@ import { mascaraData } from '../../utils/mascaraData'
 import { CustomField } from '../../components/CustomField'
 import { CustomDropdown } from '../CustomDropdown'
 
-export function PedidoInterna(): JSX.Element {
-  const [formEnviado, setFormEnviado] = useState<boolean>(false)
+interface PedidoInternaProps {
+  token: string
+}
+
+export function PedidoInterna({token}:PedidoInternaProps): JSX.Element {
+
   const [mensagemErro, setMensagemErro] = useState<string[]>([''])
   const [loading, setLoading] = useState<boolean>(false)
   const [estado, setEstado] = useState('Pedidos')
-  const [nome, setNome] = useState('')
-  const [data, setData] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [genero, setGenero] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [dadosAcesso, setDadosAcesso] = useState('')
-  const [senha, setSenha] = useState('')
-  const [novaSenha, setNovaSenha] = useState('')
-  const [nomeLoja, setNomeLoja] = useState('')
-  const [razaoSocial, setrazaoSocial] = useState('')
+  const [dadosUsuario, setDadosUsuario] = useState({})
+  const [dadosCadastroLoja, setDadosCadastroLoja] = useState({})
+  const [lojaUsuario, setLojaUsuario] = useState({})
+  const [usuariotemLoja, setUsuariotemLoja] = useState<boolean>(false)
+  
+  useEffect(() => {
+    getDadosUsuario()
+    getLojaUsuario()
+  }, [])
+
+
 
   function Conteudo() {
     switch (estado) {
@@ -58,37 +63,34 @@ export function PedidoInterna(): JSX.Element {
   interface DadosCadastroLoja {
     nome_fantasia: string
     razao_social: string
+    cnpj_cpf: string
     cep: string
-    cpf: string
-    telefone: string
     rua: string
     numero: string
     complemento: string
     bairro: string
     cidade: string
-    email: string
     uf: string
+    logo: string
+    email: string
+    telefone: string
   }
 
   interface DadosUsuario{
-    nome_completo: string
-    data_nascimento:  string
+    nome: string
     cpf: string
-    telefone: string
+    celular: string
     email: string
-    senha: string
   }
   
   const regexCpf = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/
   const regexCep = 	/^\d{5}-\d{3}$/
-  const regexDataNasc = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/
 
-  const schema = Yup.object().shape({
+  const schemaCadastroLoja = Yup.object().shape({
     nome_fantasia: Yup.string().required('Este campo é obrigatório'),
     razao_social: Yup.string().required('Este campo é obrigatório'),
-    cpf: Yup.string()
+    cnpj_cpf: Yup.string()
     .max(14)
-    .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
     .required('Este campo é obrigatório'),
     cep: Yup.string()
     .max(9)
@@ -107,57 +109,106 @@ export function PedidoInterna(): JSX.Element {
       .required('Este campo é obrigatório')
   })
 
-  const schema2 = Yup.object().shape({
-    nome_completo: Yup.string().required('Este campo é obrigatório'),
-    data_nascimento: Yup.string()
-    .max(10)
-    .matches(regexDataNasc, 'Digite uma data válida')
-    .required('Este campo é obrigatório'),
+  const schemaDadosUsuario = Yup.object().shape({
+    nome: Yup.string().required('Este campo é obrigatório'),
     cpf: Yup.string()
     .max(14)
     .matches(regexCpf, 'Digite um CPF do tipo XXX.XXX.XXX-XX')
     .required('Este campo é obrigatório'),
-    telefone: Yup.string()
+    celular: Yup.string()
     .min(13, 'Digite o numero completo')
     .required('Este campo é obrigatório'),
     email: Yup.string()
     .email('Digite um email válido')
     .required('Este campo é obrigatório'),
-    senha: Yup.string().required('Este campo é obrigatório'),
-    novasenha: Yup.string().required('Digite a nova senha')
   })
 
-  async function onSubmit(dados: DadosCadastroLoja) {
+  async function onSubmitCadastroLoja(dados: DadosCadastroLoja) {
+    
+    const data = { ...dados, telefone: mascaraCelular(dados.telefone) }
+
     try {
       setMensagemErro([''])
       setLoading(true)
-      const response = await api.post('/loja', dados)
+      if(usuariotemLoja){
+        const response = await api.put(`/loja/${dadosCadastroLoja.loja_id}`, data ,{
+          headers:{
+            authorization: `Bearer ${token}`
+          } 
+        })
+      }
+      else{
+        const response = await api.post('/loja', data ,{
+          headers:{
+            authorization: `Bearer ${token}`
+          } 
+        })
+      }  
+      
       setLoading(false)
 
-    } catch (error) {
-      setLoading(false)
-      setMensagemErro([
-        ...mensagemErro
-      ])
-      console.log(mensagemErro)
+    } catch (err) {
+      console.log("ops! ocorreu um erro" + err.response);
     }
   }
+  
 
-  async function onSubmit2(dados: DadosUsuario) {
+  async function onSubmitDadosUsuario(dados: DadosUsuario) {
+    
+    
     try {
       setMensagemErro([''])
       setLoading(true)
-      const response = await api.post('/usuario', dados)
+      const {data} = await api.put(`/usuario/${dadosUsuario.usuario_id}`, dados, {
+        headers:{
+          authorization: `Bearer ${token}`
+        } 
+      })
       setLoading(false)
+      getDadosUsuario()
 
-    } catch (error) {
-      setLoading(false)
-      setMensagemErro([
-        ...mensagemErro
-      ])
-      console.log(mensagemErro)
+    } catch (err) {
+        console.error("ops! ocorreu um erro" + err);
     }
   }
+  
+
+    async function getDadosUsuario(){
+      try{
+        const {data} = await api.get('/usuario/logado', {
+          headers:{
+            authorization: `Bearer ${token}`
+          }
+        })
+        console.log(data)
+        setDadosUsuario(data)
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
+
+    async function getLojaUsuario(){
+      try{
+        const {data} = await api.get('/loja', {
+          headers:{
+            authorization: `Bearer ${token}`
+          }
+        })
+        data.length === 0 ? setUsuariotemLoja(false) : setUsuariotemLoja(true)
+          setLojaUsuario(data)
+          console.log(data.loja_id)
+          const response = await api.get(`/loja/${data[0].loja_id}`, {
+            headers:{
+              authorization: `Bearer ${token}`
+            }
+          })
+        setDadosCadastroLoja(response.data)
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
 
   const Pedidos = () => {
     return (
@@ -277,18 +328,15 @@ export function PedidoInterna(): JSX.Element {
   const MeusDados = () => {
     return (
       <Formik
-      validationSchema={schema2}
+      validationSchema={schemaDadosUsuario}
       validateOnBlur
       initialValues={{
-        nome_completo: '',
-        data_nascimento: '',
-        cpf: '',
-        telefone: '',
-        email: '',
-        senha:'',
-        novasenha:''
+        nome: dadosUsuario.nome ?? '',
+        cpf: dadosUsuario.cpf ?? '',
+        celular: dadosUsuario.celular ?? '',
+        email: dadosUsuario.email ?? '',
       }}
-      onSubmit={values => onSubmit2(values)}
+      onSubmit={values => onSubmitDadosUsuario(values)}
       >
             {({ values, dirty, errors }) => (
             <div className={`${Styles.divPedidos} col-12 col-md-10`}>
@@ -299,16 +347,8 @@ export function PedidoInterna(): JSX.Element {
                       <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
                           <CustomField
                             type="text"
-                            name="nome_completo"
+                            name="nome"
                             label="Nome Completo*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="data_nascimento"
-                            label="Data de Nascimento*"
-                            maxLength={10}
-                            value={mascaraData(values.data_nascimento)}
                             dirty={dirty}
                           />
                           <CustomField
@@ -321,9 +361,9 @@ export function PedidoInterna(): JSX.Element {
                           />
                           <CustomField
                             type="phone"
-                            name="telefone"
+                            name="celular"
                             label="Telefone"
-                            value={mascaraCelular(values.telefone)}
+                            value={mascaraCelular(values.celular)}
                             maxLength={14}
                             dirty={dirty}
                           />
@@ -334,18 +374,6 @@ export function PedidoInterna(): JSX.Element {
                             type="email"
                             name="email"
                             label="E-mail*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="senha"
-                            label="Senha*"
-                            dirty={dirty}
-                          />
-                          <CustomField
-                            type="text"
-                            name="novasenha"
-                            label="Nova Senha*"
                             dirty={dirty}
                           />
                         <button type="submit" className={`${Styles.btnEndereco} mb-5`} >
@@ -457,23 +485,24 @@ export function PedidoInterna(): JSX.Element {
 
     return (
       <Formik
-      validationSchema={schema}
+      validationSchema={schemaCadastroLoja}
       validateOnBlur
       initialValues={{
-        nome_fantasia: '',
-        razao_social: '',
-        cep: '',
-        cpf: '',
-        telefone: '',
-        rua: '',
-        numero: '',
-        complemento: '',
-        bairro: '',
-        cidade: '',
-        email: '',
-        uf: ''
+        nome_fantasia: dadosCadastroLoja.nome_fantasia ?? '',
+        razao_social: dadosCadastroLoja.razao_social ?? '',
+        cnpj_cpf: dadosCadastroLoja.cnpj_cpf ?? '',
+        cep: dadosCadastroLoja.cep ?? '',
+        rua: dadosCadastroLoja.rua ?? '',
+        numero: dadosCadastroLoja.numero ?? '',
+        complemento: dadosCadastroLoja.complemento ?? '',
+        bairro: dadosCadastroLoja.bairro ?? '',
+        cidade: dadosCadastroLoja.cidade ?? '',
+        uf: dadosCadastroLoja.uf ?? '',
+        logo: dadosCadastroLoja.logo ?? '',
+        email: dadosCadastroLoja.email ?? '',
+        telefone: dadosCadastroLoja.telefone ?? ''
       }}
-      onSubmit={values => onSubmit(values)}
+      onSubmit={values => onSubmitCadastroLoja(values)}
       >
             {({ values, dirty, errors }) => (
             <div className={`${Styles.divPedidos} col-12 col-md-10`}>
@@ -496,10 +525,9 @@ export function PedidoInterna(): JSX.Element {
                           />
                           <CustomField
                             type="text"
-                            name="cpf"
+                            name="cnpj_cpf"
                             label="CPF*"
                             maxLength={14}
-                            value={mascaraCPF(values.cpf)}
                             dirty={dirty}
                           />
                           <CustomField
@@ -517,28 +545,20 @@ export function PedidoInterna(): JSX.Element {
                             dirty={dirty}
                           />
                           <CustomField
-                            type="number"
+                            type="text"
                             name="numero"
                             label="Número*"
                             dirty={dirty}
                           />
-                          <CustomField
-                            type="phone"
-                            name="telefone"
-                            label="Telefone"
-                            value={mascaraCelular(values.telefone)}
-                            maxLength={14}
-                            dirty={dirty}
-                          />
-                      </div>
-                      <div className={`${Styles.divSeparador} col-1`}></div>
-                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
                           <CustomField
                             type="text"
                             name="complemento"
                             label="Complemento"
                             dirty={dirty}
                           />
+                      </div>
+                      <div className={`${Styles.divSeparador} col-1`}></div>
+                      <div className={`${Styles.inputsForm} col-12 col-sm-5`}>
                           <CustomField
                             type="text"
                             name="bairro"
@@ -558,9 +578,23 @@ export function PedidoInterna(): JSX.Element {
                             array={['AC', 'AL' , 'AP' , 'AM' , 'BA' , 'CE' , 'DF' , 'ES' , 'GO' , 'MA' , 'MS' , 'MT' , 'MG' , 'PA' , 'PB' , 'PR' , 'PE' , 'PI' , 'RJ' , 'RN' , 'RS' , 'RO' , 'RR' , 'SC' , 'SP' , 'SE' , 'TO']}
                           />
                           <CustomField
+                            type="text"
+                            name="logo"
+                            label="Logo*"
+                            dirty={dirty}
+                          />
+                          <CustomField
                             type="email"
                             name="email"
                             label="Email*"
+                            dirty={dirty}
+                          />
+                          <CustomField
+                            type="phone"
+                            name="telefone"
+                            label="Telefone"
+                            value={mascaraCelular(values.telefone)}
+                            maxLength={14}
                             dirty={dirty}
                           />
                         <button type="submit" className={`${Styles.btnEndereco} mb-5`} >

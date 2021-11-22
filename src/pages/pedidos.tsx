@@ -5,14 +5,14 @@ import { Footer } from '../components/Footer'
 import { NavInterna } from '../components/NavInterna'
 import { PedidoInterna } from '../components/PedidoInterna'
 
-export default function Pedido(): JSX.Element {
+export default function Pedido({token}): JSX.Element {
   return (
     <div>
       <section>
         <NavInterna />
       </section>
       <section>
-        <PedidoInterna />
+        <PedidoInterna token={token}/>
       </section>
       <section>
         <Footer />
@@ -33,7 +33,9 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 
+  const token = access_token['access-token']
+
   return {
-    props: {}
+    props: {token}
   }
 }
