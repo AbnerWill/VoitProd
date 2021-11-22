@@ -5,7 +5,6 @@ import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { parseCookies } from 'nookies'
 import { useEffect, useState } from 'react'
-import imageToBase64 from 'image-to-base64/browser'
 import Slider from 'react-slick'
 
 import { NextArrow, PrevArrow } from '../../components/Arrows'
