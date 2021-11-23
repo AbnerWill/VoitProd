@@ -14,8 +14,12 @@ export default function NavbarVoit(): JSX.Element {
 
   useEffect(() => {
     async function getCategorias() {
-      const { data } = await api.get('/categoria/publica')
-      setRequest(data)
+      try {
+        const { data } = await api.get('/categoria/publica')
+        setRequest(data)
+      } catch (error) {
+        console.log(error)
+      }
     }
     getCategorias()
   }, [])
